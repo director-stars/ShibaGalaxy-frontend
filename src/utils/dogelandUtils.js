@@ -22,7 +22,7 @@ export const getBattleBosses = async () => {
 
 export const getMyFightDoges = async (MarketControllerContract, account) => {
   try {    
-    const unSaleDoges = await MarketControllerContract.methods.getDogeByOwner().call({
+    const unSaleDoges = await MarketControllerContract.methods.getShibaByOwner().call({
       from: account
     });
 
@@ -159,7 +159,7 @@ export const buyDoge = async (cryptoDogeControllerContract, account) => {
   const tribe = Math.floor(Math.random() * 4);
   try {
     return cryptoDogeControllerContract.methods
-      .buyDoge([tribe], referer)
+      .buyShiba([tribe], referer)
       .send({ from: account })
       .on('transactionHash', (tx) => {
         return tx.transactionHash
@@ -210,7 +210,7 @@ export const getLastTokenId = async (cryptoDogeNFTContract, account) => {
 
 export const getDogeInfo = async(cryptoDogeNFTContract, tokenId) => {
   try{
-    return await cryptoDogeNFTContract.methods.getdoger(tokenId).call();
+    return await cryptoDogeNFTContract.methods.getShiba(tokenId).call();
   } catch (err) {
     return console.error('err')
   }
@@ -317,7 +317,7 @@ export const getDogeOfSaleByOwner = async(MarketControllerContract, account) => 
     //   method: "GET",
     // });
 
-    const unSaleDoges = await MarketControllerContract.methods.getDogeOfSaleByOwner().call({
+    const unSaleDoges = await MarketControllerContract.methods.getShibaOfSaleByOwner().call({
       from: account
     });
 
@@ -382,7 +382,7 @@ export const getDogeOfSale = async(MarketControllerContract) => {
       method: "GET",
     });
 
-    const unSaleDoges = await MarketControllerContract.methods.getDogeOfSale().call();
+    const unSaleDoges = await MarketControllerContract.methods.getShibaOfSale().call();
 
     const fightDoges = [];
     const dogesExtraInfo = await res.json();
@@ -426,7 +426,7 @@ export const getDogeByOwner = async(MarketControllerContract, account) => {
   // console.log(MarketControllerContract);
   // console.log(account)
   try {
-    const unSaleDoges = await MarketControllerContract.methods.getDogeByOwner().call({
+    const unSaleDoges = await MarketControllerContract.methods.getShibaByOwner().call({
       from: account
     });
     const dogeIds = [];
@@ -478,7 +478,7 @@ export const getDogeByOwner = async(MarketControllerContract, account) => {
     return fightDoges;
     // return result;
   } catch (err) {
-    // return console.error('err')
+    // return console.error('err'))
     return []
   }
 }
@@ -492,8 +492,8 @@ export const getBalance = async(cryptoDogeNFTContract, oneDogeContract, account)
       window.localStorage.setItem("dogeNFTBalance",result);
       // console.log("dogeNFTBalance",result);
       const oneDoge = await oneDogeContract.methods.balanceOf(account).call();
-      window.localStorage.setItem("oneDogeBalance",parseInt(oneDoge) / 10**18);
-      // console.log("oneDogeBalance",oneDoge);
+      window.localStorage.setItem("shibgxBalance",parseInt(oneDoge) / 10**18);
+      // console.log("shibgxBalance",oneDoge);
       // const magicStone = await magicStoneNFTContract.methods.balanceOf(account).call();
       // window.localStorage.setItem("magicStoneNFTBalance",magicStone);
       // console.log("magicStoneNFTBalance",magicStone);
@@ -502,7 +502,7 @@ export const getBalance = async(cryptoDogeNFTContract, oneDogeContract, account)
     }
     else{
       window.localStorage.setItem("dogeNFTBalance",0);
-      window.localStorage.setItem("oneDogeBalance",0);
+      window.localStorage.setItem("shibgxBalance",0);
       window.localStorage.setItem("bnbBalance",0);
     }
     // console.log('bnb', bnb);

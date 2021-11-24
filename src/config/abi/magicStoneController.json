@@ -119,7 +119,7 @@
   },
   {
     "inputs": [],
-    "name": "cryptoDogeController",
+    "name": "cryptoShibaController",
     "outputs": [
       {
         "internalType": "address",
@@ -132,31 +132,12 @@
   },
   {
     "inputs": [],
-    "name": "cryptoDogeNFT",
+    "name": "cryptoShibaNFT",
     "outputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "dogeStoneInfo",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -248,7 +229,26 @@
         "type": "uint256"
       }
     ],
-    "name": "stoneDogeInfo",
+    "name": "shibaStoneInfo",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "stoneShibaInfo",
     "outputs": [
       {
         "internalType": "uint256",
@@ -284,7 +284,7 @@
         "type": "address"
       }
     ],
-    "name": "setCryptoDogeNFT",
+    "name": "setCryptoShibaNFT",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -306,11 +306,11 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_cryptoDogeController",
+        "name": "_cryptoShibaController",
         "type": "address"
       }
     ],
-    "name": "setCryptoDogeController",
+    "name": "setCryptoShibaController",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -352,7 +352,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_dogeId",
+        "name": "_shibaId",
         "type": "uint256"
       },
       {
@@ -375,7 +375,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_dogeId",
+        "name": "_shibaId",
         "type": "uint256"
       }
     ],
@@ -388,7 +388,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_dogeId",
+        "name": "_shibaId",
         "type": "uint256"
       }
     ],

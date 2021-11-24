@@ -16,28 +16,23 @@ import MonsterCard from './components/MonsterCard'
 // }
 
 const Hero = styled.div`
+  background: linear-gradient(90deg, rgba(255, 0, 0, 0), rgb(214, 51, 65) 45%, rgba(255, 0, 0, 0));
+  line-height: 1.5;
   align-items: center;
-  // background-image: url('/images/egg/3.png');
   background-repeat: no-repeat;
   background-position: top center;
-  display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: auto;
-  margin-bottom: 32px;
-  padding-top: 116px;
+  margin: 30px auto;
+  padding: 20px;
   text-align: center;
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    // background-image: url('/images/egg/3.png'), url('/images/egg/3b.png');
     background-position: left center, right center;
-    height: 165px;
-    padding-top: 0;
   }
 `
 const StyledHead = styled.div`
-  display:flex;
-  column-gap: 20px;
+  
 `
 const MyDoges = styled.div`
   text-align: center;
@@ -68,6 +63,15 @@ const StyledDiv = styled.div`
   justify-content: center;
   display: flex;
   margin-bottom: 20px;
+`
+const StyledHeading = styled(Heading)`
+  font-size: 4.5rem;
+`
+const Styledspan = styled.span`
+  color: #000;
+`
+const StyledText = styled(Text)`
+  font-size: 1.5rem;
 `
 const BattleMonsters: React.FC = () => {
   // const { url, title } = props
@@ -225,16 +229,13 @@ const BattleMonsters: React.FC = () => {
     <Page>
       <Hero>
         <StyledHead>
-          <Heading as="h1" size="xxl" mb="24px" color="contrast">
-            Battle
-          </Heading>
-          <Heading as="h1" size="xxl" mb="24px" color="primary">
-            Monsters
-          </Heading>
+          <StyledHeading as="h1" size="xxl" mb="24px" color="contrast">
+            Battle Monsters
+          </StyledHeading>
         </StyledHead>
-        <Text>Choose your young doge here, then train and build your 1doge army!</Text>
+        <StyledText>Choose your young shiba here, then train and defend shibagalaxy!</StyledText>
       </Hero>
-      <StyledDiv>
+      {/* <StyledDiv>
       {(airDropInfo)?(
           <Button size="sm"
           disabled={airDropPendingTx}
@@ -244,13 +245,13 @@ const BattleMonsters: React.FC = () => {
             setAirDropPendingTx(false)
           }}>{pendingTx ? 'Pending Claim AirDrop' : 'Claim AirDrop'}</Button>
         ):(<></>)}
-      </StyledDiv>
+      </StyledDiv> */}
       {(doges.length)?(
         <MyDoges>
           {(rewardTokenAmount)&&(parseInt(rewardTokenAmount.toString()) > 0)?(
           <div>
             <RewardInfo>
-              <Text fontSize="22px">Pending 1Doge: {parseInt(rewardTokenAmount.toString())/10**18}</Text>
+              <Text fontSize="22px">Pending SHIBGX: {parseInt(rewardTokenAmount.toString())/10**18}</Text>
               <TokenIcon width={30} height={30} src="/images/egg/9.png"/>
             </RewardInfo>
             {( nextClaimTime < 0)?(renderClaimButtons()):(
@@ -261,13 +262,13 @@ const BattleMonsters: React.FC = () => {
           ):(<div />)}
           
         <Heading as="h3" size="xl" mb="24px" color="contrast">
-            Choose A Doge
+            Choose A Shiba
         </Heading>
         <Carousel>
           {dogeList(doges, true)}
         </Carousel>
         <Button size="sm" variant="success">
-          Selected DogeID: #{activeDogeId}
+          Selected ShibaID: #{activeDogeId}
         </Button>
         </MyDoges>
       ):(<div />)}

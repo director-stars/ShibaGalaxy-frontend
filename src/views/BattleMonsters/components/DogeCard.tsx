@@ -26,13 +26,14 @@ const StyledImage = styled.div<{
     width:100%;
     min-height: 260px;
     background-image: url(${({ imgUrl }) => imgUrl});
-    background-size: cover;
+    background-size: contain;
     background-position: center;
 `
 
 const StyledHeading = styled(Heading)`
     text-align: center;
     text-transform: capitalize;
+    font-size: 1.75rem;
 `
 const DogeInfo = styled.div`
     display: flex;
@@ -44,14 +45,29 @@ const DogeInfo = styled.div`
 `
 const Id = styled.div`
     position: absolute;
-    background: linear-gradient(-45deg,#e8c456,#aa8929,#fdd325);
+    background: linear-gradient(-45deg,#FFC50D,#d63341,#FFC50D);
     animation: dogeid 3s ease infinite;
     padding: 5px 10px;
     font-weight: 400;
     min-width: 80px;
     font-size: 1rem;
     border-radius: 10rem;
-    margin: 10px;
+    margin: -10px 10px 10px 10px;
+`
+const StyledCard = styled(Card)`
+    background-image: url(/images/bg-card.png);
+    background-size: contain;
+    padding: 40px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 580px;
+`
+const StyledCardHeader = styled(CardHeader)`
+    padding: 0px;
+    margin: 12px 0px;
+`
+const StyledCardBody = styled(CardBody)`
+    padding: 0px 24px 24px 24px;
 `
 const DogeCardAction = styled.div`
     margin-top: 10px;
@@ -89,36 +105,36 @@ const DogeCard: React.FC<DogeCardProps> = ({classInfo, rare, level, exp, tribe, 
 
     return (
         <div>
-            <Card>
+            <StyledCard>
                 <Id>#{id}</Id>
-                <CardHeader>
+                <StyledCardHeader>
                     <StyledImage imgUrl={`/images/doges/${dogeImage}`}/>
-                </CardHeader>
-                <CardBody>
-                    <StyledHeading size="lg" color="primary">{dogeName}</StyledHeading>
-                </CardBody>
+                </StyledCardHeader>
+                <StyledCardBody>
+                    <StyledHeading size="lg" color="secondary">{dogeName}</StyledHeading>
+                </StyledCardBody>
                 <CardFooter>
                     <DogeInfo>
                         <div>
-                            <Text>Rare : </Text>
-                            <Text>{rare}</Text>
+                            <Text color="cardItemKey" bold>Rare : </Text>
+                            <Text color="cardItemValue" bold>{rare}</Text>
                         </div>
                         <div>
-                            <Text>Level :</Text>
-                            <Text>{level} / {exp} exp</Text>
+                            <Text color="cardItemKey" bold>Level :</Text>
+                            <Text color="cardItemValue" bold>{level} / {exp} exp</Text>
                         </div>
                     </DogeInfo>
                     <DogeInfo>
                         <div>
-                            <Text>Tribe :</Text>
-                            <Text>{tribeName}</Text>
+                            <Text color="cardItemKey" bold>Tribe :</Text>
+                            <Text color="cardItemValue" bold>{tribeName}</Text>
                         </div>
                     </DogeInfo>
                     {(nextTime < 0 && parseInt(fightNumber) > 0 && stoneInfo === "0")?(
                         <DogeInfo>
                             <div>
-                                <Text>Remained Turns Fight :</Text>
-                                <Text>{fightNumber}</Text>
+                                <Text color="cardItemKey" bold>Remained Turns Fight :</Text>
+                                <Text color="cardItemValue" bold>{fightNumber}</Text>
                             </div>
                         </DogeInfo>):(<></>)
                     }
@@ -131,7 +147,7 @@ const DogeCard: React.FC<DogeCardProps> = ({classInfo, rare, level, exp, tribe, 
                                 ):(
                                     <Button fullWidth size="sm" onClick={() => {
                                         setActiveDoge(id);
-                                    }}>Use this Doge</Button>
+                                    }}>Use this Shiba</Button>
                                 )}
                             </>)
                             : (<Button fullWidth size="sm" onClick={onPresentConnectModal}>Connect Wallet</Button>)}
@@ -145,7 +161,7 @@ const DogeCard: React.FC<DogeCardProps> = ({classInfo, rare, level, exp, tribe, 
                     }
                 </CardFooter>
                 
-            </Card>
+            </StyledCard>
         </div>
     )
 }

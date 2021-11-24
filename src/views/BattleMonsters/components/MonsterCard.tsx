@@ -41,17 +41,39 @@ const StyledImage = styled.div<{
 
 const StyledHeading = styled(Heading)`
     text-align: center;
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
 `
 const MonsterInfo = styled.div`
     display: grid;
     line-height: 24px;
+    font-size: 1rem;
+    margin-bottom: 20px;
 `
 const PriceInfo = styled.div`
     display: flex;
 `
 const TokenIcon = styled(Image)`
     width: 24px;
+`
+const StyledCardHeader = styled(CardHeader)`
+    padding: 0px;
+    margin: 12px 0px 24px 0px;
+`
+const StyledCardBody = styled(CardBody)`
+    // padding: 0px 24px 24px 24px;
+`
+const StyledCardFooter = styled(CardBody)`
+    padding: 0px 24px 0px 24px;
+    background: linear-gradient(180deg,#fea726,#fea726);
+    color: #fff;
+    border: 2px solid #d63341;
+    border-radius: 1.5rem;
+    padding: 20px;
+    box-shadow: 0 20px 10px 0 rgb(18 16 44 / 50%);
+`
+const StyledText = styled(Text)`
+  color: #fff;
+  font-size: 1rem;
 `
 const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewardTokenFrom, rewardTokenTo, rewardExpFrom, rewardExpTo, activeDoge}) => {
     const { account, connect, reset } = useWallet()
@@ -92,7 +114,7 @@ const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewar
     const [tx, setTx] = useState('')
     const [error, setError] = useState('')
     
-    const oneDogeAmount = window.localStorage.getItem("oneDogeBalance");
+    const oneDogeAmount = window.localStorage.getItem("shibgxBalance");
 
     
 
@@ -154,14 +176,14 @@ const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewar
             </Button>
           )
         }
-        if(parseInt(oneDogeAmount) < 100000){
-          return (
-            <Button fullWidth size="sm" disabled>Not Enough 1Doge</Button>
-          )
-        }
+        // if(parseInt(oneDogeAmount) < 100000){
+        //   return (
+        //     <Button fullWidth size="sm" disabled>Not Enough SHIBGX</Button>
+        //   )
+        // }
         if(!activeDoge){
           return (
-            <Button fullWidth size="sm">Select your doge</Button>
+            <Button fullWidth size="sm">Select your Shiba</Button>
           )  
         }
         return (
@@ -171,29 +193,30 @@ const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewar
                 setPendingTx(true)
                 await handleFight(id, activeDoge)
                 setPendingTx(false)
-            }}>{pendingTx ? 'Pending Fight' : 'Fight'}</Button>
+            }}>{pendingTx ? 'Fighting' : 'Fight'}</Button>
         )
     }
 
     return (
         <div>
             <Card>
-                <CardHeader>
+                <StyledCardHeader>
                     <StyledImage imgUrl={`/images/monsters/${monsterImage}`}/>
-                </CardHeader>
-                <CardBody>
+                </StyledCardHeader>
+                <StyledCardBody>
+                    <StyledHeading size="lg">{monsterName}</StyledHeading>
+                </StyledCardBody>
+                <StyledCardFooter>
+                    <MonsterInfo>
+                        <Block><StyledText>Level:</StyledText><StyledText>{(id + 1)}</StyledText></Block>
+                        <Block><StyledText>Success Rate:</StyledText><StyledText>~{successRate}%</StyledText></Block>
+                        {/* <Block><Label>Token Reward:</Label><PriceInfo>{rewardTokenFrom} ~ {rewardTokenTo}<TokenIcon width={24} height={24} src="/images/egg/9.png"/><Text> SHIBGX</Text></PriceInfo></Block> */}
+                        <Block><StyledText>Token Reward:</StyledText><PriceInfo>{rewardTokenFrom} ~ {rewardTokenTo}</PriceInfo></Block>
+                        <Block><StyledText>EXP Reward:</StyledText><StyledText>{rewardExpFrom} EXP</StyledText></Block>
+                    </MonsterInfo>
                     {account? (renderDogeCardButtons())
                     : (<Button fullWidth size="sm" onClick={onPresentConnectModal}>Connect Wallet</Button>)}
-                </CardBody>
-                <CardFooter>
-                    <StyledHeading size="lg">{monsterName}</StyledHeading>
-                    <MonsterInfo>
-                        <Block><Label>HP:</Label><Text>{health}HP</Text></Block>
-                        <Block><Label>Success Rate:</Label><Text>~{successRate}%</Text></Block>
-                        <Block><Label>Token Reward:</Label><PriceInfo>{rewardTokenFrom} ~ {rewardTokenTo}<TokenIcon width={24} height={24} src="/images/egg/9.png"/><Text> 1doge</Text></PriceInfo></Block>
-                        <Block><Label>EXP Reward:</Label><Text>{rewardExpFrom} EXP</Text></Block>
-                    </MonsterInfo>
-                </CardFooter>
+                </StyledCardFooter>
             </Card>
         </div>
     )

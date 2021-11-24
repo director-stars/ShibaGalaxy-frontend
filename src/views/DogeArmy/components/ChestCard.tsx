@@ -13,16 +13,20 @@ interface ChestCardProps {
 const StyledImage = styled.div<{
     imgUrl?: string
 }>`
-    width:100%;
+    margin: auto;
+    margin-left: 20px;
+    width: calc(100% - 40px);
     min-height: 260px;
     background-image: url(${({ imgUrl }) => imgUrl});
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
 `
 
 const StyledHeading = styled(Heading)`
     text-align: center;
     text-transform: capitalize;
+    font-size: 1.75rem;
 `
 const StyledCardHeader = styled(CardHeader)`
     padding: 0px;
@@ -38,14 +42,22 @@ const DogeInfo = styled.div`
 
 const Id = styled.div`
     position: absolute;
-    background: linear-gradient(-45deg,#e8c456,#aa8929,#fdd325);
+    background: linear-gradient(-45deg,#FFC50D,#d63341,#FFC50D);
     animation: dogeid 3s ease infinite;
     padding: 5px 10px;
     font-weight: 400;
     min-width: 80px;
     font-size: 1rem;
     border-radius: 10rem;
-    margin: 10px;
+    margin: -10px 10px 10px 10px;
+`
+const StyledCard = styled(Card)`
+    background-image: url(/images/bg-card.png);
+    background-size: contain;
+    padding: 40px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 580px;
 `
 const ChestCard: React.FC<ChestCardProps> = ({id, tribe}) => {
     const { account, connect, reset } = useWallet()
@@ -110,13 +122,13 @@ const ChestCard: React.FC<ChestCardProps> = ({id, tribe}) => {
 
     return (
         <div>
-            <Card>
+            <StyledCard>
                 <Id>#{id}</Id>
                 <StyledCardHeader>
                     <StyledImage imgUrl={`/images/chests/${tribeAsset}`}/>
                 </StyledCardHeader>
                 <CardBody>
-                    <StyledHeading size="lg" color="primary">{tribeName}</StyledHeading>
+                    <StyledHeading size="lg" color="secondary">{tribeName}</StyledHeading>
                 </CardBody>
                 <CardFooter>
                     <DogeInfo>
@@ -124,7 +136,7 @@ const ChestCard: React.FC<ChestCardProps> = ({id, tribe}) => {
                         : (<Button fullWidth size="sm" onClick={onPresentConnectModal}>Connect Wallet</Button>)}
                     </DogeInfo>
                 </CardFooter>
-            </Card>
+            </StyledCard>
         </div>
     )
 }

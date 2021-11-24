@@ -22,9 +22,9 @@ const StyledImage =  styled.div<{
     imageUrl?:string
 }>`
     margin: auto;
-    position:absolute;
+    // position:absolute;
     // opacity:0;
-    width:100%;
+    width:calc(100% - 40px);
     min-height: 260px;
     background-size: contain;
     background-position: center;
@@ -68,10 +68,12 @@ const StyledCardHeader = styled(CardHeader)`
 
 const StyledHeading = styled(Heading)`
     text-align: center;
+    font-size: 1.75rem;
 `
 const DogeInfo = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
 `
 const PriceInfo = styled.div`
     display: flex;
@@ -84,12 +86,19 @@ const TokenIcon = styled(Image)`
 const OwnerInfo = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
 `
-
+const StyledCard = styled(Card)`
+    background-image: url(/images/bg-card.png);
+    background-size: contain;
+    padding: 40px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+`
 const MagicStoneCard: React.FC<MagicStoneCardProps> = ({imgUrl, name, price}) => {
     return (
         <div>
-            <Card>
+            <StyledCard>
                 <StyledCardHeader>
                     <ImageSlider>
                         {/* <StyledImage imageUrl="/images/stones/fire.gif"/>
@@ -101,25 +110,25 @@ const MagicStoneCard: React.FC<MagicStoneCardProps> = ({imgUrl, name, price}) =>
                     </ImageSlider>
                 </StyledCardHeader>
                 <CardBody>
-                    <StyledHeading size="lg" color="primary">{name}</StyledHeading>
+                    <StyledHeading size="lg" color="secondary">{name}</StyledHeading>
                 </CardBody>
                 <CardFooter>
                     <DogeInfo>
-                        <Text>Price</Text>
+                        <Text color="cardItemKey" bold>Price</Text>
                         <PriceInfo>
                             <TokenIcon width={24} height={24} src={imgUrl}/>
-                            <Text>{price}</Text>
+                            <Text color="cardItemValue" bold>{price}</Text>
                         </PriceInfo>
                     </DogeInfo>
                     <OwnerInfo>
-                        <Text>Payment</Text>
-                        <Text>BNB</Text>
+                        <Text color="cardItemKey" bold>Payment</Text>
+                        <Text color="cardItemValue" bold>BNB</Text>
                     </OwnerInfo>
                     <MagicStoneCardActions 
                         price={price}
                     />
                 </CardFooter>
-            </Card>
+            </StyledCard>
         </div>
     )
 }

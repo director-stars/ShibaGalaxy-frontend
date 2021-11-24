@@ -12,7 +12,7 @@ const CardActions = styled.div`
   ${({ theme }) => theme.mediaQueries.lg} {
     justify-content: space-between;
   }
-  margin-top: 20px;
+  margin-top: 50px;
 `
 interface MagicStoneCardActionProps {
   price: string
@@ -23,7 +23,7 @@ const MagicStoneCardActions: React.FC<MagicStoneCardActionProps> = ({price}) => 
   const [toasts, setToasts] = useState([]);
   // const allowance = useMagicStoneControllerAllowance()
   // const { onApprove } = useMagicStoneControllerApprove()
-  const [bnbBalance, setBnbBalance] = useState(parseInt(window.localStorage.getItem("bnbBalance")) / 10**18);
+  // const [bnbBalance, setBnbBalance] = useState(parseInt(window.localStorage.getItem("bnbBalance")) / 10**18);
   // const dogeNFTBalance = parseInt(window.localStorage.getItem("dogeNFTBalance")) / 10**18;
   // const handleApprove = useCallback(async () => {
   //   try {
@@ -43,7 +43,7 @@ const MagicStoneCardActions: React.FC<MagicStoneCardActionProps> = ({price}) => 
   const handleGetDogeBalance = useCallback(async () => {
     try {
       await onGetDogeBalance()
-      setBnbBalance(parseInt(window.localStorage.getItem("bnbBalance")) / 10**18);
+      // setBnbBalance(parseInt(window.localStorage.getItem("bnbBalance")) / 10**18);
     } catch (e) {
       console.error(e)
     }
@@ -92,7 +92,7 @@ const MagicStoneCardActions: React.FC<MagicStoneCardActionProps> = ({price}) => 
   };
 
   const renderStoneCardButtons = () => {
-    if(bnbBalance < parseInt(price)){
+    if(parseInt(window.localStorage.getItem("bnbBalance")) / 10**18 < parseInt(price)){
       return (
           <Button fullWidth disabled size="sm">
             Not enough bnb

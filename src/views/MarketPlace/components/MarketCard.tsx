@@ -74,11 +74,11 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
     }
     else{
         dogeImage = "warm.gif";
-        dogeName = "Doge";
+        dogeName = "Shiba";
     }
     
     const tribeName = tribes[tribe].name;
-    const [oneDogeBalance, setOneDogeBalance] = useState(parseInt(window.localStorage.getItem("oneDogeBalance")) / 10**18);
+    const [shibgxBalance, setShibgxBalance] = useState(parseInt(window.localStorage.getItem("shibgxBalance")) / 10**18);
     const [dogeNFTBalance, setDogeNFTBalance] = useState(parseInt(window.localStorage.getItem("dogeNFTBalance")));
     const { account, connect, reset } = useWallet()
     useEffect(() => {
@@ -109,7 +109,7 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
       const handleGetDogeBalance = useCallback(async () => {
         try {
           await onGetDogeBalance()
-          setOneDogeBalance(parseInt(window.localStorage.getItem("oneDogeBalance")) / 10**18);
+          setShibgxBalance(parseInt(window.localStorage.getItem("shibgxBalance")) / 10**18);
           setDogeNFTBalance(parseInt(window.localStorage.getItem("dogeNFTBalance")));
         } catch (e) {
           console.error(e)
@@ -142,17 +142,17 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
             </Button>
           )
         }
-        if(!oneDogeBalance){
+        if(!shibgxBalance){
             return (
                 <Button fullWidth disabled size="sm">
-                  Not enough 1doge
+                  Not enough SHIBGX
                 </Button>
             ) 
         }
         if(dogeNFTBalance > 1){
             return (
                 <Button fullWidth disabled size="sm">
-                  You have enough Doges
+                  You have enough Shibas
                 </Button>
             ) 
         }
@@ -164,7 +164,7 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
                 await handleFillOrder(id)
                 await handleGetDogeBalance();
                 setPendingTx(false)
-            }}>{pendingTx ? 'Pending Buy Doge' : 'Buy Doge'}</Button>
+            }}>{pendingTx ? 'Pending Buy Shiba' : 'Buy Shiba'}</Button>
         )
       }
 

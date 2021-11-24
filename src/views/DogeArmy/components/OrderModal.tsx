@@ -64,10 +64,10 @@ const OrderModal: React.FC<ResultModalProps> = ({ onDismiss, title="result", id 
                 value={val}
                 onChange={handleChange}
                 max='0'
-                symbol="1DOGE"
-                availableSymbol="1Doge"
+                symbol="SHIBGX"
+                availableSymbol="SHIBGX"
               />
-              <StyledText>You&apos;ll receive ~{receiveTokenAmount} 1DOGE after subtracting a 5% fee.</StyledText>
+              <StyledText>You&apos;ll receive ~{receiveTokenAmount} SHIBGX after subtracting a 5% fee.</StyledText>
             </InputField>
           </SellInfo>
           <Button fullWidth

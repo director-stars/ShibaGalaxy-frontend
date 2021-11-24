@@ -86,7 +86,7 @@ const DogeCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, leve
     }
     else{
         dogeImage = "warm.gif";
-        dogeName = "Doge";
+        dogeName = "Shiba";
     }
     const tribeName = tribes[tribe].name;
     // const isSale = (price === "0");

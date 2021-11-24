@@ -54,7 +54,7 @@ const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId, isSale }) => 
 
   // const [, setRequestedBuy] = useState(false)
   
-  const [onPresentResult] = useModal(<OrderModal title="Sell Doge" id={dogeId} />) 
+  const [onPresentResult] = useModal(<OrderModal title="Sell Shiba" id={dogeId} />) 
   const { onCancelOrder } = useCancelOrder()
 
   const handleCancelOrder = useCallback(async () => {
@@ -93,7 +93,7 @@ const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId, isSale }) => 
           setPendingTx(true)
           onPresentResult()
           setPendingTx(false)
-      }}>{pendingTx ? 'Pending Sell Doge' : 'Sell Doge'}</Button>
+      }}>{pendingTx ? 'Pending Sell Shiba' : 'Sell Shiba'}</Button>
     )
   }
 

@@ -2,7 +2,7 @@ import { MenuItemsType, DropdownMenuItemType } from '@pancakeswap-libs/uikit'
 
 const config: MenuItemsType[] = [
   {
-    label: 'Starter Doges',
+    label: 'Starter Pack',
     icon: 'Home',
     href: '/',
   },
@@ -12,7 +12,7 @@ const config: MenuItemsType[] = [
     href: '/marketplace',
   },
   {
-    label: 'My 1Doge Army',
+    label: 'My Shibas',
     icon: 'Doge',
     href: '/my-doge',
   },
@@ -45,14 +45,14 @@ const config: MenuItemsType[] = [
         type: DropdownMenuItemType.DIVIDER,
       },
       {
-        label: 'Buy 1doge',
+        label: 'Buy SHIBGX',
         href: 'https://pancakeswap.finance/swap#/swap?outputCurrency=0x40619dc9F00ea34e51D96b6EC5d8a6aD75457434&inputCurrency=BNB',
-        type: DropdownMenuItemType.EXTERNAL_LINK,
+        // type: DropdownMenuItemType.EXTERNAL_LINK,
       },
       {
         label: 'How to Play',
-        href: 'https://docs.1doge.io/',
-        type: DropdownMenuItemType.EXTERNAL_LINK,
+        href: 'https://docs.shibagalaxy.io/',
+        // type: DropdownMenuItemType.EXTERNAL_LINK,
       }
     ],
   }

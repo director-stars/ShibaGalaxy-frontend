@@ -7,21 +7,19 @@ import ChestCard from './components/ChestCard'
 import MagicStoneCard from './components/MagicStoneCard'
 
 const Hero = styled.div`
+  background: linear-gradient(90deg, rgba(255, 0, 0, 0), rgb(214, 51, 65) 45%, rgba(255, 0, 0, 0));
+  line-height: 1.5;
   align-items: center;
   background-repeat: no-repeat;
   background-position: top center;
-  display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: auto;
-  margin-bottom: 32px;
-  padding-top: 116px;
+  margin: 30px auto;
+  padding: 20px;
   text-align: center;
 
   ${({ theme }) => theme.mediaQueries.lg} {
     background-position: left center, right center;
-    height: 165px;
-    padding-top: 0;
   }
 `
 const StyledFlexLayout = styled(FlexLayout)`
@@ -29,8 +27,16 @@ const StyledFlexLayout = styled(FlexLayout)`
 `
 
 const StyledHead = styled.div`
-  display:flex;
-  column-gap: 20px;
+  
+`
+const StyledHeading = styled(Heading)`
+  font-size: 4.5rem;
+`
+const Styledspan = styled.span`
+  color: #000;
+`
+const StyledText = styled(Text)`
+  font-size: 1.5rem;
 `
 
 const Home: React.FC = () => {
@@ -56,14 +62,12 @@ const Home: React.FC = () => {
     <Page>
       <Hero>
         <StyledHead>
-          <Heading as="h1" size="xxl" mb="24px" color="contrast">
-            Starter
-          </Heading>
-          <Heading as="h1" size="xxl" mb="24px" color="primary">
-            Doges
-          </Heading>
+          <StyledHeading as="h1" size="xxl" mb="24px" color="contrast">
+            Starter Pack
+          </StyledHeading>
         </StyledHead>
-        <Text>Choose your young doge here, then train and build your 1doge army!</Text>
+        <StyledText>Want to help defend the <Styledspan>shibagalaxy?</Styledspan></StyledText>
+        <StyledText>Choose a shiba warrior and start fighting angry bears, for reward and glory!!!</StyledText>
       </Hero>
       <div>
         <StyledFlexLayout>
@@ -74,8 +78,8 @@ const Home: React.FC = () => {
             />
             <ChestCard 
               imgUrl="/images/egg/9.png"
-              name="Random Doge"
-              price="50000"
+              name="Random Shiba"
+              price="5000"
             />
         </StyledFlexLayout>
       </div>

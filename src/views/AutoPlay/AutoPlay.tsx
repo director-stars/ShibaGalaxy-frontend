@@ -148,10 +148,7 @@ const AutoPlay: React.FC = () => {
       <Hero>
         <StyledHead>
           <Heading as="h1" size="xxl" mb="24px" color="contrast">
-            Auto
-          </Heading>
-          <Heading as="h1" size="xxl" mb="24px" color="primary">
-            Play
+            Auto Play
           </Heading>
         </StyledHead>
       </Hero>

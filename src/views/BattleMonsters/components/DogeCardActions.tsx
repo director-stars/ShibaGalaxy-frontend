@@ -27,7 +27,7 @@ const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId }) => {
   const allowance = useCryptoDogeControllerAllowance()
   const { onApprove } = useCryptoDogeControllerApprove()
   // const [onPresentApprove] = useModal(<PurchaseWarningModal />)
-  const oneDogeAmount = window.localStorage.getItem("oneDogeBalance");
+  const oneDogeAmount = window.localStorage.getItem("shibgxBalance");
   const handleApprove = useCallback(async () => {
     try {
       setRequestedApproval(true)
@@ -98,7 +98,7 @@ const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId }) => {
     }
     if(parseInt(oneDogeAmount) < 100000){
       return (
-        <Button fullWidth size="sm" disabled>Not Enough 1Doge</Button>
+        <Button fullWidth size="sm" disabled>Not Enough SHIBGX</Button>
       )
     }
     return (

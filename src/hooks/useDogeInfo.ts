@@ -27,6 +27,7 @@ export const classes = [
       {asset: "Aurora.gif", name: "Aurora"},
       {asset: "BlackHole.gif", name: "BlackHole"},
       {asset: "Bronze.gif", name: "Bronze"},
+      {asset: "Ash.gif", name: "Ash"},
       {asset: "Bull.gif", name: "Bull"},
     ],
     [
@@ -70,12 +71,12 @@ export const classes = [
   ]
   
   export const tribes = [
-    {asset: "fire.gif", name:"Fire"},
-    {asset: "sky.gif", name:"Sky"},
-    {asset: "electric.gif", name:"Electric"},
-    {asset: "grass.gif", name:"Grass"},
-    {asset: "wind.gif", name:"Wind"},
-    {asset: "water.gif", name:"Water"},
+    {asset: "Chest_Red.gif", name:"Fire"},
+    {asset: "Chest_BabyBlue.gif", name:"Sky"},
+    {asset: "Chest_Purple.gif", name:"Electric"},
+    {asset: "Chest_Green.gif", name:"Grass"},
+    {asset: "Chest_Yellow.gif", name:"Wind"},
+    {asset: "Chest_Blue.gif", name:"Water"},
   ]
   
   export const monsters = [

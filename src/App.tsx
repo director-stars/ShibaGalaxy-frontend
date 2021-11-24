@@ -42,7 +42,7 @@ const App: React.FC = () => {
   }, [onGetDogeBalance])
   handleGetDogeBalance();
   // console.log(window.localStorage.getItem("dogeNFTBalance"));
-  // console.log(window.localStorage.getItem("oneDogeBalance"));
+  // console.log(window.localStorage.getItem("shibgxBalance"));
   // console.log(window.localStorage.getItem("magicStoneNFTBalance"));
 
   return (
@@ -55,15 +55,15 @@ const App: React.FC = () => {
             <Route path="/" exact>
               <Home />
             </Route>
-            <Route path="/marketplace">
+            {/* <Route path="/marketplace">
               <MarketPlace />
-            </Route>
+            </Route> */}
             <Route path="/my-doge">
               <DogeArmy />
             </Route>
-            <Route path="/auto-play">
+            {/* <Route path="/auto-play">
               <AutoPlay />
-            </Route>
+            </Route> */}
             <Route path="/battle-monsters">
              <BattleMonsters />
             </Route>

@@ -90,7 +90,7 @@ const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewar
                     </StyledDiv>
                     <MonsterInfo>
                         <Block><Label>Success Rate:</Label><Text>~{successRate}%</Text></Block>
-                        <Block><Label>Token Reward:</Label><PriceInfo>{rewardTokenFrom} ~ {rewardTokenTo}<TokenIcon width={24} height={24} src="/images/egg/9.png"/><Text> 1doge</Text></PriceInfo></Block>
+                        <Block><Label>Token Reward:</Label><PriceInfo>{rewardTokenFrom} ~ {rewardTokenTo}<TokenIcon width={24} height={24} src="/images/egg/9.png"/><Text> SHIBGX</Text></PriceInfo></Block>
                         <Block><Label>EXP Reward:</Label><Text>{rewardExpFrom} EXP</Text></Block>
                     </MonsterInfo>
                     {account? (renderDogeCardButtons())

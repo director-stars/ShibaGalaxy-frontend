@@ -37,8 +37,9 @@ const ResultModal: React.FC<ResultModalProps> = ({ onDismiss, title="result", re
               <div>You won {winNumber} time(s) on {fightNumber} fight(s)!</div>
             )}
           
-          <div>You got {rewardToken} 1Doge, {rewardExp} Exp</div>
-          <LinkExternal href={`https://bscscan.com/tx/${tx}`} external>Check TX</LinkExternal>
+          <div>You got {rewardToken} SHIBGX, {rewardExp} Exp</div>
+          {/* <LinkExternal href={`https://bscscan.com/tx/${tx}`} external>Check TX</LinkExternal> */}
+          <LinkExternal href={`https://testnet.bscscan.com/tx/${tx}`} external>Check TX</LinkExternal>
           </StyledDiv>
           ):(<StyledDiv>{error}</StyledDiv>)}
         </Modal>

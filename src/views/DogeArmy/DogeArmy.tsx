@@ -13,33 +13,28 @@ import ChestCard from './components/ChestCard'
 // }
 
 const Hero = styled.div`
+  background: linear-gradient(90deg, rgba(255, 0, 0, 0), rgb(214, 51, 65) 45%, rgba(255, 0, 0, 0));
+  line-height: 1.5;
   align-items: center;
-  // background-image: url('/images/egg/3.png');
   background-repeat: no-repeat;
   background-position: top center;
-  display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: auto;
-  margin-bottom: 32px;
-  padding-top: 116px;
+  margin: 30px auto;
+  padding: 20px;
   text-align: center;
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    // background-image: url('/images/egg/3.png'), url('/images/egg/3b.png');
     background-position: left center, right center;
-    height: 165px;
-    padding-top: 0;
   }
 `
 const StyledHead = styled.div`
-  display:flex;
-  column-gap: 20px;
 `
 const MyDoges = styled.div`
   text-align: center;
   overflow: hidden;
   align-content: center;
+  margin-bottom: 50px;
 `
 
 const DogeItem = styled.div`
@@ -55,7 +50,12 @@ const Row = styled.div`
     margin-left: 16px;
   }
 `;
-
+const StyledHeading = styled(Heading)`
+  font-size: 4.5rem;
+`
+const StyledText = styled(Text)`
+  font-size: 1.5rem;
+`
 const DogeArmy: React.FC = () => {
   // const { url, title } = props
   const [isSaleDoges, setIsSaleDoges] = useState(true);
@@ -121,17 +121,11 @@ const DogeArmy: React.FC = () => {
     <Page>
       <Hero>
         <StyledHead>
-          <Heading as="h1" size="xxl" mb="24px" color="contrast">
-            You have
-          </Heading>
-          <Heading as="h1" size="xxl" mb="24px" color="primary">
-            {saleDoges.length + unSaleDoges.length}
-          </Heading>
-          <Heading as="h1" size="xxl" mb="24px" color="contrast">
-            doge(s) in your 1doge army!
-          </Heading>
+          <StyledHeading as="h1" size="xxl" mb="24px" color="contrast">
+            You have {saleDoges.length + unSaleDoges.length} shiba(s)!
+          </StyledHeading>
         </StyledHead>
-        <Text>To start building your 1doge army, buy a doge from the starter doges or from the marketplace.</Text>
+        <StyledText>To start defending shibagalaxy, buy a shiba from the starter pack or from the marketplace.</StyledText>
       </Hero>
       
       <MyDoges>

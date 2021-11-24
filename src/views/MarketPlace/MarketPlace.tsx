@@ -7,29 +7,23 @@ import { useSaleDoges } from 'hooks/useDogesLand'
 import MarketCard from './components/MarketCard'
 
 const Hero = styled.div`
+  background: linear-gradient(90deg, rgba(255, 0, 0, 0), rgb(214, 51, 65) 45%, rgba(255, 0, 0, 0));
+  line-height: 1.5;
   align-items: center;
-  // background-image: url('/images/egg/3.png');
   background-repeat: no-repeat;
   background-position: top center;
-  display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: auto;
-  margin-bottom: 32px;
-  padding-top: 116px;
+  margin: 30px auto;
+  padding: 20px;
   text-align: center;
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    // background-image: url('/images/egg/3.png'), url('/images/egg/3b.png');
     background-position: left center, right center;
-    height: 165px;
-    padding-top: 0;
   }
 `
 
 const StyledHead = styled.div`
-  display:flex;
-  column-gap: 20px;
 `
 
 const MarketItem = styled.div`
@@ -37,7 +31,12 @@ const MarketItem = styled.div`
   padding: 16px;
   margin: auto;
 `
-
+const StyledHeading = styled(Heading)`
+  font-size: 4.5rem;
+`
+const StyledText = styled(Text)`
+  font-size: 1.5rem;
+`
 const MarketPlace: React.FC = () => {
   const doges = useSaleDoges()
   // console.log(doges)
@@ -66,14 +65,11 @@ const MarketPlace: React.FC = () => {
     <Page>
       <Hero>
         <StyledHead>
-          <Heading as="h1" size="xxl" mb="24px" color="contrast">
-            Market
-          </Heading>
-          <Heading as="h1" size="xxl" mb="24px" color="primary">
-            Place
-          </Heading>
+          <StyledHeading as="h1" size="xxl" mb="24px" color="contrast">
+            Market Place
+          </StyledHeading>
         </StyledHead>
-        <Text>Choose your young doge here, then train and build your 1doge army!</Text>
+        <StyledText>Choose your young doge here, then train and build your 1doge army!</StyledText>
       </Hero>
       <div>
         <FlexLayout>
