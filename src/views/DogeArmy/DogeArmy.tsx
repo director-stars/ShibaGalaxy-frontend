@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { Heading, Text, ButtonMenu, ButtonMenuItem } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
+import PageContent from 'components/layout/PageContent'
 import { useMySaleDoges, useMyUnSaleDoges } from 'hooks/useDogesLand'
 import FlexLayout from 'components/layout/Flex'
 import DogeCard from './components/DogeCard'
@@ -127,20 +128,21 @@ const DogeArmy: React.FC = () => {
         </StyledHead>
         <StyledText>To start defending shibagalaxy, buy a shiba from the starter pack or from the marketplace.</StyledText>
       </Hero>
-      
-      <MyDoges>
-        <Row>
-          <ButtonMenu size="sm" activeIndex={index} onClick={handleClick}>
-            <ButtonMenuItem>ALL</ButtonMenuItem>
-            <ButtonMenuItem>Available</ButtonMenuItem>
-            <ButtonMenuItem>In Order</ButtonMenuItem>
-          </ButtonMenu>
-        </Row>
-        <FlexLayout>
-        {((typeof saleDoges === typeof []) && isSaleDoges)?dogeList(saleDoges, true):(<></>)}
-        {((typeof unSaleDoges === typeof []) && isUnSaleDoges)?dogeList(unSaleDoges, true):(<></>)}
-        </FlexLayout>
-      </MyDoges>
+      <PageContent>
+        <MyDoges>
+          <Row>
+            <ButtonMenu size="sm" activeIndex={index} onClick={handleClick}>
+              <ButtonMenuItem>ALL</ButtonMenuItem>
+              <ButtonMenuItem>Available</ButtonMenuItem>
+              <ButtonMenuItem>In Order</ButtonMenuItem>
+            </ButtonMenu>
+          </Row>
+          <FlexLayout>
+          {((typeof saleDoges === typeof []) && isSaleDoges)?dogeList(saleDoges, true):(<></>)}
+          {((typeof unSaleDoges === typeof []) && isUnSaleDoges)?dogeList(unSaleDoges, true):(<></>)}
+          </FlexLayout>
+        </MyDoges>
+      </PageContent>
     </Page>
   )
 }

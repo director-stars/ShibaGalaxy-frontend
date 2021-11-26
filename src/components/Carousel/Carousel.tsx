@@ -40,7 +40,11 @@ const CarouselBlock = styled.div`
         vertical-align: middle;
       }
     }
+    width: calc(100vw - 40px);
     position: relative;
+    ${({ theme }) => theme.mediaQueries.lg} {
+      width: 100%;
+    }
 `
 const ArrowBlock = styled.div`
     display: flex;

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button, Heading } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
+import PageContent from 'components/layout/PageContent'
 import useI18n from 'hooks/useI18n'
 
 const StyledNotFound = styled.div`
@@ -15,6 +16,8 @@ const StyledHead = styled(Heading)`
   margin-bottom: 30px;
   display:flex;
   column-gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
 `
 
 const NotFound = () => {
@@ -32,10 +35,12 @@ const NotFound = () => {
             Soon!
           </Heading>
         </StyledHead>
+        <PageContent>
         {/* <Text mb="16px">{TranslateString(999, 'Oops, page not found.')}</Text> */}
-        <Button as="a" href="/" size="sm">
-          {TranslateString(999, 'Back Home')}
-        </Button>
+          <Button as="a" href="/" size="sm">
+            {TranslateString(999, 'Back Home')}
+          </Button>
+        </PageContent>
       </StyledNotFound>
     </Page>
   )

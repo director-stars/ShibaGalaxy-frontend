@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Heading, Text } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
+import PageContent from 'components/layout/PageContent'
 import FlexLayout from 'components/layout/Flex'
 import ChestCard from './components/ChestCard'
 import MagicStoneCard from './components/MagicStoneCard'
@@ -69,7 +70,7 @@ const Home: React.FC = () => {
         <StyledText>Want to help defend the <Styledspan>shibagalaxy?</Styledspan></StyledText>
         <StyledText>Choose a shiba warrior and start fighting angry bears, for reward and glory!!!</StyledText>
       </Hero>
-      <div>
+      <PageContent>
         <StyledFlexLayout>
             <MagicStoneCard 
               imgUrl="/images/egg/bnb.png"
@@ -82,7 +83,7 @@ const Home: React.FC = () => {
               price="5000"
             />
         </StyledFlexLayout>
-      </div>
+      </PageContent>
     </Page>
   )
 }

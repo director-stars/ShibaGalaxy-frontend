@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Carousel from 'components/Carousel'
 import { Button, Heading, Text, Image } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
+import PageContent from 'components/layout/PageContent'
 import { useMonsters, useMyFightDoges, useRewardTokenInfo, useClaimReward, useNextClaimTime, useAirDropInfo, useClaimAirDrop } from 'hooks/useDogesLand'
 import { useCryptoDogeControllerAllowance } from 'hooks/useAllowance'
 import { useCryptoDogeControllerApprove } from 'hooks/useApprove'
@@ -246,40 +247,42 @@ const BattleMonsters: React.FC = () => {
           }}>{pendingTx ? 'Pending Claim AirDrop' : 'Claim AirDrop'}</Button>
         ):(<></>)}
       </StyledDiv> */}
-      {(doges.length)?(
-        <MyDoges>
-          {(rewardTokenAmount)&&(parseInt(rewardTokenAmount.toString()) > 0)?(
-          <div>
-            <RewardInfo>
-              <Text fontSize="22px">Pending SHIBGX: {parseInt(rewardTokenAmount.toString())/10**18}</Text>
-              <TokenIcon width={30} height={30} src="/images/egg/9.png"/>
-            </RewardInfo>
-            {( nextClaimTime < 0)?(renderClaimButtons()):(
-              <Button size="sm"
-              disabled>Next claim time in {Math.ceil( nextClaimTime / 1000 /3600)} hours</Button>
-            )}
-          </div>
-          ):(<div />)}
-          
-        <Heading as="h3" size="xl" mb="24px" color="contrast">
-            Choose A Shiba
-        </Heading>
-        <Carousel>
-          {dogeList(doges, true)}
-        </Carousel>
-        <Button size="sm" variant="success">
-          Selected ShibaID: #{activeDogeId}
-        </Button>
-        </MyDoges>
-      ):(<div />)}
-      <Monsters>
-        <Heading as="h3" size="xl" mb="24px" color="contrast">
-          Choose A Monster
-        </Heading>
-        <FlexLayout>
-          {monsterList(monsters, true)}
-        </FlexLayout>
-      </Monsters>
+      <PageContent>
+        {(doges.length)?(
+          <MyDoges>
+            {(rewardTokenAmount)&&(parseInt(rewardTokenAmount.toString()) > 0)?(
+            <div>
+              <RewardInfo>
+                <Text fontSize="22px">Pending SHIBGX: {parseInt(rewardTokenAmount.toString())/10**18}</Text>
+                <TokenIcon width={30} height={30} src="/images/egg/9.png"/>
+              </RewardInfo>
+              {( nextClaimTime < 0)?(renderClaimButtons()):(
+                <Button size="sm"
+                disabled>Next claim time in {Math.ceil( nextClaimTime / 1000 /3600)} hours</Button>
+              )}
+            </div>
+            ):(<div />)}
+            
+          <Heading as="h3" size="xl" mb="24px" color="contrast">
+              Choose A Shiba
+          </Heading>
+          <Carousel>
+            {dogeList(doges, true)}
+          </Carousel>
+          <Button size="sm" variant="success">
+            Selected ShibaID: #{activeDogeId}
+          </Button>
+          </MyDoges>
+        ):(<div />)}
+        <Monsters>
+          <Heading as="h3" size="xl" mb="24px" color="contrast">
+            Choose A Monster
+          </Heading>
+          <FlexLayout>
+            {monsterList(monsters, true)}
+          </FlexLayout>
+        </Monsters>
+      </PageContent>
     </Page>
   )
 }

@@ -4,6 +4,7 @@ import { Heading, useWalletModal, Button, Text } from '@pancakeswap-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useReferralHistory } from 'hooks/useDogesLand'
 import Page from 'components/layout/Page'
+import PageContent from 'components/layout/PageContent'
 import FlexLayout from 'components/layout/Flex'
 import GetReferralLinkCard from './components/GetReferralLinkCard'
 
@@ -133,32 +134,34 @@ const Referrals: React.FC = () => {
             </Banner>
           </Hero>
         </StyledHead>
-        <StyledBody>
-          <Heading size="xl" mb="40px" color="contrast">
-            Invite your friends to ShibaGalaxy
-          </Heading>
-          {account ? (
-            <>
-              <StyledCard>
-                <GetReferralLinkCard />
-              </StyledCard>
-            </>
-          ) : (
-            <FlexLayout>
-              <Button fullWidth size="sm" onClick={onPresentConnectModal}>Connect Wallet</Button>
-            </FlexLayout>
-          )}
-          <Heading size="xl" mb="40px" color="contrast">
-            Referral History this week.
-          </Heading>
-          <ReferralList>
-            <ReferralHeader>
-              <ReferralAddress>Referral Address</ReferralAddress>
-              <ReferralCount>Invited Friends</ReferralCount>
-            </ReferralHeader>
-            {referralList()}
-          </ReferralList>
-        </StyledBody>
+        <PageContent>
+          <StyledBody>
+            <Heading size="xl" mb="40px" color="contrast">
+              Invite your friends to ShibaGalaxy
+            </Heading>
+            {account ? (
+              <>
+                <StyledCard>
+                  <GetReferralLinkCard />
+                </StyledCard>
+              </>
+            ) : (
+              <FlexLayout>
+                <Button fullWidth size="sm" onClick={onPresentConnectModal}>Connect Wallet</Button>
+              </FlexLayout>
+            )}
+            <Heading size="xl" mb="40px" color="contrast">
+              Referral History this week.
+            </Heading>
+            <ReferralList>
+              <ReferralHeader>
+                <ReferralAddress>Referral Address</ReferralAddress>
+                <ReferralCount>Invited Friends</ReferralCount>
+              </ReferralHeader>
+              {referralList()}
+            </ReferralList>
+          </StyledBody>
+        </PageContent>
       </Page>
     </>
   )

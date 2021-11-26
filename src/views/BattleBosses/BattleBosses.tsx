@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Carousel from 'components/Carousel'
 import { Heading, Text } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
+import PageContent from 'components/layout/PageContent'
 import FlexLayout from 'components/layout/Flex'
 import BossCard from './components/BossCard'
 import DogeCard from './components/DogeCard'
@@ -113,22 +114,24 @@ const BattleBosses: React.FC<BattleBossesProps> = (props) => {
         </StyledHead>
         <Text>Choose your young doge here, then train and build your 1doge army!</Text>
       </Hero>
-      <MyDoges>
-        <Text fontSize="24px" color="contrast">
-            Choose A Doge
-        </Text>
-        <Carousel>
-          {/* {dogeList(doges, true)} */}
-        </Carousel>
-      </MyDoges>
-      <Bosses>
-        <Text fontSize="24px" color="contrast">
-          Choose A Boss
-        </Text>
-        <FlexLayout>
-          {/* {bossList(battleBosses, true)} */}
-        </FlexLayout>
-      </Bosses>
+      <PageContent>
+        <MyDoges>
+          <Text fontSize="24px" color="contrast">
+              Choose A Doge
+          </Text>
+          <Carousel>
+            {/* {dogeList(doges, true)} */}
+          </Carousel>
+        </MyDoges>
+        <Bosses>
+          <Text fontSize="24px" color="contrast">
+            Choose A Boss
+          </Text>
+          <FlexLayout>
+            {/* {bossList(battleBosses, true)} */}
+          </FlexLayout>
+        </Bosses>
+      </PageContent>
     </Page>
   )
 }

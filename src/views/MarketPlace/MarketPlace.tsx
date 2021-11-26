@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import styled from 'styled-components'
 import { Heading, Text } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
+import PageContent from 'components/layout/PageContent'
 import FlexLayout from 'components/layout/Flex'
 import { useSaleDoges } from 'hooks/useDogesLand'
 import MarketCard from './components/MarketCard'
@@ -71,11 +72,11 @@ const MarketPlace: React.FC = () => {
         </StyledHead>
         <StyledText>Choose your young doge here, then train and build your 1doge army!</StyledText>
       </Hero>
-      <div>
+      <PageContent>
         <FlexLayout>
           {(typeof doges === typeof [])?dogeList(doges, true):(<div />)}
         </FlexLayout>
-      </div>
+      </PageContent>
     </Page>
   )
 }

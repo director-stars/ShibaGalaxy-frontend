@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { Heading } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
+import PageContent from 'components/layout/PageContent'
 import { useMonsters, useMyFightDoges, useMyStone } from 'hooks/useDogesLand'
 import FlexLayout from 'components/layout/Flex'
 import DogeCard from './components/DogeCard'
@@ -152,30 +153,32 @@ const AutoPlay: React.FC = () => {
           </Heading>
         </StyledHead>
       </Hero>
-      <FlexLayout>
-        <StoneCard magicStoneNFTBalance={magicStoneNFTBalance}/>
-      </FlexLayout>
-      <Monsters>
-        <StyledFlexLayout>
-          {(typeof monsters === typeof [])?monsterList(monsters, true):(<></>)}
-        </StyledFlexLayout>
-      </Monsters>
-      <MyDoges>
-        {(typeof doges === typeof [])?dogeList(doges, true):(<></>)}
-      </MyDoges>
-      {/* <Hero>
-        <StyledHead>
-          <Heading as="h1" size="xxl" mb="24px" color="contrast">
-            Coming
-          </Heading>
-          <Heading as="h1" size="xxl" mb="24px" color="primary">
-            Soon
-          </Heading>
-        </StyledHead>
-      </Hero>
-      <StyledHeading as="h3" size="xl" mb="24px" color="contrast">
-        With Autoplay mode , your Doges can Battle Monsters while you’re away or asleep. All you need to get started is a magic stone
-      </StyledHeading> */}
+      <PageContent>
+        <FlexLayout>
+          <StoneCard magicStoneNFTBalance={magicStoneNFTBalance}/>
+        </FlexLayout>
+        <Monsters>
+          <StyledFlexLayout>
+            {(typeof monsters === typeof [])?monsterList(monsters, true):(<></>)}
+          </StyledFlexLayout>
+        </Monsters>
+        <MyDoges>
+          {(typeof doges === typeof [])?dogeList(doges, true):(<></>)}
+        </MyDoges>
+        {/* <Hero>
+          <StyledHead>
+            <Heading as="h1" size="xxl" mb="24px" color="contrast">
+              Coming
+            </Heading>
+            <Heading as="h1" size="xxl" mb="24px" color="primary">
+              Soon
+            </Heading>
+          </StyledHead>
+        </Hero>
+        <StyledHeading as="h3" size="xl" mb="24px" color="contrast">
+          With Autoplay mode , your Doges can Battle Monsters while you’re away or asleep. All you need to get started is a magic stone
+        </StyledHeading> */}
+      </PageContent>
     </Page>
   )
 }
