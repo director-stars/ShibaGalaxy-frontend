@@ -6,6 +6,7 @@ import PageContent from 'components/layout/PageContent'
 import FlexLayout from 'components/layout/Flex'
 import { useSaleDoges } from 'hooks/useDogesLand'
 import MarketCard from './components/MarketCard'
+import Pagination from './components/Pagination'
 
 const Hero = styled.div`
   background: linear-gradient(90deg, rgba(255, 0, 0, 0), rgb(214, 51, 65) 45%, rgba(255, 0, 0, 0));
@@ -70,6 +71,7 @@ const StyledSpan = styled.span`
 const MarketBlock = styled.div`
   display: flex;
 `
+
 const MarketPlace: React.FC = () => {
   const [selectedDoges, setSelectedDoges] = useState([])
   const [searchValue, setSearchValue] = useState<string>('')
@@ -92,6 +94,10 @@ const MarketPlace: React.FC = () => {
   const [chSky, setChSky] = useState(false)
   const [chGrass, setChGrass] = useState(false)
   const [chElectric, setChElectric] = useState(false)
+
+  // Pagination
+  const [requestedPageNumber, setRequestedPageNumber] = useState(0);
+
   const doges = useSaleDoges()
   // console.log(doges)
   const handleInput = useCallback((e) => {
@@ -164,10 +170,15 @@ const MarketPlace: React.FC = () => {
       )
     );
   }, [doges, searchValue, chRare1, chRare2, chRare3, chRare4, chRare5, chRare6, chLevel1, chLevel2, chLevel3, chLevel4, chLevel5, chLevel6, chFire, chSky, chGrass, chElectric])
+
+  useEffect(() => {
+    console.log('requestedPageNumber: ', requestedPageNumber)
+  }, [requestedPageNumber])
+
   const dogeList = useCallback(
     (dogesToDisplay, removed: boolean) => {
       return dogesToDisplay.map((doge, index) => {
-        console.log(index)
+        // console.log(index)
         return <MarketItem key={doge._tokenId}>
           <MarketCard
             id={doge._tokenId}
@@ -278,6 +289,7 @@ const MarketPlace: React.FC = () => {
           {(typeof selectedDoges === typeof [])?dogeList(selectedDoges, true):(<div />)}
         </FlexLayout>
         </MarketBlock>
+        <Pagination itemsPerPage={10} setRequestedPageNumber={setRequestedPageNumber} />
       </PageContent>
     </Page>
   )
