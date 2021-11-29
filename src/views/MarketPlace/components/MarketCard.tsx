@@ -22,6 +22,7 @@ interface MartketCardProps {
 const StyledHeading = styled(Heading)`
     text-align: center;
     text-transform: capitalize;
+    letter-spacing: 1px;
 `
 const DogeInfo = styled.div`
     display: flex;
@@ -36,6 +37,7 @@ const TokenIcon = styled(Image)`
 const OwnerInfo = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
 `
 const StyledImage = styled.div<{
     imgUrl?: string
@@ -43,7 +45,7 @@ const StyledImage = styled.div<{
     width:100%;
     min-height: 260px;
     background-image: url(${({ imgUrl }) => imgUrl});
-    background-size: cover;
+    background-size: contain;
     background-position: center;
 `
 const DogeInfoItem = styled.div`
@@ -54,14 +56,30 @@ const DogeInfoItem = styled.div`
 `
 const Id = styled.div`
     position: absolute;
-    background: linear-gradient(-45deg,#e8c456,#aa8929,#fdd325);
+    background: linear-gradient(-45deg,#FFC50D,#d63341,#FFC50D);
     animation: dogeid 3s ease infinite;
     padding: 5px 10px;
     font-weight: 400;
     min-width: 80px;
     font-size: 1rem;
     border-radius: 10rem;
-    margin: 10px;
+    margin: -10px 10px 10px 10px;
+    text-align: center;
+`
+const StyledCard = styled(Card)`
+    background-image: url(/images/bg-card.png);
+    background-size: contain;
+    padding: 40px 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 580px;
+`
+const StyledCardHeader = styled(CardHeader)`
+    padding: 0px;
+    margin: 12px 0px;
+`
+const StyledCardBody = styled(CardBody)`
+    padding: 0px 24px 24px 24px;
 `
 const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, level, exp, rare, tribe}) => {
     const price1 = new BigNumber(price).div(new BigNumber(10).pow(18)).toString()
@@ -73,7 +91,7 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
         dogeName = classes[parseInt(rare) - 1][classInfo].name;
     }
     else{
-        dogeImage = "warm.gif";
+        dogeImage = "Bull.gif";
         dogeName = "Shiba";
     }
     
@@ -169,54 +187,46 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
       }
 
     return (
-        <div>
-            <Card>
-                <Id>#{id}</Id>
-                <CardHeader>
-                    <StyledImage imgUrl={`/images/doges/${dogeImage}`}/>
-                </CardHeader>
-                <CardBody>
-                    {/* {account? (<Button fullWidth size="sm" onClick={async () => {
-                        setPendingTx(true)
-                        handleFillOrder(id);
-                        setPendingTx(false)
-                    }}>{pendingTx ? 'Pending Buy Doge' : 'Buy Doge'}</Button>)
-                    : (<Button fullWidth size="sm" onClick={onPresentConnectModal}>Connect Wallet</Button>)} */}
-                    {account? (renderDogeCardButtons())
-                    : (<Button fullWidth size="sm" onClick={onPresentConnectModal}>Connect Wallet</Button>)}
-                </CardBody>
-                <CardFooter>
-                    <StyledHeading size="lg">{dogeName}</StyledHeading>
-                    <DogeInfo>
-                        <DogeInfoItem>
-                            <Text>Rare : </Text>
-                            <Text>{rare}</Text>
-                        </DogeInfoItem>
-                        <DogeInfoItem>
-                            <Text>Level :</Text>
-                            <Text>{level} / {exp} exp</Text>
-                        </DogeInfoItem>
-                    </DogeInfo>
-                    <DogeInfo>
-                        <DogeInfoItem>
-                            <Text>Tribe :</Text>
-                            <Text>{tribeName}</Text>
-                        </DogeInfoItem>
-                        <DogeInfoItem>
-                            <Text>Price</Text>
-                            <PriceInfo>
-                                <TokenIcon width={24} height={24} src="/images/egg/9.png"/>
-                                <Text>{price1}</Text>
-                            </PriceInfo>
-                        </DogeInfoItem>
-                    </DogeInfo>
-                    <OwnerInfo>
-                        <Text>Owner</Text>
-                        <Text>{ownerAddress}</Text>
-                    </OwnerInfo>
-                </CardFooter>
-            </Card>
-        </div>
+        <StyledCard>
+            <Id>#{id}</Id>
+            <StyledCardHeader>
+                <StyledImage imgUrl={`/images/doges/${dogeImage}`}/>
+            </StyledCardHeader>
+            <StyledCardBody>
+                <StyledHeading size="lg" color="secondary">{dogeName}</StyledHeading>
+            </StyledCardBody>
+            <CardFooter>
+                <DogeInfo>
+                    <DogeInfoItem>
+                        <Text color="cardItemKey" bold>Rare : </Text>
+                        <Text color="cardItemValue" bold>{rare}</Text>
+                    </DogeInfoItem>
+                    <DogeInfoItem>
+                        <Text color="cardItemKey" bold>Level :</Text>
+                        <Text color="cardItemValue" bold>{level} / {exp} exp</Text>
+                    </DogeInfoItem>
+                </DogeInfo>
+                <DogeInfo>
+                    <DogeInfoItem>
+                        <Text color="cardItemKey" bold>Tribe :</Text>
+                        <Text color="cardItemValue" bold>{tribeName}</Text>
+                    </DogeInfoItem>
+                    <DogeInfoItem>
+                        <Text color="cardItemKey" bold>Price</Text>
+                        <PriceInfo>
+                            <TokenIcon width={24} height={24} src="/images/egg/9.png"/>
+                            <Text color="cardItemValue" bold>{price1}</Text>
+                        </PriceInfo>
+                    </DogeInfoItem>
+                </DogeInfo>
+                <OwnerInfo>
+                    <Text color="cardItemKey" bold>Owner</Text>
+                    <Text color="cardItemValue" bold>{ownerAddress}</Text>
+                </OwnerInfo>
+                {account? (renderDogeCardButtons())
+                : (<Button fullWidth size="sm" onClick={onPresentConnectModal}>Connect Wallet</Button>)}
+            </CardFooter>
+        </StyledCard>
     )
 }
 

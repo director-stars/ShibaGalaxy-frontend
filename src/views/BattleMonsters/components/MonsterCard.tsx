@@ -42,6 +42,7 @@ const StyledImage = styled.div<{
 const StyledHeading = styled(Heading)`
     text-align: center;
     // margin-bottom: 10px;
+    letter-spacing:1px;
 `
 const MonsterInfo = styled.div`
     display: grid;
@@ -57,10 +58,10 @@ const TokenIcon = styled(Image)`
 `
 const StyledCardHeader = styled(CardHeader)`
     padding: 0px;
-    margin: 12px 0px 24px 0px;
+    margin: 12px 0px 0px 0px;
 `
 const StyledCardBody = styled(CardBody)`
-    // padding: 0px 24px 24px 24px;
+    padding: 0px 24px 24px 24px;
 `
 const StyledCardFooter = styled(CardBody)`
     padding: 0px 24px 0px 24px;

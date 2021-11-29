@@ -80,8 +80,8 @@ export const classes = [
   ]
   
   export const monsters = [
-    {asset: "monster1_idle.gif", name:"Calaca Skeleton"},
-    {asset: "monster2_idle.gif", name:"Plague Zombie"},
-    {asset: "monster3_idle.gif", name:"Mudkin Drowner"},
-    {asset: "monster4_idle.gif", name:"Deathlord Draugr"},
+    {asset: "Bear_1.gif", name:"Bear_1"},
+    {asset: "Bear_2.gif", name:"Bear_2"},
+    {asset: "Dragon_1.gif", name:"Dragon_1"},
+    {asset: "Dragon_2.gif", name:"Dragon_2"},
   ]

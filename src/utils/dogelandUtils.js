@@ -1,6 +1,7 @@
 /* eslint-disable no-await-in-loop */
 import Web3 from 'web3'
 import { getWeb3 } from 'utils/web3'
+import { classes } from 'hooks/useDogeInfo'
 
 let referer="0x0000000000000000000000000000000000000000" ;
 // console.log(window.localStorage.getItem("referer"))
@@ -403,10 +404,12 @@ export const getDogeOfSale = async(MarketControllerContract) => {
       doge._salePrice = unSaleDoges[i]._salePrice;
       // doge.fightNumber = 0;
       doge._stoneInfo = unSaleDoges[i]._stoneInfo;
+      doge._stoneInfo = '';
       for (let j = 0; j < dogesExtraInfo.length; j ++){
         if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
           // doge.fightNumber = dogesExtraInfo[j].fightNumber;
           doge._classInfo = dogesExtraInfo[j].classInfo;
+          doge._name = classes[parseInt(doge._rare) - 1][doge._classInfo].name;
           // console.log(dogesExtraInfo[j].classInfo)
           // console.log('doge')
         }
@@ -508,6 +511,7 @@ export const getBalance = async(cryptoDogeNFTContract, oneDogeContract, account)
     // console.log('bnb', bnb);
     return 0;
   } catch (err) {
+    console.log(err)
     return console.error('err')
   }
 }
