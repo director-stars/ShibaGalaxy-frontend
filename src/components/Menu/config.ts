@@ -14,10 +14,10 @@ const config: MenuItemsType[] = [
   {
     label: 'My Shibas',
     icon: 'Doge',
-    href: '/my-doge',
+    href: '/my-shiba',
   },
   {
-    label: 'Battle Monsters',
+    label: 'Battle Bears & Dragons',
     icon: 'Battle',
     href: '/battle-monsters',
   },

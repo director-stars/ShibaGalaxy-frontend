@@ -110,7 +110,7 @@ const BattleMonsters: React.FC = () => {
     (dogesToDisplay, removed: boolean) => {
       return dogesToDisplay.map((doge) => 
         (
-          <DogeItem>
+          <DogeItem key={doge._tokenId}>
             <DogeCard 
               classInfo={doge._classInfo}
               rare={doge._rare}
@@ -135,7 +135,7 @@ const BattleMonsters: React.FC = () => {
   const monsterList = useCallback(
     (monstersToDisplay, removed: boolean) => {
       return monstersToDisplay.map((monster) => (
-        <div style={{ padding: "16px"}}>
+        <div style={{ padding: "16px"}} key={monster.id}>
           <MonsterCard 
             id={monster.id}
             health={monster._hp}
@@ -231,7 +231,7 @@ const BattleMonsters: React.FC = () => {
       <Hero>
         <StyledHead>
           <StyledHeading as="h1" size="xxl" mb="24px" color="contrast">
-            Battle Monsters
+            Battle Bears & Dragons
           </StyledHeading>
         </StyledHead>
         <StyledText>Choose your young shiba here, then train and defend shibagalaxy!</StyledText>

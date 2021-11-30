@@ -73,7 +73,7 @@ const DogeArmy: React.FC = () => {
   const dogeList = useCallback(
     (dogesToDisplay, removed: boolean) => {
       return dogesToDisplay.map((doge) => (
-        <DogeItem>
+        <DogeItem key={doge._tokenId}>
           {(doge._rare !== "0")?(
           <DogeCard
             id={doge._tokenId}

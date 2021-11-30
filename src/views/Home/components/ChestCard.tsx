@@ -81,7 +81,7 @@ const PriceInfo = styled.div`
 `
 const TokenIcon = styled(Image)`
     width: 24px;
-
+    margin-right: 10px;
 `
 const OwnerInfo = styled.div`
     display: flex;
@@ -123,7 +123,7 @@ const ChestCard: React.FC<ChestCardProps> = ({imgUrl, name, price}) => {
                     </DogeInfo>
                     <OwnerInfo>
                         <Text color="cardItemKey" bold>Payment</Text>
-                        <Text color="cardItemValue" bold>SHIBGX</Text>
+                        <Text color="cardItemValue" bold>BNB</Text>
                     </OwnerInfo>
                     <ChestCardActions 
                         price={price}

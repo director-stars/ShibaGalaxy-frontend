@@ -289,7 +289,7 @@ const MarketPlace: React.FC = () => {
           {(typeof selectedDoges === typeof [])?dogeList(selectedDoges, true):(<div />)}
         </FlexLayout>
         </MarketBlock>
-        <Pagination itemsPerPage={10} setRequestedPageNumber={setRequestedPageNumber} />
+        <Pagination itemsPerPage={1} setRequestedPageNumber={setRequestedPageNumber} />
       </PageContent>
     </Page>
   )

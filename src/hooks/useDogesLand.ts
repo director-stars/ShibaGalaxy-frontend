@@ -108,10 +108,10 @@ export const useBuyCryptoDoge = () => {
   const cryptoDogeNFTContract = useCryptoDogeNFT();
   const oneDogeContract = useOneDoge();
   const handleBuy = useCallback(
-    async () => {
+    async (price) => {
       try {
         const firstPurchaseTime = await cryptoDogeNFTContract.methods.firstPurchaseTime(account).call();
-        const txHash = await buyDoge(cryptoDogeControllerContract, account)
+        const txHash = await buyDoge(cryptoDogeControllerContract, account, price)
         const lastTokenId = await getLastTokenId(cryptoDogeNFTContract, account);
         const _classInfo = "0";
         const token = getBuyDogeToken(lastTokenId, account, _classInfo);

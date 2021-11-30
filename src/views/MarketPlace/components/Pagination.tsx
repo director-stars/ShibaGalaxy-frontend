@@ -26,9 +26,14 @@ const StyledPagination = styled.div`
     text-align: center;
   }
   & ul li a{
-    padding: 10px;
     color: #d63341;
     font-weight: bold;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   & ul li.selected {
     background-color: #d63341;

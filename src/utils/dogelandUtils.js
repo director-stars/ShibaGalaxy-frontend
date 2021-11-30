@@ -154,14 +154,14 @@ export const getNextClaimTime = async (cryptoDogeControllerContract, account) =>
   }
 }
 
-export const buyDoge = async (cryptoDogeControllerContract, account) => {
+export const buyDoge = async (cryptoDogeControllerContract, account, price) => {
   checkReferer();
   // console.log('referer', referer)
   const tribe = Math.floor(Math.random() * 4);
   try {
     return cryptoDogeControllerContract.methods
       .buyShiba([tribe], referer)
-      .send({ from: account })
+      .send({ from: account, value: Web3.utils.toWei(price)})
       .on('transactionHash', (tx) => {
         return tx.transactionHash
       })
@@ -175,7 +175,6 @@ export const buyStone = async (magicStoneControllerContract, account, price) => 
     return magicStoneControllerContract.methods
       .buyStone()
       .send({ from: account, value: Web3.utils.toWei(price)})
-      // .send({ from: account, value: price})
       .on('transactionHash', (tx) => {
         return tx.transactionHash
       })

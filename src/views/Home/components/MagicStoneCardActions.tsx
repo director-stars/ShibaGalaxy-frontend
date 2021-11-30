@@ -92,10 +92,10 @@ const MagicStoneCardActions: React.FC<MagicStoneCardActionProps> = ({price}) => 
   };
 
   const renderStoneCardButtons = () => {
-    if(parseInt(window.localStorage.getItem("bnbBalance")) / 10**18 < parseInt(price)){
+    if(parseFloat(window.localStorage.getItem("bnbBalance")) / 10**18 < parseFloat(price)){
       return (
           <Button fullWidth disabled size="sm">
-            Not enough bnb
+            Not enough BNB
           </Button>
       ) 
     }

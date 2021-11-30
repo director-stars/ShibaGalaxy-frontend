@@ -36,7 +36,6 @@ const StyledImage = styled.div<{
     min-height: 260px;
     background-image: url(${({ imgUrl }) => imgUrl});
     background-size: cover;
-    background-position: center;
 `
 
 const StyledHeading = styled(Heading)`
@@ -57,8 +56,13 @@ const TokenIcon = styled(Image)`
     width: 24px;
 `
 const StyledCardHeader = styled(CardHeader)`
-    padding: 0px;
-    margin: 12px 0px 0px 0px;
+    padding-bottom: 50px;
+    margin: 12px 0px 24px 0px;
+    background-image: url(/images/shibas_platform_only.png);
+    background-size: cover;
+    background-position: center;
+    background-position-y: 150px;
+    background-repeat: no-repeat;
 `
 const StyledCardBody = styled(CardBody)`
     padding: 0px 24px 24px 24px;

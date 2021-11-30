@@ -58,7 +58,7 @@ const App: React.FC = () => {
             {/* <Route path="/marketplace">
               <MarketPlace />
             </Route> */}
-            <Route path="/my-doge">
+            <Route path="/my-shiba">
               <DogeArmy />
             </Route>
             {/* <Route path="/auto-play">

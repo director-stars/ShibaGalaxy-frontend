@@ -29,7 +29,7 @@ export default {
   },
   cryptoDogeController: {
     56: '0x0321019AbeD77e80b9bb4e9fc0a6b5c236A65070',
-    97: '0xA21fF0ba7cB0e99D498742B6ddBa31771433744c',
+    97: '0x863ebA52Ff7aE4aedbb847B1BD8f5cC4B672eA89',
   },
   oneDoge: {
     56: '0x901be55dcdd348ca86b086b84c45a540be7bb301',

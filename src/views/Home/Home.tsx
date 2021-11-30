@@ -68,19 +68,19 @@ const Home: React.FC = () => {
           </StyledHeading>
         </StyledHead>
         <StyledText>Want to help defend the <Styledspan>shibagalaxy?</Styledspan></StyledText>
-        <StyledText>Choose a shiba warrior and start fighting angry bears, for reward and glory!!!</StyledText>
+        <StyledText>Choose a shiba warrior and start fighting angry bears, for reward and glory !!!</StyledText>
       </Hero>
       <PageContent>
         <StyledFlexLayout>
             <MagicStoneCard 
               imgUrl="/images/egg/bnb.png"
               name="Magic Stone"
-              price="0.2"
+              price="0.8"
             />
             <ChestCard 
-              imgUrl="/images/egg/9.png"
+              imgUrl="/images/egg/bnb.png"
               name="Random Shiba"
-              price="5000"
+              price="0.2"
             />
         </StyledFlexLayout>
       </PageContent>

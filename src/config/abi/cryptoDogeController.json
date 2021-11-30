@@ -489,7 +489,7 @@
     ],
     "name": "buyShiba",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
