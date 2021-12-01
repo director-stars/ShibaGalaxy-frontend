@@ -40,7 +40,7 @@ const DogeInfo = styled.div`
     justify-content: space-between;
     & * {
         display: flex;
-        margin-right: 10px;
+        // margin-right: 10px;
     }
 `
 const Id = styled.div`
@@ -120,13 +120,13 @@ const DogeCard: React.FC<DogeCardProps> = ({classInfo, rare, level, exp, tribe, 
                             <Text color="cardItemValue" bold>{rare}</Text>
                         </div>
                         <div>
-                            <Text color="cardItemKey" bold>Level :</Text>
+                            <Text color="cardItemKey" bold>Level : </Text>
                             <Text color="cardItemValue" bold>{level} / {exp} exp</Text>
                         </div>
                     </DogeInfo>
                     <DogeInfo>
                         <div>
-                            <Text color="cardItemKey" bold>Tribe :</Text>
+                            <Text color="cardItemKey" bold>Tribe : </Text>
                             <Text color="cardItemValue" bold>{tribeName}</Text>
                         </div>
                     </DogeInfo>

@@ -1837,7 +1837,7 @@
 
 "@pancakeswap-libs/uikit@Starsidea/ShibaGalaxy-Uikit":
   version "0.0.1"
-  resolved "git+ssh://git@github.com/Starsidea/ShibaGalaxy-Uikit.git#6729065da34d1c7d875e28b6b08351c59923fd32"
+  resolved "git+ssh://git@github.com/Starsidea/ShibaGalaxy-Uikit.git#59218217ab09b1485cdbe50e93c6b8145e3696ad"
   dependencies:
     "@types/lodash" "^4.14.162"
     "@types/styled-system" "^5.1.10"

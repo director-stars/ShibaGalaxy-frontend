@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect } from 'react'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { useCryptoDogeController, useCryptoDogeNFT, useMarketController, useOneDoge, useMagicStoneController, useAirDropContract } from 'hooks/useContract'
+import { useCryptoDogeController, useCryptoDogeNFT, useMarketController, useOneDoge, useMagicStoneController, useAirDropContract, useMagicStoneNFT } from 'hooks/useContract'
 import useRefresh from './useRefresh'
 import {
   getBuyDogeToken,
@@ -25,7 +25,10 @@ import {
   openChest,
   cancelOrder,
   fillOrder,
-  getBalance,
+  getStoneNFTBalance,
+  getBnbBalance,
+  getShibaNFTBalance,
+  getTokenBalance,
   buyStone,
   unsetAutoFight,
   setAutoFight,
@@ -34,7 +37,9 @@ import {
   getNextClaimTime,
   getAirDropInfo,
   claimAirDrop,
-  dbGetReferralHistory
+  dbGetReferralHistory,
+  getShibaSupply,
+  getStoneSupply
 } from '../utils/dogelandUtils'
 
 // export const useBattleBosses = () => {
@@ -106,7 +111,7 @@ export const useBuyCryptoDoge = () => {
   const { account } = useWallet()
   const cryptoDogeControllerContract = useCryptoDogeController()
   const cryptoDogeNFTContract = useCryptoDogeNFT();
-  const oneDogeContract = useOneDoge();
+  // const oneDogeContract = useOneDoge();
   const handleBuy = useCallback(
     async (price) => {
       try {
@@ -116,13 +121,14 @@ export const useBuyCryptoDoge = () => {
         const _classInfo = "0";
         const token = getBuyDogeToken(lastTokenId, account, _classInfo);
         await dbCreateDoge(lastTokenId, firstPurchaseTime, account, 0, token);
-        await getBalance(cryptoDogeNFTContract, oneDogeContract, account, );
+        // await getBalance(cryptoDogeNFTContract, oneDogeContract, account, );
         return txHash
       } catch (e) {
         return false
       }
     },
-    [account, cryptoDogeControllerContract, cryptoDogeNFTContract, oneDogeContract],
+    // [account, cryptoDogeControllerContract, cryptoDogeNFTContract, oneDogeContract],
+    [account, cryptoDogeControllerContract, cryptoDogeNFTContract],
   )
 
   return { onBuyDoge: handleBuy }
@@ -248,13 +254,13 @@ export const useFillOrder = () => {
         const result = await fillOrder(cryptoDogeNFTContract, account, _tokenId)
         const token = getFillOrderToken(_tokenId, account);
         await dbUpdateOwner(_tokenId, firstPurchaseTime, account, token);
-        await getBalance(cryptoDogeNFTContract, oneDogeContract, account, );
+        // await getBalance(cryptoDogeNFTContract, oneDogeContract, account, );
         return result
       } catch (e) {
         return false
       }
     },
-    [account, cryptoDogeNFTContract, oneDogeContract],
+    [account, cryptoDogeNFTContract],
   )
   return { onFillOrder: handleFillOrder }
 }
@@ -332,23 +338,63 @@ export const useSaleDoges = () => {
   return doges
 }
 
-export const useDogeBalance = () => {
+export const useGetBnbBalance = () => {
   const { account } = useWallet()
-  // const { fastRefresh } = useRefresh()
-  const cryptoDogeNFTContract = useCryptoDogeNFT();
+  const [balance, setBalance] = useState(0)
+  const { fastRefresh } = useRefresh()
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const result = await getBnbBalance(account);
+      setBalance(result);
+    }
+    fetchBalance()
+  }, [fastRefresh, account])
+  return balance;
+}
+
+export const useTokenBalance = () => {
+  const { account } = useWallet()
   const oneDogeContract = useOneDoge();
-  const handleGetDogeBalance = useCallback(
-    async () => {
-      try {
-        await getBalance(cryptoDogeNFTContract, oneDogeContract, account, );
-        return true;
-      } catch (e) {
-        return false
-      }
-    },
-    [account, cryptoDogeNFTContract, oneDogeContract],
-  )
-  return { onGetDogeBalance: handleGetDogeBalance }
+  const [balance, setBalance] = useState(0)
+  const { fastRefresh } = useRefresh()
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const result = await getTokenBalance( oneDogeContract, account );
+      setBalance(result);
+    }
+    fetchBalance()
+  }, [fastRefresh, oneDogeContract, account])
+  return balance;
+}
+
+export const useShibaNFTBalance = () => {
+  const { account } = useWallet()
+  const cryptoDogeNFTContract = useCryptoDogeNFT();
+  const [balance, setBalance] = useState(0)
+  const { fastRefresh } = useRefresh()
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const result = await getShibaNFTBalance( cryptoDogeNFTContract, account );
+      setBalance(result);
+    }
+    fetchBalance()
+  }, [fastRefresh, cryptoDogeNFTContract, account])
+  return balance;
+}
+
+export const useStoneNFTBalance = () => {
+  const { account } = useWallet()
+  const stoneNFTContract = useMagicStoneNFT();
+  const [balance, setBalance] = useState(0)
+  const { fastRefresh } = useRefresh()
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const result = await getStoneNFTBalance( stoneNFTContract, account );
+      setBalance(result);
+    }
+    fetchBalance()
+  }, [fastRefresh, stoneNFTContract, account])
+  return balance;
 }
 
 export const useMyStone = () => {
@@ -464,4 +510,30 @@ export const useReferralHistory = () => {
     getHistory();
   },[]);
   return history;
+}
+
+export const useGetTotalShibaSupply = () => {
+  const [shibaSupply, setShibaSupply] = useState(0);
+  const cryptoDogeNFTContract = useCryptoDogeNFT();
+  useEffect(() => {
+    const fetchShibaSupply = async () => {
+      const supply = await getShibaSupply(cryptoDogeNFTContract);
+      setShibaSupply(supply);
+    }
+    fetchShibaSupply();
+  },[cryptoDogeNFTContract]);
+  return shibaSupply;
+}
+
+export const useGetTotalStoneSupply = () => {
+  const [stoneSupply, setStoneSupply] = useState(0)
+  const magicStoneNFTContract = useMagicStoneNFT();
+  useEffect(() => {
+    const fetchStoneSupply = async () => {
+      const supply = await getStoneSupply(magicStoneNFTContract);
+      setStoneSupply(supply);
+    }
+    fetchStoneSupply();
+  },[magicStoneNFTContract]);
+  return stoneSupply;
 }

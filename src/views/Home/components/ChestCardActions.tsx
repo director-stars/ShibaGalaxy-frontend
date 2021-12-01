@@ -1,10 +1,11 @@
 import React, { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { Button, ToastContainer, useWalletModal } from '@pancakeswap-libs/uikit'
-import { useCryptoDogeControllerAllowance } from 'hooks/useAllowance'
-import { useCryptoDogeControllerApprove } from 'hooks/useApprove'
+// import { useCryptoDogeControllerAllowance } from 'hooks/useAllowance'
+// import { useCryptoDogeControllerApprove } from 'hooks/useApprove'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { useBuyCryptoDoge, useDogeBalance } from 'hooks/useDogesLand'
+import { useBuyCryptoDoge } from 'hooks/useDogesLand'
+import useRefresh from 'hooks/useRefresh'
 
 const CardActions = styled.div`
   display: flex;
@@ -18,16 +19,19 @@ const CardActions = styled.div`
 `
 interface ChestCardActionProps {
   price: string
+  bnbBalance: number
+  shibaNftBalance: number
 }
 
-const ChestCardActions: React.FC<ChestCardActionProps> = ({price}) => {
+const ChestCardActions: React.FC<ChestCardActionProps> = ({price, bnbBalance, shibaNftBalance}) => {
   // const [requestedApproval, setRequestedApproval] = useState(false)
   const [toasts, setToasts] = useState([]);
+  const { fastRefresh } = useRefresh()
   // const allowance = useCryptoDogeControllerAllowance()
   // const { onApprove } = useCryptoDogeControllerApprove()
   // console.log(parseInt(window.localStorage.getItem("shibgxBalance")))
-  // const [shibgxBalance, setShibgxBalance] = useState(parseInt(window.localStorage.getItem("shibgxBalance")));  
-  // const [dogeNFTBalance, setDogeNFTBalance] = useState(parseInt(window.localStorage.getItem("dogeNFTBalance")));
+  // const [bnbBalance, setBnbBalance] = useState(parseFloat(window.localStorage.getItem("bnbBalance")));  
+  // const [dogeNFTBalance, setDogeNFTBalance] = useState(parseFloat(window.localStorage.getItem("dogeNFTBalance")));
   // setShibgxBalance(parseInt(window.localStorage.getItem("shibgxBalance")));
   // setDogeNFTBalance(parseInt(window.localStorage.getItem("dogeNFTBalance")));
   // console.log('shibgxBalance', shibgxBalance)
@@ -54,7 +58,10 @@ const ChestCardActions: React.FC<ChestCardActionProps> = ({price}) => {
     if (!account && window.localStorage.getItem('accountStatus')) {
     connect('injected')
     }
-  }, [account, connect])
+    // setBnbBalance(parseFloat(window.localStorage.getItem("bnbBalance")))
+    // setDogeNFTBalance(parseFloat(window.localStorage.getItem("dogeNFTBalance")))
+    // console.log('effect')
+  }, [account, connect, fastRefresh])
   
   const { onPresentConnectModal } = useWalletModal(connect, reset)
   const [pendingTx, setPendingTx] = useState(false)
@@ -75,16 +82,16 @@ const ChestCardActions: React.FC<ChestCardActionProps> = ({price}) => {
     }
   }, [onBuyDoge, setRequestedBuy, price])
   
-  const { onGetDogeBalance } = useDogeBalance()
-  const handleGetDogeBalance = useCallback(async () => {
-    try {
-      await onGetDogeBalance()
-      // setShibgxBalance(parseInt(window.localStorage.getItem("shibgxBalance")));
-      // setDogeNFTBalance(parseInt(window.localStorage.getItem("dogeNFTBalance")));
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onGetDogeBalance])
+  // const { onGetDogeBalance } = useDogeBalance()
+  // const handleGetDogeBalance = useCallback(async () => {
+  //   try {
+  //     await onGetDogeBalance()
+  //     // setShibgxBalance(parseInt(window.localStorage.getItem("shibgxBalance")));
+  //     // setDogeNFTBalance(parseInt(window.localStorage.getItem("dogeNFTBalance")));
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }, [onGetDogeBalance])
 
   const handleClick = (description = "") => {
     const now = Date.now();
@@ -105,14 +112,14 @@ const ChestCardActions: React.FC<ChestCardActionProps> = ({price}) => {
   // console.log('shibgxBalance: ', shibgxBalance)
 
   const renderDogeCardButtons = () => {
-    if(parseInt(window.localStorage.getItem("dogeNFTBalance")) > 4){
+    if(parseInt(shibaNftBalance.toString()) > 4){
       return (
           <Button fullWidth disabled size="sm">
             You have enough shibas
           </Button>
       ) 
     }
-    if(parseFloat(window.localStorage.getItem("bnbBalance")) / 10**18 < parseFloat(price)){
+    if(parseFloat(bnbBalance.toString()) / 10**18 < parseFloat(price)){
       return (
           <Button fullWidth disabled size="sm">
             Not enough BNB
@@ -133,7 +140,7 @@ const ChestCardActions: React.FC<ChestCardActionProps> = ({price}) => {
         onClick={async () => {
             setPendingTx(true)
             await handleBuy()
-            await handleGetDogeBalance()
+            // await handleGetDogeBalance()
             setPendingTx(false)
             window.scrollTo(0, 0);
             handleClick()

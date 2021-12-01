@@ -7,6 +7,8 @@ interface MagicStoneCardProps {
     imgUrl: string
     name: string
     price: string
+    totalSupply: number
+    bnbBalance: number
 }
 
 const round = keyframes`
@@ -64,6 +66,7 @@ const ImageSlider = styled.div`
 `
 const StyledCardHeader = styled(CardHeader)`
     padding: 0px;
+    margin-bottom: 10px;
 `
 
 const StyledHeading = styled(Heading)`
@@ -95,7 +98,10 @@ const StyledCard = styled(Card)`
     background-repeat: no-repeat;
     background-position: center;
 `
-const MagicStoneCard: React.FC<MagicStoneCardProps> = ({imgUrl, name, price}) => {
+const StyledCardBody = styled(CardBody)`
+    padding-bottom: 10px;
+`
+const MagicStoneCard: React.FC<MagicStoneCardProps> = ({imgUrl, name, price, totalSupply, bnbBalance}) => {
     return (
         <div>
             <StyledCard>
@@ -109,9 +115,9 @@ const MagicStoneCard: React.FC<MagicStoneCardProps> = ({imgUrl, name, price}) =>
                         <StyledImage imageUrl="/images/stones/MagicStone_Yellow.gif"/>
                     </ImageSlider>
                 </StyledCardHeader>
-                <CardBody>
+                <StyledCardBody>
                     <StyledHeading size="lg" color="secondary">{name}</StyledHeading>
-                </CardBody>
+                </StyledCardBody>
                 <CardFooter>
                     <DogeInfo>
                         <Text color="cardItemKey" bold>Price</Text>
@@ -120,12 +126,17 @@ const MagicStoneCard: React.FC<MagicStoneCardProps> = ({imgUrl, name, price}) =>
                             <Text color="cardItemValue" bold>{price}</Text>
                         </PriceInfo>
                     </DogeInfo>
+                    <DogeInfo>
+                        <Text color="cardItemKey" bold>Created</Text>
+                        <Text color="cardItemValue" bold>{totalSupply}</Text>
+                    </DogeInfo>
                     <OwnerInfo>
                         <Text color="cardItemKey" bold>Payment</Text>
                         <Text color="cardItemValue" bold>BNB</Text>
                     </OwnerInfo>
                     <MagicStoneCardActions 
                         price={price}
+                        bnbBalance={bnbBalance}
                     />
                 </CardFooter>
             </StyledCard>

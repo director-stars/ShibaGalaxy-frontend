@@ -3,7 +3,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { ResetCSS } from '@pancakeswap-libs/uikit'
 import BigNumber from 'bignumber.js'
-import { useDogeBalance } from 'hooks/useDogesLand'
+// import { useDogeBalance } from 'hooks/useDogesLand'
 import GlobalStyle from './style/Global'
 import Menu from './components/Menu'
 import PageLoader from './components/PageLoader'
@@ -32,15 +32,15 @@ const App: React.FC = () => {
       connect('injected')
     }
   }, [account, connect])
-  const { onGetDogeBalance } = useDogeBalance()
-  const handleGetDogeBalance = useCallback(async () => {
-    try {
-      await onGetDogeBalance()
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onGetDogeBalance])
-  handleGetDogeBalance();
+  // const { onGetDogeBalance } = useDogeBalance()
+  // const handleGetDogeBalance = useCallback(async () => {
+  //   try {
+  //     await onGetDogeBalance()
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }, [onGetDogeBalance])
+  // handleGetDogeBalance();
   // console.log(window.localStorage.getItem("dogeNFTBalance"));
   // console.log(window.localStorage.getItem("shibgxBalance"));
   // console.log(window.localStorage.getItem("magicStoneNFTBalance"));

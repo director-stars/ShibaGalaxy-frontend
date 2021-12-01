@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { Button, useWalletModal } from '@pancakeswap-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { useUnsetAutoFight, useSetAutoFight, useDogeBalance } from 'hooks/useDogesLand'
+import { useUnsetAutoFight, useSetAutoFight } from 'hooks/useDogesLand'
 
 interface DogeCardActionsProps {
   dogeId: string
@@ -89,15 +89,15 @@ const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId, stoneInfo, ac
     }
   }, [onSetAutoFight, dogeId, activeStoneId, activeMonster])
 
-  const { onGetDogeBalance } = useDogeBalance()
-  const handleGetDogeBalance = useCallback(async () => {
-    try {
-      await onGetDogeBalance()
-      setMagicStoneNFTBalance(parseInt(window.localStorage.getItem("magicStoneNFTBalance")));
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onGetDogeBalance, setMagicStoneNFTBalance])
+  // const { onGetDogeBalance } = useDogeBalance()
+  // const handleGetDogeBalance = useCallback(async () => {
+  //   try {
+  //     await onGetDogeBalance()
+  //     setMagicStoneNFTBalance(parseInt(window.localStorage.getItem("magicStoneNFTBalance")));
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }, [onGetDogeBalance, setMagicStoneNFTBalance])
 
   const renderDogeCardButtons = () => {
     // if (!allowance.toNumber()) {
@@ -134,7 +134,7 @@ const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId, stoneInfo, ac
       onClick={async () => {
           setPendingTx(true)
           await handleSetAutoFight()
-          await handleGetDogeBalance()
+          // await handleGetDogeBalance()
           setActiveMonster('');
           setPendingTx(false)
       }}>{pendingTx ? 'Pending Set Auto Fight' : 'Set Auto Fight'}</Button>

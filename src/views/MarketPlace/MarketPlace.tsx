@@ -4,9 +4,10 @@ import { Heading, Text, Checkbox, Input } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
 import PageContent from 'components/layout/PageContent'
 import FlexLayout from 'components/layout/Flex'
-import { useSaleDoges } from 'hooks/useDogesLand'
+import { useSaleDoges, useShibaNFTBalance, useTokenBalance } from 'hooks/useDogesLand'
+import ReactPaginate from 'react-paginate';
 import MarketCard from './components/MarketCard'
-import Pagination from './components/Pagination'
+// import Pagination from './components/Pagination'
 
 const Hero = styled.div`
   background: linear-gradient(90deg, rgba(255, 0, 0, 0), rgb(214, 51, 65) 45%, rgba(255, 0, 0, 0));
@@ -72,6 +73,43 @@ const MarketBlock = styled.div`
   display: flex;
 `
 
+const StyledPagination = styled.div`
+  padding: 10px;
+  // background-color: #fff;
+  & ul {
+    display: flex;
+    list-style: none;
+    justify-content: flex-end;
+  }
+  & ul li {
+    background-color: #FFC50D;
+    border-radius: 5px;
+    margin: 10px;
+    min-width: 40px;
+    height: 40px;
+    color: #d63341;
+    font-weight: bold;
+    text-align: center;
+  }
+  & ul li a{
+    color: #d63341;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  & ul li.selected {
+    background-color: #d63341;
+    color: #FFC50D;
+  }
+  & ul li.selected a{
+    color: #FFC50D;
+  }
+`
+
 const MarketPlace: React.FC = () => {
   const [selectedDoges, setSelectedDoges] = useState([])
   const [searchValue, setSearchValue] = useState<string>('')
@@ -99,6 +137,8 @@ const MarketPlace: React.FC = () => {
   const [requestedPageNumber, setRequestedPageNumber] = useState(0);
 
   const doges = useSaleDoges()
+  const tokenBalance = useTokenBalance();
+  const shibaNftBalance = useShibaNFTBalance();
   // console.log(doges)
   const handleInput = useCallback((e) => {
     setSearchValue(e.target.value)
@@ -123,79 +163,100 @@ const MarketPlace: React.FC = () => {
   const toggleCheckGrass = useCallback(() => setChGrass((uc) => !uc),[])
   const toggleCheckElectric = useCallback(() => setChElectric((uc) => !uc),[])
   useEffect(() => {
-    setSelectedDoges(doges.filter(
-        (doge) => {
-          let cr1 =  chRare1 ? doge._rare === '1' : true
-          let cr2 =  chRare2 ? doge._rare === '2' : true
-          let cr3 =  chRare3 ? doge._rare === '3' : true
-          let cr4 =  chRare4 ? doge._rare === '4' : true
-          let cr5 =  chRare5 ? doge._rare === '5' : true
-          let cr6 =  chRare6 ? doge._rare === '6' : true
-          if(chRare1 || chRare2 || chRare3 || chRare4 || chRare5 || chRare6){
-            cr1 =  chRare1 ? doge._rare === '1' : false
-            cr2 =  chRare2 ? doge._rare === '2' : false
-            cr3 =  chRare3 ? doge._rare === '3' : false
-            cr4 =  chRare4 ? doge._rare === '4' : false
-            cr5 =  chRare5 ? doge._rare === '5' : false
-            cr6 =  chRare6 ? doge._rare === '6' : false
-          }
+    // console.log(doges.length)
+    if(typeof doges === typeof []){
+      setSelectedDoges(doges.filter(
+          (doge) => {
+            let cr1 =  chRare1 ? doge._rare === '1' : true
+            let cr2 =  chRare2 ? doge._rare === '2' : true
+            let cr3 =  chRare3 ? doge._rare === '3' : true
+            let cr4 =  chRare4 ? doge._rare === '4' : true
+            let cr5 =  chRare5 ? doge._rare === '5' : true
+            let cr6 =  chRare6 ? doge._rare === '6' : true
+            if(chRare1 || chRare2 || chRare3 || chRare4 || chRare5 || chRare6){
+              cr1 =  chRare1 ? doge._rare === '1' : false
+              cr2 =  chRare2 ? doge._rare === '2' : false
+              cr3 =  chRare3 ? doge._rare === '3' : false
+              cr4 =  chRare4 ? doge._rare === '4' : false
+              cr5 =  chRare5 ? doge._rare === '5' : false
+              cr6 =  chRare6 ? doge._rare === '6' : false
+            }
 
-          let cl1 =  chLevel1 ? doge._level === '1' : true
-          let cl2 =  chLevel2 ? doge._level === '2' : true
-          let cl3 =  chLevel3 ? doge._level === '3' : true
-          let cl4 =  chLevel4 ? doge._level === '4' : true
-          let cl5 =  chLevel5 ? doge._level === '5' : true
-          let cl6 =  chLevel6 ? doge._level === '6' : true
-          if(chLevel1 || chLevel2 || chLevel3 || chLevel4 || chLevel5 || chLevel6){
-            cl1 =  chLevel1 ? doge._level === '1' : false
-            cl2 =  chLevel2 ? doge._level === '2' : false
-            cl3 =  chLevel3 ? doge._level === '3' : false
-            cl4 =  chLevel4 ? doge._level === '4' : false
-            cl5 =  chLevel5 ? doge._level === '5' : false
-            cl6 =  chLevel6 ? doge._level === '6' : false
-          }
+            let cl1 =  chLevel1 ? doge._level === '1' : true
+            let cl2 =  chLevel2 ? doge._level === '2' : true
+            let cl3 =  chLevel3 ? doge._level === '3' : true
+            let cl4 =  chLevel4 ? doge._level === '4' : true
+            let cl5 =  chLevel5 ? doge._level === '5' : true
+            let cl6 =  chLevel6 ? doge._level === '6' : true
+            if(chLevel1 || chLevel2 || chLevel3 || chLevel4 || chLevel5 || chLevel6){
+              cl1 =  chLevel1 ? doge._level === '1' : false
+              cl2 =  chLevel2 ? doge._level === '2' : false
+              cl3 =  chLevel3 ? doge._level === '3' : false
+              cl4 =  chLevel4 ? doge._level === '4' : false
+              cl5 =  chLevel5 ? doge._level === '5' : false
+              cl6 =  chLevel6 ? doge._level === '6' : false
+            }
 
-          let ct1 =  chFire ? doge._tribe === '0' : true
-          let ct2 =  chSky ? doge._tribe === '1' : true
-          let ct3 =  chGrass ? doge._tribe === '2' : true
-          let ct4 =  chElectric ? doge._tribe === '3' : true
-          if(chFire || chSky || chGrass || chElectric){
-            ct1 =  chFire ? doge._tribe === '0' : false
-            ct2 =  chSky ? doge._tribe === '1' : false
-            ct3 =  chGrass ? doge._tribe === '2' : false
-            ct4 =  chElectric ? doge._tribe === '3' : false
+            let ct1 =  chFire ? doge._tribe === '0' : true
+            let ct2 =  chSky ? doge._tribe === '1' : true
+            let ct3 =  chGrass ? doge._tribe === '2' : true
+            let ct4 =  chElectric ? doge._tribe === '3' : true
+            if(chFire || chSky || chGrass || chElectric){
+              ct1 =  chFire ? doge._tribe === '0' : false
+              ct2 =  chSky ? doge._tribe === '1' : false
+              ct3 =  chGrass ? doge._tribe === '2' : false
+              ct4 =  chElectric ? doge._tribe === '3' : false
+            }
+            return doge._name.toLowerCase().includes(searchValue.toLowerCase()) && (cr1 || cr2 || cr3 || cr4 || cr5 || cr6) && (cl1 || cl2 || cl3 || cl4 || cl5 || cl6) && (ct1 || ct2 || ct3 || ct4)
           }
-          return doge._name.toLowerCase().includes(searchValue.toLowerCase()) && (cr1 || cr2 || cr3 || cr4 || cr5 || cr6) && (cl1 || cl2 || cl3 || cl4 || cl5 || cl6) && (ct1 || ct2 || ct3 || ct4)
-        }
-      )
-    );
+        )
+      );
+    }
   }, [doges, searchValue, chRare1, chRare2, chRare3, chRare4, chRare5, chRare6, chLevel1, chLevel2, chLevel3, chLevel4, chLevel5, chLevel6, chFire, chSky, chGrass, chElectric])
 
+  // useEffect(() => {
+  //   console.log('requestedPageNumber: ', requestedPageNumber)
+  // }, [requestedPageNumber])
+
+  const itemsPerPage = 1;
+  const [pageCount, setPageCount] = useState(0);
   useEffect(() => {
-    console.log('requestedPageNumber: ', requestedPageNumber)
-  }, [requestedPageNumber])
+    setPageCount(Math.ceil(selectedDoges.length / itemsPerPage));
+  }, [selectedDoges, itemsPerPage]);
+  const handlePageClick = (event) => {
+    setRequestedPageNumber(event.selected);
+  };
 
   const dogeList = useCallback(
     (dogesToDisplay, removed: boolean) => {
       return dogesToDisplay.map((doge, index) => {
         // console.log(index)
-        return <MarketItem key={doge._tokenId}>
-          <MarketCard
-            id={doge._tokenId}
-            classInfo={doge._classInfo}
-            price={doge._salePrice}
-            owner={doge._owner}
-            level={doge._level}
-            rare={doge._rare}
-            exp={doge._exp}
-            tribe={doge._tribe}
-          />
-        </MarketItem>
+        if(requestedPageNumber * itemsPerPage <= index && (requestedPageNumber + 1) * itemsPerPage > index){
+          return <MarketItem key={doge._tokenId}>
+            <MarketCard
+              id={doge._tokenId}
+              classInfo={doge._classInfo}
+              price={doge._salePrice}
+              owner={doge._owner}
+              level={doge._level}
+              rare={doge._rare}
+              exp={doge._exp}
+              tribe={doge._tribe}
+              tokenBalance={tokenBalance}
+              shibaNftBalance={shibaNftBalance}
+            />
+          </MarketItem>
+        }
+        return <></>
       })
     }
     ,
-    [],
+    [requestedPageNumber, tokenBalance, shibaNftBalance],
   )
+  // console.log('selectedDoges: ', selectedDoges.length);
+  // for(let i = 0; i < selectedDoges.length; i ++){
+  //   items.push(i + 1);
+  // }
 
   return (
     <Page>
@@ -209,6 +270,7 @@ const MarketPlace: React.FC = () => {
       </Hero>
       <PageContent>
         <MarketBlock>
+          {(selectedDoges.length)?(
         <FilterBlock>
           <Input type="text" scale="md" placeholder="Search Your Shibas" value={searchValue} onChange={handleInput}/>
           <BlockTitle color="primary">Rare</BlockTitle>
@@ -285,11 +347,23 @@ const MarketPlace: React.FC = () => {
             </CheckBoxBlock>
           </BlockDiv>
         </FilterBlock>
+        ):(<></>)}
         <FlexLayout>
-          {(typeof selectedDoges === typeof [])?dogeList(selectedDoges, true):(<div />)}
+          {dogeList(selectedDoges, true)}
         </FlexLayout>
         </MarketBlock>
-        <Pagination itemsPerPage={1} setRequestedPageNumber={setRequestedPageNumber} />
+        {/* <Pagination itemsPerPage={1} setRequestedPageNumber={setRequestedPageNumber} items={[]}/> */}
+        <StyledPagination>
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel=">"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={3}
+            pageCount={pageCount}
+            previousLabel="<"
+            renderOnZeroPageCount={null}
+          />
+        </StyledPagination>
       </PageContent>
     </Page>
   )

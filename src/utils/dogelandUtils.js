@@ -485,33 +485,84 @@ export const getDogeByOwner = async(MarketControllerContract, account) => {
   }
 }
 
-export const getBalance = async(cryptoDogeNFTContract, oneDogeContract, account) => {
+// export const getBalance = async(cryptoDogeNFTContract, oneDogeContract, account) => {
+//   try {
+//     if(account){
+//       const balance = await cryptoDogeNFTContract.methods.balanceOf(account).call();
+//       const order = await cryptoDogeNFTContract.methods.orders(account).call();
+//       const result = parseInt(balance) + parseInt(order);
+//       window.localStorage.setItem("dogeNFTBalance",result);
+//       // console.log("dogeNFTBalance",result);
+//       const oneDoge = await oneDogeContract.methods.balanceOf(account).call();
+//       window.localStorage.setItem("shibgxBalance",parseInt(oneDoge) / 10**18);
+//       // console.log("shibgxBalance",oneDoge);
+//       // const magicStone = await magicStoneNFTContract.methods.balanceOf(account).call();
+//       // window.localStorage.setItem("magicStoneNFTBalance",magicStone);
+//       // console.log("magicStoneNFTBalance",magicStone);
+//       const bnb = await getWeb3().eth.getBalance(account);
+//       console.log('bnb: ', bnb)
+//       window.localStorage.setItem("bnbBalance",bnb);
+//     }
+//     else{
+//       window.localStorage.setItem("dogeNFTBalance",0);
+//       window.localStorage.setItem("shibgxBalance",0);
+//       window.localStorage.setItem("bnbBalance",0);
+//     }
+//     // console.log('bnb', bnb);
+//     return 0;
+//   } catch (err) {
+//     console.log(err)
+//     return console.error('err')
+//   }
+// }
+
+export const getBnbBalance = async(account) => {
+  try {
+    if(account){
+      const bnb = await getWeb3().eth.getBalance(account);
+      return parseInt(bnb);
+    }
+    return 0;
+  } catch (err) {
+    return 0;
+  }
+}
+
+export const getShibaNFTBalance = async(cryptoDogeNFTContract, account) => {
   try {
     if(account){
       const balance = await cryptoDogeNFTContract.methods.balanceOf(account).call();
       const order = await cryptoDogeNFTContract.methods.orders(account).call();
       const result = parseInt(balance) + parseInt(order);
-      window.localStorage.setItem("dogeNFTBalance",result);
-      // console.log("dogeNFTBalance",result);
-      const oneDoge = await oneDogeContract.methods.balanceOf(account).call();
-      window.localStorage.setItem("shibgxBalance",parseInt(oneDoge) / 10**18);
-      // console.log("shibgxBalance",oneDoge);
-      // const magicStone = await magicStoneNFTContract.methods.balanceOf(account).call();
-      // window.localStorage.setItem("magicStoneNFTBalance",magicStone);
-      // console.log("magicStoneNFTBalance",magicStone);
-      const bnb = await getWeb3().eth.getBalance(account);
-      window.localStorage.setItem("bnbBalance",bnb);
+      return result;
     }
-    else{
-      window.localStorage.setItem("dogeNFTBalance",0);
-      window.localStorage.setItem("shibgxBalance",0);
-      window.localStorage.setItem("bnbBalance",0);
-    }
-    // console.log('bnb', bnb);
     return 0;
   } catch (err) {
-    console.log(err)
-    return console.error('err')
+    return 0;
+  }
+}
+
+export const getTokenBalance = async(oneDogeContract, account) => {
+  try {
+    if(account){
+      const balance = await oneDogeContract.methods.balanceOf(account).call();
+      return balance;
+    }
+    return 0;
+  } catch (err) {
+    return 0;
+  }
+}
+
+export const getStoneNFTBalance = async(stoneNFTContract, account) => {
+  try {
+    if(account){
+      const balance = await stoneNFTContract.methods.balanceOf(account).call();
+      return balance;
+    }
+    return 0;
+  } catch (err) {
+    return 0;
   }
 }
 
@@ -596,4 +647,14 @@ export const dbGetReferralHistory = async() => {
   });
   const response = await res.json();
   return response;
+}
+
+export const getShibaSupply = async(cryptoDogeNFTContract) => {
+  const supply = await cryptoDogeNFTContract.methods.totalSupply().call();
+  return supply;
+}
+
+export const getStoneSupply = async(magicStoneNFTContract) => {
+  const supply = await magicStoneNFTContract.methods.totalSupply().call();
+  return supply;
 }

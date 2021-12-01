@@ -7,6 +7,9 @@ interface ChestCardProps {
     imgUrl: string
     name: string
     price: string
+    totalSupply: number
+    bnbBalance: number
+    shibaNftBalance: number
 }
 
 const round = keyframes`
@@ -64,6 +67,7 @@ const ImageSlider = styled.div`
 `
 const StyledCardHeader = styled(CardHeader)`
     padding: 0px;
+    margin-bottom: 10px;
 `
 
 const StyledHeading = styled(Heading)`
@@ -95,8 +99,10 @@ const StyledCard = styled(Card)`
     background-repeat: no-repeat;
     background-position: center;
 `
-
-const ChestCard: React.FC<ChestCardProps> = ({imgUrl, name, price}) => {
+const StyledCardBody = styled(CardBody)`
+    padding-bottom: 10px;
+`
+const ChestCard: React.FC<ChestCardProps> = ({imgUrl, name, price, totalSupply, bnbBalance, shibaNftBalance}) => {
     return (
         <div>
             <StyledCard>
@@ -110,9 +116,9 @@ const ChestCard: React.FC<ChestCardProps> = ({imgUrl, name, price}) => {
                         <StyledImage imageUrl="/images/chests/Chest_Yellow.gif"/>
                     </ImageSlider>
                 </StyledCardHeader>
-                <CardBody>
+                <StyledCardBody>
                     <StyledHeading size="lg" color="secondary">{name}</StyledHeading>
-                </CardBody>
+                </StyledCardBody>
                 <CardFooter>
                     <DogeInfo>
                         <Text color="cardItemKey" bold>Price</Text>
@@ -121,12 +127,18 @@ const ChestCard: React.FC<ChestCardProps> = ({imgUrl, name, price}) => {
                             <Text color="cardItemValue" bold>{price}</Text>
                         </PriceInfo>
                     </DogeInfo>
+                    <DogeInfo>
+                        <Text color="cardItemKey" bold>Created</Text>
+                        <Text color="cardItemValue" bold>{totalSupply}</Text>
+                    </DogeInfo>
                     <OwnerInfo>
                         <Text color="cardItemKey" bold>Payment</Text>
                         <Text color="cardItemValue" bold>BNB</Text>
                     </OwnerInfo>
                     <ChestCardActions 
                         price={price}
+                        bnbBalance={bnbBalance}
+                        shibaNftBalance={shibaNftBalance}
                     />
                 </CardFooter>
             </StyledCard>

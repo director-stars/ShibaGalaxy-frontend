@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Heading, Text } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
 import PageContent from 'components/layout/PageContent'
+import { useGetTotalShibaSupply, useGetTotalStoneSupply, useGetBnbBalance, useShibaNFTBalance } from 'hooks/useDogesLand'
 import FlexLayout from 'components/layout/Flex'
 import ChestCard from './components/ChestCard'
 import MagicStoneCard from './components/MagicStoneCard'
@@ -57,8 +58,15 @@ const Home: React.FC = () => {
     }
   }
 
-  // const { onGetDogeBalance } = useDogeBalance()
+  // const [totalShibaSupply, setTotalShibaSupply] = useState(0)
+  // const [totalStoneSupply, setTotalStoneSupply] = useState(0)
+  const totalShibaSupply = useGetTotalShibaSupply();
+  const totalStoneSupply = useGetTotalStoneSupply();
+  const bnbBalance = useGetBnbBalance();
+  const shibaNftBalance = useShibaNFTBalance()
 
+  // const { onGetDogeBalance } = useDogeBalance()
+  // console.log( window.localStorage.getItem("bnbBalance"));
   return (
     <Page>
       <Hero>
@@ -76,11 +84,16 @@ const Home: React.FC = () => {
               imgUrl="/images/egg/bnb.png"
               name="Magic Stone"
               price="0.8"
+              totalSupply={totalStoneSupply}
+              bnbBalance={bnbBalance}
             />
             <ChestCard 
               imgUrl="/images/egg/bnb.png"
               name="Random Shiba"
               price="0.2"
+              totalSupply={totalShibaSupply}
+              bnbBalance={bnbBalance}
+              shibaNftBalance={shibaNftBalance}
             />
         </StyledFlexLayout>
       </PageContent>

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 import { Heading, Text, useWalletModal, Card, CardBody, CardHeader, CardFooter, Button, Image } from '@pancakeswap-libs/uikit'
 import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { useFillOrder, useDogeBalance } from 'hooks/useDogesLand'
+import { useFillOrder } from 'hooks/useDogesLand'
 import { classes, tribes } from 'hooks/useDogeInfo'
 import { useCryptoDogeNFTAllowance } from 'hooks/useAllowance'
 import { useCryptoDogeNFTApprove } from 'hooks/useApprove'
@@ -17,6 +17,8 @@ interface MartketCardProps {
     rare: string
     exp: string
     tribe: string
+    tokenBalance: number
+    shibaNftBalance: number
 }
 
 const StyledHeading = styled(Heading)`
@@ -43,10 +45,11 @@ const StyledImage = styled.div<{
     imgUrl?: string
 }>`
     width:100%;
-    min-height: 260px;
+    min-height: 380px;
     background-image: url(${({ imgUrl }) => imgUrl});
     background-size: contain;
-    background-position: center;
+    background-position: top;
+    background-repeat: no-repeat;
 `
 const DogeInfoItem = styled.div`
     display: flex;
@@ -67,21 +70,47 @@ const Id = styled.div`
     text-align: center;
 `
 const StyledCard = styled(Card)`
-    background-image: url(/images/bg-card.png);
+    // background-image: url(/images/bg-card.png);
     background-size: contain;
-    padding: 40px 20px;
+    padding-top: 40px;
     background-repeat: no-repeat;
     background-position: center;
-    height: 580px;
+    height: 680px;
 `
 const StyledCardHeader = styled(CardHeader)`
     padding: 0px;
     margin: 12px 0px;
+    background-image: url(/images/shibas_platform_only.png);
+    background-size: cover;
+    background-position: center;
+    background-position-y: 170px;
+    background-repeat: no-repeat;
 `
 const StyledCardBody = styled(CardBody)`
-    padding: 0px 24px 24px 24px;
+    background-image: url(/images/card-market__body.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    z-index: 2;
+    width: 80%;
+    margin: auto;
+    height: 50px;
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
-const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, level, exp, rare, tribe}) => {
+const StyledCardFooter = styled(CardFooter)`
+    margin-top: -25px;
+    padding-top: 40px;
+    background-image: url(/images/card-market__footer.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    z-index: 1;
+    height: 210px;
+`
+const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, level, exp, rare, tribe, tokenBalance, shibaNftBalance}) => {
     const price1 = new BigNumber(price).div(new BigNumber(10).pow(18)).toString()
     const ownerAddress = `${owner.substring(0, 4)}...${owner.substring(owner.length - 4)}`;
     let dogeImage;
@@ -96,8 +125,8 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
     }
     
     const tribeName = tribes[tribe].name;
-    const [shibgxBalance, setShibgxBalance] = useState(parseInt(window.localStorage.getItem("shibgxBalance")) / 10**18);
-    const [dogeNFTBalance, setDogeNFTBalance] = useState(parseInt(window.localStorage.getItem("dogeNFTBalance")));
+    // const [shibgxBalance, setShibgxBalance] = useState(parseInt(window.localStorage.getItem("shibgxBalance")) / 10**18);
+    // const [dogeNFTBalance, setDogeNFTBalance] = useState(parseInt(window.localStorage.getItem("dogeNFTBalance")));
     const { account, connect, reset } = useWallet()
     useEffect(() => {
         if (!account && window.localStorage.getItem('accountStatus')) {
@@ -123,16 +152,16 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
         }
       }, [onFillOrder])
 
-      const { onGetDogeBalance } = useDogeBalance()
-      const handleGetDogeBalance = useCallback(async () => {
-        try {
-          await onGetDogeBalance()
-          setShibgxBalance(parseInt(window.localStorage.getItem("shibgxBalance")) / 10**18);
-          setDogeNFTBalance(parseInt(window.localStorage.getItem("dogeNFTBalance")));
-        } catch (e) {
-          console.error(e)
-        }
-      }, [onGetDogeBalance])
+    //   const { onGetDogeBalance } = useDogeBalance()
+    //   const handleGetDogeBalance = useCallback(async () => {
+    //     try {
+    //       await onGetDogeBalance()
+    //       setShibgxBalance(parseInt(window.localStorage.getItem("shibgxBalance")) / 10**18);
+    //       setDogeNFTBalance(parseInt(window.localStorage.getItem("dogeNFTBalance")));
+    //     } catch (e) {
+    //       console.error(e)
+    //     }
+    //   }, [onGetDogeBalance])
 
     const { onPresentConnectModal } = useWalletModal(connect, reset)
 
@@ -160,27 +189,27 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
             </Button>
           )
         }
-        if(!shibgxBalance){
-            return (
-                <Button fullWidth disabled size="sm">
-                  Not enough SHIBGX
-                </Button>
-            ) 
-        }
-        if(dogeNFTBalance > 1){
+        if(shibaNftBalance > 4){
             return (
                 <Button fullWidth disabled size="sm">
                   You have enough Shibas
                 </Button>
             ) 
         }
+        if(tokenBalance < parseInt(price)){
+            return (
+                <Button fullWidth disabled size="sm">
+                  Not enough SHIBGX
+                </Button>
+            ) 
+        }        
         return (
             <Button fullWidth size="sm"
             disabled={pendingTx}
             onClick={async () => {
                 setPendingTx(true)
                 await handleFillOrder(id)
-                await handleGetDogeBalance();
+                // await handleGetDogeBalance();
                 setPendingTx(false)
             }}>{pendingTx ? 'Pending Buy Shiba' : 'Buy Shiba'}</Button>
         )
@@ -195,7 +224,7 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
             <StyledCardBody>
                 <StyledHeading size="lg" color="secondary">{dogeName}</StyledHeading>
             </StyledCardBody>
-            <CardFooter>
+            <StyledCardFooter>
                 <DogeInfo>
                     <DogeInfoItem>
                         <Text color="cardItemKey" bold>Rare : </Text>
@@ -225,7 +254,7 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
                 </OwnerInfo>
                 {account? (renderDogeCardButtons())
                 : (<Button fullWidth size="sm" onClick={onPresentConnectModal}>Connect Wallet</Button>)}
-            </CardFooter>
+            </StyledCardFooter>
         </StyledCard>
     )
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { Button, ToastContainer, useWalletModal } from '@pancakeswap-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { useBuyMagicStone, useDogeBalance } from 'hooks/useDogesLand'
+import { useBuyMagicStone } from 'hooks/useDogesLand'
 
 const CardActions = styled.div`
   display: flex;
@@ -16,9 +16,10 @@ const CardActions = styled.div`
 `
 interface MagicStoneCardActionProps {
   price: string
+  bnbBalance: number
 }
 
-const MagicStoneCardActions: React.FC<MagicStoneCardActionProps> = ({price}) => {
+const MagicStoneCardActions: React.FC<MagicStoneCardActionProps> = ({price, bnbBalance}) => {
   // const [requestedApproval, setRequestedApproval] = useState(false)
   const [toasts, setToasts] = useState([]);
   // const allowance = useMagicStoneControllerAllowance()
@@ -39,15 +40,15 @@ const MagicStoneCardActions: React.FC<MagicStoneCardActionProps> = ({price}) => 
   //   }
   // }, [onApprove])
 
-  const { onGetDogeBalance } = useDogeBalance()
-  const handleGetDogeBalance = useCallback(async () => {
-    try {
-      await onGetDogeBalance()
-      // setBnbBalance(parseInt(window.localStorage.getItem("bnbBalance")) / 10**18);
-    } catch (e) {
-      console.error(e)
-    }
-  }, [onGetDogeBalance])
+  // const { onGetDogeBalance } = useDogeBalance()
+  // const handleGetDogeBalance = useCallback(async () => {
+  //   try {
+  //     await onGetDogeBalance()
+  //     // setBnbBalance(parseInt(window.localStorage.getItem("bnbBalance")) / 10**18);
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }, [onGetDogeBalance])
 
   const { account, connect, reset } = useWallet()
   useEffect(() => {
@@ -92,7 +93,7 @@ const MagicStoneCardActions: React.FC<MagicStoneCardActionProps> = ({price}) => 
   };
 
   const renderStoneCardButtons = () => {
-    if(parseFloat(window.localStorage.getItem("bnbBalance")) / 10**18 < parseFloat(price)){
+    if(parseFloat(bnbBalance.toString()) / 10**18 < parseFloat(price)){
       return (
           <Button fullWidth disabled size="sm">
             Not enough BNB
@@ -112,7 +113,7 @@ const MagicStoneCardActions: React.FC<MagicStoneCardActionProps> = ({price}) => 
         onClick={async () => {
             setPendingTx(true)
             await handleBuy()
-            await handleGetDogeBalance()
+            // await handleGetDogeBalance()
             setPendingTx(false)
             window.scrollTo(0, 0);
             handleClick()
