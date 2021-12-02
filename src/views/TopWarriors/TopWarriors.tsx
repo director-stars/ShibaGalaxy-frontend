@@ -2,11 +2,11 @@ import React, { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { Heading, useWalletModal, Button, Text } from '@pancakeswap-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { useReferralHistory } from 'hooks/useDogesLand'
+// import { useReferralHistory } from 'hooks/useDogesLand'
 import Page from 'components/layout/Page'
 import PageContent from 'components/layout/PageContent'
 import FlexLayout from 'components/layout/Flex'
-import GetReferralLinkCard from './components/GetReferralLinkCard'
+// import GetReferralLinkCard from './components/GetReferralLinkCard'
 
 const StyledHead = styled.div`
   background: rgba(0,0,0,.5);
@@ -36,7 +36,7 @@ const Banner = styled.div`
   ${({ theme }) => theme.mediaQueries.lg} {
     background-image: url('${process.env.PUBLIC_URL}/images/pet.gif'), url('${process.env.PUBLIC_URL}/images/enemy.gif');
     background-position: left center, right center;
-    height: 302px;
+    height: 202px;
     padding-top: 0;
   }
 `
@@ -79,7 +79,7 @@ const ReferralAddress = styled.div`
 const ReferralCount = styled.div`
   
 `
-const Referrals: React.FC = () => {
+const TopWarriors: React.FC = () => {
   const { account, connect, reset } = useWallet()
   useEffect(() => {
     if (!account && window.localStorage.getItem('accountStatus')) {
@@ -87,39 +87,39 @@ const Referrals: React.FC = () => {
     }
   }, [account, connect])
   const { onPresentConnectModal } = useWalletModal(connect, reset)
-  const referralHistory = useReferralHistory();
+  // const referralHistory = useReferralHistory();
   // console.log(referralHistory.length)
   // referralHistory.forEach((referral) => {
   //   console.log(referral)
   // })
   // const list = Object.keys(referralHistory);
-  const referralList = useCallback(
-    () => {
-      // return <StyledDiv>key</StyledDiv>
-      // if(Object.keys(history).length)
+  // const referralList = useCallback(
+  //   () => {
+  //     // return <StyledDiv>key</StyledDiv>
+  //     // if(Object.keys(history).length)
       
-      const tempList = Object.keys(referralHistory);
-      for(let i = 0; i < tempList.length; i ++){
-        for(let j = 0; j < tempList.length; j ++){
-          if(referralHistory[tempList[i]].length > referralHistory[tempList[j]].length){
-            const temp = tempList[i];
-            tempList[i] = tempList[j];
-            tempList[j] = temp;
-          }
-        }
-      }
-      if(tempList.length === 0)
-        return <ReferralInfo>There is no referral</ReferralInfo>
-      let index = 0;
-      return tempList.map((address) => {
-        index ++;
-        if(index > 50) return <></>
-        return <ReferralInfo>
-          <ReferralAddress>{address}</ReferralAddress>
-          <ReferralCount>{referralHistory[address].length}</ReferralCount>
-        </ReferralInfo>
-      })
-    },[referralHistory])
+  //     const tempList = Object.keys(referralHistory);
+  //     for(let i = 0; i < tempList.length; i ++){
+  //       for(let j = 0; j < tempList.length; j ++){
+  //         if(referralHistory[tempList[i]].length > referralHistory[tempList[j]].length){
+  //           const temp = tempList[i];
+  //           tempList[i] = tempList[j];
+  //           tempList[j] = temp;
+  //         }
+  //       }
+  //     }
+  //     if(tempList.length === 0)
+  //       return <ReferralInfo>There is no referral</ReferralInfo>
+  //     let index = 0;
+  //     return tempList.map((address) => {
+  //       index ++;
+  //       if(index > 50) return <></>
+  //       return <ReferralInfo>
+  //         <ReferralAddress>{address}</ReferralAddress>
+  //         <ReferralCount>{referralHistory[address].length}</ReferralCount>
+  //       </ReferralInfo>
+  //     })
+  //   },[referralHistory])
   
   return (
     <>
@@ -142,7 +142,7 @@ const Referrals: React.FC = () => {
             {account ? (
               <>
                 <StyledCard>
-                  <GetReferralLinkCard />
+                  {/* <GetReferralLinkCard /> */}
                 </StyledCard>
               </>
             ) : (
@@ -158,7 +158,7 @@ const Referrals: React.FC = () => {
                 <ReferralAddress>Referral Address</ReferralAddress>
                 <ReferralCount>Invited Friends</ReferralCount>
               </ReferralHeader>
-              {referralList()}
+              {/* {referralList()} */}
             </ReferralList>
           </StyledBody>
         </PageContent>
@@ -167,4 +167,4 @@ const Referrals: React.FC = () => {
   )
 }
 
-export default Referrals
+export default TopWarriors

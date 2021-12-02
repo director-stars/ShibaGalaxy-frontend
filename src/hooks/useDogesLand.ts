@@ -7,6 +7,7 @@ import {
   getDecreaseFNToken,
   getFillOrderToken,
   getOpenChestToken,
+  getUpdateEarnedAmountToken,
 } from './useDogeInfo'
 import { 
   getMyFightDoges, 
@@ -39,7 +40,8 @@ import {
   claimAirDrop,
   dbGetReferralHistory,
   getShibaSupply,
-  getStoneSupply
+  getStoneSupply,
+  dbUpdateEarnedAmount
 } from '../utils/dogelandUtils'
 
 // export const useBattleBosses = () => {
@@ -158,18 +160,22 @@ export const useBuyMagicStone = () => {
 
 export const useFightCryptoMonster = () => {
   const { account } = useWallet()
+  const cryptoDogeNFTContract = useCryptoDogeNFT()
   const cryptoDogeControllerContract = useCryptoDogeController()
   const handleFight = useCallback(
     async (monsterId, dogeId) => {
       try {
-        const token = getDecreaseFNToken(dogeId, account);
+        let token = getDecreaseFNToken(dogeId, account);
         const fightResult = await fightMonster(cryptoDogeControllerContract, account, monsterId, dogeId, token)
+        const amount = await getRewardTokenInfo(cryptoDogeNFTContract, account);
+        token = getUpdateEarnedAmountToken(amount / 10**18, account);
+        await dbUpdateEarnedAmount(account, amount / 10**18, token);
         return fightResult
       } catch (e) {
         return false
       }
     },
-    [account, cryptoDogeControllerContract],
+    [account, cryptoDogeControllerContract, cryptoDogeNFTContract],
   )
 
   return { onFightMonster: handleFight }

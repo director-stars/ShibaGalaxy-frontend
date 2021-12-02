@@ -22,6 +22,11 @@ const config: MenuItemsType[] = [
     href: '/battle-monsters',
   },
   {
+    label: 'Top Warriors',
+    icon: 'Prize',
+    href: '/top-warriors',
+  },
+  {
     label: 'AutoPlay',
     icon: 'Stone',
     href: '/auto-play',

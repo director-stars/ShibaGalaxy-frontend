@@ -125,20 +125,7 @@ const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewar
 
     const handleFight = useCallback(async (monsterId, dogeId) => {
           const fightResult = await onFightMonster(monsterId, dogeId)
-          // console.log('fightResult', fightResult);
-          // setTx(fightResult.events?fightResult.events.Fight.transactionHash:'')
-          // setRewardExp(fightResult.events?fightResult.events.Fight.returnValues._rewardExp.toString():'');
-          // setRewardToken(fightResult.events?fightResult.events.Fight.returnValues._rewardTokenAmount.toString():'');
-          // setError(fightResult.code);
-          // // setBattleResult(temp.toString());
-          // if(fightResult.code){
-          //   setBattleResult(fightResult.message);
-          // }
-          // else{
-          //   if(fightResult.events.Fight)
-          //     setBattleResult(fightResult.events.Fight.returnValues._win);
-          //   setBattleResult(fightResult.events.Fight.returnValues._win);
-          // }
+
           setTx(fightResult.events?fightResult.events.Fight.transactionHash:'')
           setRewardExp(fightResult.events?fightResult.events.Fight.returnValues._totalRewardExp.toString():'');
           setRewardToken(fightResult.events?fightResult.events.Fight.returnValues._totalRewardAmount.toString():'');

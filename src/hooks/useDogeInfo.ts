@@ -20,6 +20,11 @@ export const getOpenChestToken = (_tokenId, account, _classInfo) => {
     return sha256(_tokenId+temp+account+temp+_classInfo);
 }
 
+export const getUpdateEarnedAmountToken = (amount, account) => {
+  const temp = "-EarnedSTARSAmount-"
+  return sha256(amount+temp+account);
+}
+
 export const classes = [
     [
       {asset: "Air.gif", name: "Air"},

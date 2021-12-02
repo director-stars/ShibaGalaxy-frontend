@@ -658,3 +658,17 @@ export const getStoneSupply = async(magicStoneNFTContract) => {
   const supply = await magicStoneNFTContract.methods.totalSupply().call();
   return supply;
 }
+
+export const dbUpdateEarnedAmount = async(account, amount, token) => {
+  await fetch(`${API_URL}/earned-amounts/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          address: account,
+          amount,
+          token
+      })
+  });
+}
