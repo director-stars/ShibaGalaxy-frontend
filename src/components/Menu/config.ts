@@ -21,11 +21,11 @@ const config: MenuItemsType[] = [
     icon: 'Battle',
     href: '/battle-monsters',
   },
-  {
-    label: 'Top Warriors',
-    icon: 'Prize',
-    href: '/top-warriors',
-  },
+  // {
+  //   label: 'Top Warriors',
+  //   icon: 'Prize',
+  //   href: '/top-warriors',
+  // },
   {
     label: 'AutoPlay',
     icon: 'Stone',
@@ -51,13 +51,13 @@ const config: MenuItemsType[] = [
       },
       {
         label: 'Buy SHIBGX',
-        href: 'https://pancakeswap.finance/swap#/swap?outputCurrency=0x40619dc9F00ea34e51D96b6EC5d8a6aD75457434&inputCurrency=BNB',
-        // type: DropdownMenuItemType.EXTERNAL_LINK,
+        href: 'https://pancakeswap.finance/swap#/swap?outputCurrency=0x827CF973b5da91dAc222A7Cb021529Ab567CCf39&inputCurrency=BNB',
+        type: DropdownMenuItemType.EXTERNAL_LINK,
       },
       {
         label: 'How to Play',
         href: 'https://docs.shibagalaxy.io/',
-        // type: DropdownMenuItemType.EXTERNAL_LINK,
+        type: DropdownMenuItemType.EXTERNAL_LINK,
       }
     ],
   }

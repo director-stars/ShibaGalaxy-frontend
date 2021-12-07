@@ -31,6 +31,8 @@ const StyledCardBody = styled(CardBody)`
 
 const StyledCard = styled(Card)`
     min-width: 400px;
+    background-color: #fea726;
+    border-radius: 30px;
 `
 const StoneCard: React.FC<StoneCardProps> = ({magicStoneNFTBalance}) => {
     const { account, connect } = useWallet()
@@ -43,8 +45,8 @@ const StoneCard: React.FC<StoneCardProps> = ({magicStoneNFTBalance}) => {
     return (
         <StyledCard ribbon={<CardRibbon text="Magic Stone" />}>
             <StyledCardBody>
-                <StyledImage imgUrl="/images/stones/water.gif"/>
-                <StyledHeading size="lg" color="primary">{magicStoneNFTBalance} available stone(s)</StyledHeading>
+                <StyledImage imgUrl="/images/stones/MagicStone_Yellow.gif"/>
+                <StyledHeading size="lg" color="contrast">{magicStoneNFTBalance} available stone(s)</StyledHeading>
             </StyledCardBody>
         </StyledCard>
     )

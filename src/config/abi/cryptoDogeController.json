@@ -18,18 +18,6 @@
         "internalType": "uint256",
         "name": "_dna",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_rare",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_classInfo",
-        "type": "uint256"
       }
     ],
     "name": "DNASet",
@@ -92,23 +80,17 @@
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [
+    "inputs": [],
+    "name": "_uniswapV2Router",
+    "outputs": [
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_tokenId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "_monsterId",
-        "type": "uint256"
+        "internalType": "contract IUniswapV2Router02",
+        "name": "",
+        "type": "address"
       }
     ],
-    "name": "SetAutoFight",
-    "type": "event"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [
@@ -118,7 +100,7 @@
         "type": "uint256"
       }
     ],
-    "name": "autoFightMonsterInfo",
+    "name": "availableFightNumber",
     "outputs": [
       {
         "internalType": "uint256",
@@ -150,7 +132,33 @@
   },
   {
     "inputs": [],
-    "name": "claimAmount",
+    "name": "busdTokenAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "claimPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "claimPriceDecimal",
     "outputs": [
       {
         "internalType": "uint256",
@@ -246,6 +254,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "maxFightNumber",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -323,32 +344,6 @@
   },
   {
     "inputs": [],
-    "name": "randFightNumberFrom",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "randFightNumberTo",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "rareEstate",
     "outputs": [
       {
@@ -365,44 +360,6 @@
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "setStoneTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "stoneInfo",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -527,25 +484,6 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getClassInfo",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
         "name": "_tokenId",
         "type": "uint256"
       },
@@ -558,11 +496,6 @@
         "internalType": "uint256",
         "name": "monsterId",
         "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "_final",
-        "type": "bool"
       }
     ],
     "name": "fight",
@@ -575,6 +508,35 @@
     "name": "claimToken",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "start",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "end",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "priceCheck",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -623,24 +585,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_randFightNumberFrom",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_randFightNumberTo",
-        "type": "uint256"
-      }
-    ],
-    "name": "setRandFightNumber",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "_address",
         "type": "address"
@@ -673,11 +617,11 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_amount",
+        "name": "_price",
         "type": "uint256"
       }
     ],
-    "name": "setClaimAmount",
+    "name": "setClaimPrice",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -691,6 +635,19 @@
       }
     ],
     "name": "setClaimTimeCycle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_maxFightNumber",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMaxFightNumber",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

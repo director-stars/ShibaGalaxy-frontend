@@ -355,13 +355,15 @@ export const getDogeOfSaleByOwner = async(MarketControllerContract, account) => 
       doge._isEvolved = unSaleDoges[i]._isEvolved;
       // doge.fightNumber = 0;
       doge._stoneInfo = unSaleDoges[i]._stoneInfo;
-      for (let j = 0; j < dogesExtraInfo.length; j ++){
-        if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
-          // doge.fightNumber = dogesExtraInfo[j].fightNumber;
-          doge._classInfo = dogesExtraInfo[j].classInfo;
-          // console.log(doge.fightNumber);
+      doge._classInfo = unSaleDoges[i]._classInfo;
+      // if(!doge._classInfo)
+        for (let j = 0; j < dogesExtraInfo.length; j ++){
+          if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
+            // doge.fightNumber = dogesExtraInfo[j].fightNumber;
+            doge._classInfo = dogesExtraInfo[j].classInfo;
+            // console.log(doge.fightNumber);
+          }
         }
-      }
       // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
       if(unSaleDoges[i]._isEvolved)
         fightDoges.push(doge);
@@ -465,14 +467,16 @@ export const getDogeByOwner = async(MarketControllerContract, account) => {
       doge.fightNumber = 0;
       doge._stoneInfo = unSaleDoges[i]._stoneInfo;
       doge._salePrice = unSaleDoges[i]._salePrice;
-      for (let j = 0; j < dogesExtraInfo.length; j ++){
-        if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
-          doge.fightNumber = dogesExtraInfo[j].fightNumber;
-          doge._classInfo = dogesExtraInfo[j].classInfo;
-          // console.log(doge.fightNumber);
-          // console.log(doge._classInfo);
+      doge._classInfo = unSaleDoges[i]._classInfo;
+      // if(!doge._classInfo)
+        for (let j = 0; j < dogesExtraInfo.length; j ++){
+          if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
+            doge.fightNumber = dogesExtraInfo[j].fightNumber;
+            doge._classInfo = dogesExtraInfo[j].classInfo;
+            // console.log(doge.fightNumber);
+            // console.log(doge._classInfo);
+          }
         }
-      }
       // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
       // if(unSaleDoges[i]._isEvolved)
       fightDoges.push(doge);
@@ -671,4 +675,15 @@ export const dbUpdateEarnedAmount = async(account, amount, token) => {
           token
       })
   });
+}
+
+export const dbGetClaimList = async() => {
+  const res = await fetch(`${API_URL}/earned-amounts`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  });
+  const response = await res.json();
+  return response;
 }

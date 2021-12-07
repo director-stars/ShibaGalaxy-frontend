@@ -33,7 +33,7 @@ export const classes = [
       {asset: "BlackHole.gif", name: "BlackHole"},
       {asset: "Bronze.gif", name: "Bronze"},
       {asset: "Ash.gif", name: "Ash"},
-      {asset: "Bull.gif", name: "Bull"},
+      {asset: "Scarlet.gif", name: "Scarlet"},
     ],
     [
       {asset: "Cloud.gif", name: "Cloud"},

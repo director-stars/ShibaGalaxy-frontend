@@ -126,13 +126,6 @@ const ChestCardActions: React.FC<ChestCardActionProps> = ({price, bnbBalance, sh
           </Button>
       ) 
     }
-    // if (!allowance.toNumber()) {
-    //   return (
-    //     <Button fullWidth disabled={requestedApproval} size="sm" onClick={handleApprove}>
-    //       Approve
-    //     </Button>
-    //   )
-    // }
     
     return (
         <Button fullWidth size="sm"

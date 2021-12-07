@@ -877,6 +877,11 @@
         "internalType": "uint256",
         "name": "_dna",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256[6]",
+        "name": "_classes",
+        "type": "uint256[6]"
       }
     ],
     "name": "evolve",
@@ -978,6 +983,11 @@
           {
             "internalType": "uint256",
             "name": "dna",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "classInfo",
             "type": "uint256"
           },
           {
@@ -1266,6 +1276,43 @@
       }
     ],
     "name": "updateClaimTokenAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "getTotalClaimTokenAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "updateTotalClaimTokenAmount",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

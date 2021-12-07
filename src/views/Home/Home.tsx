@@ -83,7 +83,7 @@ const Home: React.FC = () => {
             <MagicStoneCard 
               imgUrl="/images/egg/bnb.png"
               name="Magic Stone"
-              price="0.8"
+              price="0.3"
               totalSupply={totalStoneSupply}
               bnbBalance={bnbBalance}
             />

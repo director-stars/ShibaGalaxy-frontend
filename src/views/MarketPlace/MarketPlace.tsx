@@ -218,7 +218,7 @@ const MarketPlace: React.FC = () => {
   //   console.log('requestedPageNumber: ', requestedPageNumber)
   // }, [requestedPageNumber])
 
-  const itemsPerPage = 1;
+  const itemsPerPage = 9;
   const [pageCount, setPageCount] = useState(0);
   useEffect(() => {
     setPageCount(Math.ceil(selectedDoges.length / itemsPerPage));

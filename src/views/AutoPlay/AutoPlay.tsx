@@ -10,28 +10,27 @@ import StoneCard from './components/StoneCard'
 import MonsterCard from './components/MonsterCard'
 
 const Hero = styled.div`
+  background: linear-gradient(90deg, rgba(255, 0, 0, 0), rgb(214, 51, 65) 45%, rgba(255, 0, 0, 0));
+  line-height: 1.5;
   align-items: center;
-  // background-image: url('/images/egg/3.png');
   background-repeat: no-repeat;
   background-position: top center;
-  display: flex;
   justify-content: center;
   flex-direction: column;
-  margin: auto;
-  // margin-bottom: 32px;
-  padding-top: 116px;
+  margin: 30px auto;
+  padding: 20px;
   text-align: center;
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    // background-image: url('/images/egg/3.png'), url('/images/egg/3b.png');
     background-position: left center, right center;
-    height: 165px;
-    padding-top: 0;
   }
 `
 const StyledHead = styled.div`
-  display:flex;
-  column-gap: 20px;
+  // display:flex;
+  // column-gap: 20px;
+`
+const StyledHeading = styled(Heading)`
+  font-size: 4.5rem;
 `
 const MyDoges = styled.div`
   text-align: center;
@@ -148,23 +147,24 @@ const AutoPlay: React.FC = () => {
     <Page>
       <Hero>
         <StyledHead>
-          <Heading as="h1" size="xxl" mb="24px" color="contrast">
+          <StyledHeading as="h1" size="xxl" mb="24px" color="contrast">
             Auto Play
-          </Heading>
+          </StyledHeading>
         </StyledHead>
       </Hero>
       <PageContent>
         <FlexLayout>
-          <StoneCard magicStoneNFTBalance={magicStoneNFTBalance}/>
+          {/* <StoneCard magicStoneNFTBalance={magicStoneNFTBalance}/> */}
+          <StoneCard magicStoneNFTBalance={stoneSize}/>
         </FlexLayout>
-        <Monsters>
+        {/* <Monsters>
           <StyledFlexLayout>
             {(typeof monsters === typeof [])?monsterList(monsters, true):(<></>)}
           </StyledFlexLayout>
         </Monsters>
         <MyDoges>
           {(typeof doges === typeof [])?dogeList(doges, true):(<></>)}
-        </MyDoges>
+        </MyDoges> */}
         {/* <Hero>
           <StyledHead>
             <Heading as="h1" size="xxl" mb="24px" color="contrast">
@@ -174,10 +174,10 @@ const AutoPlay: React.FC = () => {
               Soon
             </Heading>
           </StyledHead>
-        </Hero>
-        <StyledHeading as="h3" size="xl" mb="24px" color="contrast">
-          With Autoplay mode , your Doges can Battle Monsters while you’re away or asleep. All you need to get started is a magic stone
-        </StyledHeading> */}
+        </Hero> */}
+        <Heading as="h1" size="xl" mb="24px" color="contrast">
+          With Autoplay mode , your Shibas can fight Bears & Dragons while you’re away or asleep. All you need to get started is a magic stone
+        </Heading>
       </PageContent>
     </Page>
   )

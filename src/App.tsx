@@ -65,18 +65,18 @@ const App: React.FC = () => {
             {/* <Route path="/top-warriors">
               <TopWarriors />
             </Route> */}
-            {/* <Route path="/auto-play">
+            <Route path="/auto-play">
               <AutoPlay />
-            </Route> */}
-            <Route path="/battle-monsters">
-             <BattleMonsters />
             </Route>
+            {/* <Route path="/battle-monsters">
+             <BattleMonsters />
+            </Route> */}
             {/* <Route path="/battle-bosses">
              <BattleBosses />
             </Route> */}
-            <Route path="/referrals">
+            {/* <Route path="/referrals">
              <Referrals />
-            </Route>
+            </Route> */}
             <Route component={NotFound} />
           </Switch>
         </Suspense>

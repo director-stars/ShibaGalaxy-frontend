@@ -41,7 +41,8 @@ import {
   dbGetReferralHistory,
   getShibaSupply,
   getStoneSupply,
-  dbUpdateEarnedAmount
+  dbUpdateEarnedAmount,
+  dbGetClaimList
 } from '../utils/dogelandUtils'
 
 // export const useBattleBosses = () => {
@@ -112,17 +113,17 @@ export const useNextClaimTime = () => {
 export const useBuyCryptoDoge = () => {
   const { account } = useWallet()
   const cryptoDogeControllerContract = useCryptoDogeController()
-  const cryptoDogeNFTContract = useCryptoDogeNFT();
+  // const cryptoDogeNFTContract = useCryptoDogeNFT();
   // const oneDogeContract = useOneDoge();
   const handleBuy = useCallback(
     async (price) => {
       try {
-        const firstPurchaseTime = await cryptoDogeNFTContract.methods.firstPurchaseTime(account).call();
+        // const firstPurchaseTime = await cryptoDogeNFTContract.methods.firstPurchaseTime(account).call();
         const txHash = await buyDoge(cryptoDogeControllerContract, account, price)
-        const lastTokenId = await getLastTokenId(cryptoDogeNFTContract, account);
-        const _classInfo = "0";
-        const token = getBuyDogeToken(lastTokenId, account, _classInfo);
-        await dbCreateDoge(lastTokenId, firstPurchaseTime, account, 0, token);
+        // const lastTokenId = await getLastTokenId(cryptoDogeNFTContract, account);
+        // const _classInfo = "0";
+        // const token = getBuyDogeToken(lastTokenId, account, _classInfo);
+        // await dbCreateDoge(lastTokenId, firstPurchaseTime, account, 0, token);
         // await getBalance(cryptoDogeNFTContract, oneDogeContract, account, );
         return txHash
       } catch (e) {
@@ -130,7 +131,7 @@ export const useBuyCryptoDoge = () => {
       }
     },
     // [account, cryptoDogeControllerContract, cryptoDogeNFTContract, oneDogeContract],
-    [account, cryptoDogeControllerContract, cryptoDogeNFTContract],
+    [account, cryptoDogeControllerContract],
   )
 
   return { onBuyDoge: handleBuy }
@@ -278,10 +279,10 @@ export const useOpenChest = () => {
     async (_tokenId) => {
       try {
         const result = await openChest(cryptoDogeControllerContract, account, _tokenId)
-        const _classInfo = result.events.DNASet.returnValues._classInfo;
-        const token = getOpenChestToken(_tokenId, account, _classInfo);
-        await dbCreateDoge(_tokenId, account, _classInfo, token);
-        return 'result'
+        // const _classInfo = result.events.DNASet.returnValues._classInfo;
+        // const token = getOpenChestToken(_tokenId, account, _classInfo);
+        // await dbCreateDoge(_tokenId, account, _classInfo, token);
+        return result
       } catch (e) {
         return false
       }
@@ -542,4 +543,17 @@ export const useGetTotalStoneSupply = () => {
     fetchStoneSupply();
   },[magicStoneNFTContract]);
   return stoneSupply;
+}
+
+export const useClaimList = () => {
+  const [list, setList] = useState([])
+
+  useEffect(() => {
+    const getList = async () => {
+      const claimList = await dbGetClaimList();
+      setList(claimList);
+    }
+    getList();
+  },[]);
+  return list;
 }

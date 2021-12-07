@@ -126,10 +126,10 @@ const MagicStoneCard: React.FC<MagicStoneCardProps> = ({imgUrl, name, price, tot
                             <Text color="cardItemValue" bold>{price}</Text>
                         </PriceInfo>
                     </DogeInfo>
-                    <DogeInfo>
+                    {/* <DogeInfo>
                         <Text color="cardItemKey" bold>Created</Text>
                         <Text color="cardItemValue" bold>{totalSupply}</Text>
-                    </DogeInfo>
+                    </DogeInfo> */}
                     <OwnerInfo>
                         <Text color="cardItemKey" bold>Payment</Text>
                         <Text color="cardItemValue" bold>BNB</Text>
