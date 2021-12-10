@@ -1,22 +1,26 @@
-import styled from 'styled-components'
+import React from 'react'
+import { Button } from '@pancakeswap-libs/uikit'
 import formatLotteryDate from '../helpers/formatLotteryDate'
 
-const Wrapper = styled.div`
-  // position: absolute;
-  // top: 0;
-  // right: 0;
-  margin:0px 5px;
-`
+interface TimestampProps {
+  battleTime: number,
+  cycle: number
+}
 
-const Timestamp = ({ timeValue }) => {
-  const { hours, minutes } = formatLotteryDate(timeValue)
+const Timestamp: React.FC<TimestampProps> = ({ battleTime, cycle }) => {
+  console.log('now: ',Date.now())
+  console.log('battleTime: ', battleTime)
+  const hours = Math.floor((cycle + battleTime - Date.now()) / 3600 / 1000);
+  const minutes = Math.floor((cycle + battleTime - Date.now()) / 60 / 1000);
 
   return (
-    <Wrapper>
-      {/* <Text fontSize="14px"> */}
-        {(minutes > 0)? hours+1:hours}
-      {/* </Text> */}
-    </Wrapper>
+    <>
+    {(hours > 0)?(
+      <Button disabled fullWidth size="sm">Next Fight in {hours} hour(s)</Button>
+    ):(
+      <Button disabled fullWidth size="sm">Next Fight in {minutes} minute(s)</Button>
+    )}
+    </>
   )
 }
 

@@ -166,11 +166,11 @@ export const useFightCryptoMonster = () => {
   const handleFight = useCallback(
     async (monsterId, dogeId) => {
       try {
-        let token = getDecreaseFNToken(dogeId, account);
-        const fightResult = await fightMonster(cryptoDogeControllerContract, account, monsterId, dogeId, token)
+        // let token = getDecreaseFNToken(dogeId, account);
+        const fightResult = await fightMonster(cryptoDogeControllerContract, account, monsterId, dogeId)
         const amount = await getRewardTokenInfo(cryptoDogeNFTContract, account);
-        token = getUpdateEarnedAmountToken(amount / 10**18, account);
-        await dbUpdateEarnedAmount(account, amount / 10**18, token);
+        // token = getUpdateEarnedAmountToken(amount / 10**18, account);
+        // await dbUpdateEarnedAmount(account, amount / 10**18, token);
         return fightResult
       } catch (e) {
         return false

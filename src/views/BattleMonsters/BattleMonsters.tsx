@@ -4,7 +4,7 @@ import Carousel from 'components/Carousel'
 import { Button, Heading, Text, Image } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
 import PageContent from 'components/layout/PageContent'
-import { useMonsters, useMyFightDoges, useRewardTokenInfo, useClaimReward, useNextClaimTime, useAirDropInfo, useClaimAirDrop } from 'hooks/useDogesLand'
+import { useMonsters, useMyFightDoges, useRewardTokenInfo, useClaimReward, useNextClaimTime, useAirDropInfo, useClaimAirDrop, useTokenBalance } from 'hooks/useDogesLand'
 import { useCryptoDogeControllerAllowance } from 'hooks/useAllowance'
 import { useCryptoDogeControllerApprove } from 'hooks/useApprove'
 import FlexLayout from 'components/layout/Flex'
@@ -87,6 +87,7 @@ const BattleMonsters: React.FC = () => {
   const [, setRequestedClaim] = useState(false)
   const { onClaimReward } = useClaimReward()
   const nextClaimTime = parseInt(useNextClaimTime())*1000 - Date.now();
+  const tokenBalance = useTokenBalance();
 
   const [requestedApproval, setRequestedApproval] = useState(false)
   const allowance = useCryptoDogeControllerAllowance()
@@ -122,7 +123,7 @@ const BattleMonsters: React.FC = () => {
               setActiveDoge={setActiveDogeId}
               farmTime={doge._farmTime}
               fightNumber={doge.fightNumber}
-              availableBattleTime={doge._availableBattleTime}
+              battleTime={doge._battleTime}
               stoneInfo={doge._stoneInfo}
             />
           </DogeItem>
@@ -145,12 +146,13 @@ const BattleMonsters: React.FC = () => {
             rewardExpFrom={monster._rewardExpFrom}
             rewardExpTo={monster._rewardExpTo}
             activeDoge={activeDogeId}
+            tokenBalance={tokenBalance}
           />
         </div>
       ))
     }
     ,
-    [activeDogeId],
+    [activeDogeId, tokenBalance],
   )
 
   const renderClaimButtons = () => {
@@ -192,20 +194,20 @@ const BattleMonsters: React.FC = () => {
       console.error(e)
     }
   }, [onClaimReward, setRequestedClaim])
-  useEffect(() => {
-    if(!(doges.length === 0) && (!activeDogeId)){
-      // console.log(doges.length)
-      for(let i = 0; i< doges.length; i++){
-        if(parseInt(doges[i].farmTime)*1000 < Date.now()){
-          setActiveDogeId(doges[i].Doge_ID)
-          break;
-        }
-        if(i === doges.length -1){
-          setActiveDogeId(null)
-        }
-      }
-    }
-  }, [activeDogeId, doges])
+  // useEffect(() => {
+  //   if(!(doges.length === 0) && (!activeDogeId)){
+  //     // console.log(doges.length)
+  //     for(let i = 0; i< doges.length; i++){
+  //       if(parseInt(doges[i].fightNumber) < 1){
+  //         setActiveDogeId(doges[i].Doge_ID)
+  //         break;
+  //       }
+  //       if(i === doges.length -1){
+  //         setActiveDogeId(null)
+  //       }
+  //     }
+  //   }
+  // }, [activeDogeId, doges])
 
   const [airDropPendingTx, setAirDropPendingTx] = useState(false)
   const airDropInfo = useAirDropInfo();
@@ -253,7 +255,7 @@ const BattleMonsters: React.FC = () => {
             {(rewardTokenAmount)&&(parseInt(rewardTokenAmount.toString()) > 0)?(
             <div>
               <RewardInfo>
-                <Text fontSize="22px">Pending SHIBGX: {parseInt(rewardTokenAmount.toString())/10**18}</Text>
+                <Text fontSize="22px">Pending SHIBGX: {parseInt(rewardTokenAmount.toString())/10**9}</Text>
                 <TokenIcon width={30} height={30} src="/images/egg/9.png"/>
               </RewardInfo>
               {( nextClaimTime < 0)?(renderClaimButtons()):(

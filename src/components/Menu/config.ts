@@ -51,7 +51,7 @@ const config: MenuItemsType[] = [
       },
       {
         label: 'Buy SHIBGX',
-        href: 'https://pancakeswap.finance/swap#/swap?outputCurrency=0x827CF973b5da91dAc222A7Cb021529Ab567CCf39&inputCurrency=BNB',
+        href: 'https://pancakeswap.finance/swap#/swap?outputCurrency=0x7420d2bc1f8efb491d67ee860df1d35fe49ffb8c&inputCurrency=BNB',
         type: DropdownMenuItemType.EXTERNAL_LINK,
       },
       {

@@ -17,6 +17,7 @@ interface MonsterCardProps {
     rewardExpFrom: string
     rewardExpTo: string
     activeDoge: string
+    tokenBalance: number
 }
 
 const Block = styled.div`
@@ -80,7 +81,7 @@ const StyledText = styled(Text)`
   color: #fff;
   font-size: 1rem;
 `
-const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewardTokenFrom, rewardTokenTo, rewardExpFrom, rewardExpTo, activeDoge}) => {
+const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewardTokenFrom, rewardTokenTo, rewardExpFrom, rewardExpTo, activeDoge, tokenBalance}) => {
     const { account, connect, reset } = useWallet()
     useEffect(() => {
         if (!account && window.localStorage.getItem('accountStatus')) {
@@ -118,9 +119,9 @@ const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewar
     const [winNumber, setWinNumber] = useState("")
     const [tx, setTx] = useState('')
     const [error, setError] = useState('')
+    const minTokenBalance = 3000000;
     
-    const oneDogeAmount = window.localStorage.getItem("shibgxBalance");
-
+    // const oneDogeAmount = window.localStorage.getItem("shibgxBalance");
     
 
     const handleFight = useCallback(async (monsterId, dogeId) => {
@@ -168,11 +169,11 @@ const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewar
             </Button>
           )
         }
-        // if(parseInt(oneDogeAmount) < 100000){
-        //   return (
-        //     <Button fullWidth size="sm" disabled>Not Enough SHIBGX</Button>
-        //   )
-        // }
+        if((tokenBalance / 10 ** 9) < minTokenBalance){
+          return (
+            <Button fullWidth size="sm" disabled>Not Enough SHIBGX</Button>
+          )
+        }
         if(!activeDoge){
           return (
             <Button fullWidth size="sm">Select your Shiba</Button>

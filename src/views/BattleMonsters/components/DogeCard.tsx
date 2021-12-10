@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { classes, tribes } from 'hooks/useDogeInfo'
 import DogeCardActions from './DogeCardActions';
+import Timestamp from './Timestamp';
 
 interface DogeCardProps {
     classInfo: string
@@ -16,7 +17,7 @@ interface DogeCardProps {
     setActiveDoge: any
     farmTime: string
     fightNumber: string
-    availableBattleTime: string
+    battleTime: string
     stoneInfo: string
 }
 
@@ -72,36 +73,21 @@ const StyledCardBody = styled(CardBody)`
 const DogeCardAction = styled.div`
     margin-top: 10px;
 `
-const DogeCard: React.FC<DogeCardProps> = ({classInfo, rare, level, exp, tribe, id, activeDoge, setActiveDoge, farmTime, fightNumber, availableBattleTime, stoneInfo}) => {
-    // console.log('rare',rare)
-    // console.log('classInfo',classInfo)
+const DogeCard: React.FC<DogeCardProps> = ({classInfo, rare, level, exp, tribe, id, activeDoge, setActiveDoge, farmTime, fightNumber, battleTime, stoneInfo}) => {
     const { account, connect, reset } = useWallet()
     useEffect(() => {
         if (!account && window.localStorage.getItem('accountStatus')) {
         connect('injected')
         }
     }, [account, connect])
-    let dogeImage;
-    let dogeName;
-    if(classInfo){
-        dogeImage = classes[parseInt(rare) - 1][classInfo].asset;
-        dogeName = classes[parseInt(rare) - 1][classInfo].name;
-    }
-    else{
-        dogeImage = "warm.gif";
-        dogeName = "Doge";
-    }
+    const dogeImage = classes[parseInt(rare) - 1][classInfo].asset;
+    const dogeName = classes[parseInt(rare) - 1][classInfo].name;
     const tribeName = tribes[tribe].name;
 
     const { onPresentConnectModal } = useWalletModal(connect, reset)
-    let nextTime = parseInt(availableBattleTime)*1000 - Date.now();
-    if(nextTime < 0 && parseInt(fightNumber) < 1){
-        nextTime = 0;
-    }
-    // if(!(nextTime < 0 && parseInt(fightNumber) > 0)){
-    //     if(activeDoge === parseInt(id))
-    //         setActiveDoge();
-    // }
+    const cycle = 4 * 3600 * 1000;
+    const nextTime = Math.floor(Date.now() / cycle) - Math.floor(parseInt(battleTime) * 1000 / cycle);
+    const maxFightNumber = 3;
 
     return (
         <div>
@@ -130,15 +116,19 @@ const DogeCard: React.FC<DogeCardProps> = ({classInfo, rare, level, exp, tribe, 
                             <Text color="cardItemValue" bold>{tribeName}</Text>
                         </div>
                     </DogeInfo>
-                    {(nextTime < 0 && parseInt(fightNumber) > 0 && stoneInfo === "0")?(
+                    {((parseInt(fightNumber) > 0 && stoneInfo === "0") || (nextTime >= 1 && stoneInfo === "0"))?(
                         <DogeInfo>
                             <div>
                                 <Text color="cardItemKey" bold>Remained Turns Fight :</Text>
-                                <Text color="cardItemValue" bold>{fightNumber}</Text>
+                                {nextTime >= 1?(
+                                    <Text color="cardItemValue" bold>{maxFightNumber}</Text>
+                                ):(
+                                    <Text color="cardItemValue" bold>{fightNumber}</Text>
+                                )}
                             </div>
                         </DogeInfo>):(<></>)
                     }
-                    {(nextTime <= 0 && parseInt(fightNumber) > 0)?(
+                    {(parseInt(fightNumber) > 0 || nextTime >= 1 )?(
                         (<DogeCardAction>
                         
                             {account? (<>
@@ -155,7 +145,7 @@ const DogeCard: React.FC<DogeCardProps> = ({classInfo, rare, level, exp, tribe, 
                         </DogeCardAction>)
                         ): (
                         <DogeCardAction>
-                            <Button disabled fullWidth size="sm" onClick={onPresentConnectModal}>Next Fight in {Math.ceil(nextTime/1000/3600)} hours</Button>
+                            <Timestamp battleTime={parseInt(battleTime) * 1000} cycle={cycle} />
                         </DogeCardAction>
                         )
                     }

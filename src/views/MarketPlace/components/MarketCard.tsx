@@ -111,7 +111,7 @@ const StyledCardFooter = styled(CardFooter)`
     height: 210px;
 `
 const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, level, exp, rare, tribe, tokenBalance, shibaNftBalance}) => {
-    const price1 = new BigNumber(price).div(new BigNumber(10).pow(18)).toString()
+    const price1 = new BigNumber(price).div(new BigNumber(10).pow(9)).toString()
     const ownerAddress = `${owner.substring(0, 4)}...${owner.substring(owner.length - 4)}`;
     let dogeImage;
     let dogeName;
@@ -125,8 +125,6 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
     }
     
     const tribeName = tribes[tribe].name;
-    // const [shibgxBalance, setShibgxBalance] = useState(parseInt(window.localStorage.getItem("shibgxBalance")) / 10**18);
-    // const [dogeNFTBalance, setDogeNFTBalance] = useState(parseInt(window.localStorage.getItem("dogeNFTBalance")));
     const { account, connect, reset } = useWallet()
     useEffect(() => {
         if (!account && window.localStorage.getItem('accountStatus')) {
@@ -146,22 +144,10 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
           if (!txHash) {
             setPendingTx(false)
           }
-          // onPresentApprove()
         } catch (e) {
           console.error(e)
         }
       }, [onFillOrder])
-
-    //   const { onGetDogeBalance } = useDogeBalance()
-    //   const handleGetDogeBalance = useCallback(async () => {
-    //     try {
-    //       await onGetDogeBalance()
-    //       setShibgxBalance(parseInt(window.localStorage.getItem("shibgxBalance")) / 10**18);
-    //       setDogeNFTBalance(parseInt(window.localStorage.getItem("dogeNFTBalance")));
-    //     } catch (e) {
-    //       console.error(e)
-    //     }
-    //   }, [onGetDogeBalance])
 
     const { onPresentConnectModal } = useWalletModal(connect, reset)
 

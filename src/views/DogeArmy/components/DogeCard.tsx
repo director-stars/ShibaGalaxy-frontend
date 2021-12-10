@@ -75,16 +75,13 @@ const StyledCardBody = styled(CardBody)`
     padding: 0px 24px 24px 24px;
 `
 const DogeCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, level, exp, rare, tribe}) => {
-    const price1 = new BigNumber(price).div(new BigNumber(10).pow(18)).toString()
+    const price1 = new BigNumber(price).div(new BigNumber(10).pow(9)).toString()
     const { account, connect, reset } = useWallet()
     useEffect(() => {
         if (!account && window.localStorage.getItem('accountStatus')) {
         connect('injected')
         }
     }, [account, connect])
-    // console.log('id',id)
-    // console.log('rare',rare)
-    // console.log('classInfo',classInfo)
     let dogeImage;
     let dogeName;
     if(classInfo){
