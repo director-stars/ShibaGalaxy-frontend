@@ -88,6 +88,7 @@ const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId }) => {
     }
   }, [ fightNumber, winNumber, rewardExp, rewardToken, tx, error, onPresentResult ])
 
+  const minTokenBalance = 3000000;
   const renderDogeCardButtons = () => {
     if (!allowance.toNumber()) {
       return (
@@ -96,7 +97,7 @@ const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId }) => {
         </Button>
       )
     }
-    if(parseInt(oneDogeAmount) < 100000){
+    if(parseInt(oneDogeAmount) < minTokenBalance){
       return (
         <Button fullWidth size="sm" disabled>Not Enough SHIBGX</Button>
       )

@@ -48,28 +48,8 @@ const StyledFlexLayout = styled(FlexLayout)`
     margin-bottom: 20px;
   }
 `
-// const StyledDiv = styled.div`
-//   column-gap: 20px;
-//   display: inline-flex;
-//   margin-bottom: 20px;
-// `
-
-// const Row = styled.div`
-//   margin-bottom: 32px;
-
-//   & > button + button {
-//     margin-left: 16px;
-//   }
-// `;
-
-// const StyledHeading = styled(Heading)`
-//   letter-spacing: 2px;
-//   text-align: center;
-//   font-weight: 400px;
-// `
 
 const AutoPlay: React.FC = () => {
-  // const { url, title } = props
   // const chevronWidth = 40;
   const stones = useMyStone();
   const stoneSize = stones.length;
@@ -82,8 +62,7 @@ const AutoPlay: React.FC = () => {
   let availableStoneId = 0;
   // console.log(stones)
   for(let i = 0; i < stoneSize; i ++){
-    // setActiveStoneId(0);
-    if(stones[i]._dogeId === "0") {
+    if(stones[i]._shibaId === "0") {
       availableStone ++;
       availableStoneId = stones[i]._tokenId;
       // setActiveStoneId(stones[i]._tokenId);
@@ -94,7 +73,6 @@ const AutoPlay: React.FC = () => {
   useEffect(() => {
     if(stoneSize !== 0){
       setMagicStoneNFTBalance(availableStone);
-      window.localStorage.setItem("magicStoneNFTBalance", availableStone.toString())
     }
   }, [ availableStone, stoneSize ])
 
@@ -105,7 +83,7 @@ const AutoPlay: React.FC = () => {
   const monsterList = useCallback(
     (monstersToDisplay, removed: boolean) => {
       return monstersToDisplay.map((monster) => (
-        <MonsterCard 
+        <MonsterCard key={monster.id}
             id={monster.id}
             health={monster._hp}
             successRate={monster._successRate}
@@ -123,7 +101,7 @@ const AutoPlay: React.FC = () => {
   const dogeList = useCallback(
     (dogesToDisplay, removed: boolean) => {
       return dogesToDisplay.map((doge) => (
-        <DogeCard
+        <DogeCard key={doge._tokenId}
           id={doge._tokenId}
           classInfo={doge._classInfo}
           price={doge._salePrice}
@@ -154,30 +132,16 @@ const AutoPlay: React.FC = () => {
       </Hero>
       <PageContent>
         <FlexLayout>
-          {/* <StoneCard magicStoneNFTBalance={magicStoneNFTBalance}/> */}
-          <StoneCard magicStoneNFTBalance={stoneSize}/>
+          <StoneCard magicStoneNFTBalance={magicStoneNFTBalance}/>
         </FlexLayout>
-        {/* <Monsters>
+        <Monsters>
           <StyledFlexLayout>
             {(typeof monsters === typeof [])?monsterList(monsters, true):(<></>)}
           </StyledFlexLayout>
         </Monsters>
         <MyDoges>
           {(typeof doges === typeof [])?dogeList(doges, true):(<></>)}
-        </MyDoges> */}
-        {/* <Hero>
-          <StyledHead>
-            <Heading as="h1" size="xxl" mb="24px" color="contrast">
-              Coming
-            </Heading>
-            <Heading as="h1" size="xxl" mb="24px" color="primary">
-              Soon
-            </Heading>
-          </StyledHead>
-        </Hero> */}
-        <Heading as="h1" size="xl" mb="24px" color="contrast">
-          With Autoplay mode , your Shibas can fight Bears & Dragons while you’re away or asleep. All you need to get started is a magic stone
-        </Heading>
+        </MyDoges>
       </PageContent>
     </Page>
   )

@@ -128,7 +128,7 @@ const DogeCard: React.FC<DogeCardProps> = ({classInfo, rare, level, exp, tribe, 
                             </div>
                         </DogeInfo>):(<></>)
                     }
-                    {(parseInt(fightNumber) > 0 || nextTime >= 1 )?(
+                    {(parseInt(fightNumber) > 0 && nextTime >= 1 )?(
                         (<DogeCardAction>
                         
                             {account? (<>

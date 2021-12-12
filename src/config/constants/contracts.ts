@@ -49,7 +49,7 @@ export default {
   },
   magicStoneController: {
     56: '0xC467B57d505537D69C0b9b6cE69878eb16C8d468',
-    97: '0x3a10F2f5fC73558fAD8270f3313B4052cCaDF09E',
+    97: '0x72947c9b47cdDf124D67A6a99CEd835cd43b7178',
   },
   airDrop: {
     56: '0x681C706e6d394004B032019a38d6C0745D29e640',

@@ -58,15 +58,13 @@ const DogeInfoItem = styled.div`
     }
 `
 const Id = styled.div`
-    // position: absolute;
-    background: linear-gradient(-45deg,#e8c456,#aa8929,#fdd325);
+    background: linear-gradient(-45deg,#FFC50D,#d63341,#FFC50D);
     animation: dogeid 3s ease infinite;
     padding: 5px 10px;
     font-weight: 400;
     min-width: 80px;
     font-size: 1rem;
     border-radius: 10rem;
-    // margin: 10px;
     color: #fff;
     height: fit-content;
 `

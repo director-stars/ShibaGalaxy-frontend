@@ -8,8 +8,6 @@ interface TimestampProps {
 }
 
 const Timestamp: React.FC<TimestampProps> = ({ battleTime, cycle }) => {
-  console.log('now: ',Date.now())
-  console.log('battleTime: ', battleTime)
   const hours = Math.floor((cycle + battleTime - Date.now()) / 3600 / 1000);
   const minutes = Math.floor((cycle + battleTime - Date.now()) / 60 / 1000);
 

@@ -89,24 +89,7 @@ const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId, stoneInfo, ac
     }
   }, [onSetAutoFight, dogeId, activeStoneId, activeMonster])
 
-  // const { onGetDogeBalance } = useDogeBalance()
-  // const handleGetDogeBalance = useCallback(async () => {
-  //   try {
-  //     await onGetDogeBalance()
-  //     setMagicStoneNFTBalance(parseInt(window.localStorage.getItem("magicStoneNFTBalance")));
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }, [onGetDogeBalance, setMagicStoneNFTBalance])
-
   const renderDogeCardButtons = () => {
-    // if (!allowance.toNumber()) {
-    //   return (
-    //     <Button fullWidth disabled={requestedApproval} size="sm" onClick={handleApprove}>
-    //       Approve
-    //     </Button>
-    //   )
-    // }
     if(stoneInfo !== "0"){
       return (
         <Button fullWidth size="sm"

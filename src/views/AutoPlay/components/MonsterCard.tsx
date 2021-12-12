@@ -50,6 +50,8 @@ const MonsterInfo = styled.div`
 `
 const PriceInfo = styled.div`
     display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 `
 const TokenIcon = styled(Image)`
     width: 24px;
@@ -57,6 +59,10 @@ const TokenIcon = styled(Image)`
 const StyledDiv = styled.div`
     display: flex;
     column-gap: 20px;
+`
+const StyledText = styled(Text)`
+    display: flex;
+    flex-wrap: wrap;
 `
 const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewardTokenFrom, rewardTokenTo, rewardExpFrom, rewardExpTo, activeMonster, setActiveMonster}) => {
     const { account, connect, reset } = useWallet()
@@ -90,7 +96,7 @@ const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewar
                     </StyledDiv>
                     <MonsterInfo>
                         <Block><Label>Success Rate:</Label><Text>~{successRate}%</Text></Block>
-                        <Block><Label>Token Reward:</Label><PriceInfo>{rewardTokenFrom} ~ {rewardTokenTo}<TokenIcon width={24} height={24} src="/images/egg/9.png"/><Text> SHIBGX</Text></PriceInfo></Block>
+                        <Block><Label>Token Reward:</Label><PriceInfo>{rewardTokenFrom} ~ {rewardTokenTo}<StyledText><TokenIcon width={24} height={24} src="/images/egg/9.png"/> SHIBGX</StyledText></PriceInfo></Block>
                         <Block><Label>EXP Reward:</Label><Text>{rewardExpFrom} EXP</Text></Block>
                     </MonsterInfo>
                     {account? (renderDogeCardButtons())
