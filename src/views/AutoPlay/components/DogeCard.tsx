@@ -79,7 +79,16 @@ const DogeCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, leve
     let dogeImage;
     let dogeName;
     if(classInfo){
-        dogeImage = classes[parseInt(rare) - 1][classInfo].asset;
+        if(classes[parseInt(rare) - 1][classInfo].type === "multi"){
+            let dogeNumber = parseInt(tribe) + 1
+            if(parseInt(exp) > 350){
+                dogeNumber = parseInt(tribe) + 5
+            }
+            dogeImage = `${classes[parseInt(rare) - 1][classInfo].asset}/${classes[parseInt(rare) - 1][classInfo].asset}_${dogeNumber}.gif`;
+        }
+        else{
+            dogeImage = `${classes[parseInt(rare) - 1][classInfo].asset}/${classes[parseInt(rare) - 1][classInfo].asset}_1.gif`;
+        }
         dogeName = classes[parseInt(rare) - 1][classInfo].name;
     }
     else{

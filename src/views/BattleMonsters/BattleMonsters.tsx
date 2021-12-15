@@ -125,13 +125,14 @@ const BattleMonsters: React.FC = () => {
               fightNumber={doge.fightNumber}
               battleTime={doge._battleTime}
               stoneInfo={doge._stoneInfo}
+              tokenBalance={tokenBalance}
             />
           </DogeItem>
         )
       )
     }
     ,
-    [activeDogeId],
+    [activeDogeId, tokenBalance],
   )
   const monsterList = useCallback(
     (monstersToDisplay, removed: boolean) => {
@@ -272,7 +273,7 @@ const BattleMonsters: React.FC = () => {
             {dogeList(doges, true)}
           </Carousel>
           <Button size="sm" variant="success">
-            Selected ShibaID: #{activeDogeId}
+            Selected ShibaID: #{(activeDogeId!==0)?activeDogeId:''}
           </Button>
           </MyDoges>
         ):(<div />)}

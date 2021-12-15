@@ -9,6 +9,7 @@ import ResultModal from './ResultModal'
 
 interface DogeCardActionsProps {
   dogeId: string
+  tokenBalance: number
 }
 
 const CardActions = styled.div`
@@ -22,12 +23,12 @@ const CardActions = styled.div`
   // margin-top: 20px;
 `
 
-const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId }) => {
+const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId, tokenBalance }) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
   const allowance = useCryptoDogeControllerAllowance()
   const { onApprove } = useCryptoDogeControllerApprove()
   // const [onPresentApprove] = useModal(<PurchaseWarningModal />)
-  const oneDogeAmount = window.localStorage.getItem("shibgxBalance");
+  // const oneDogeAmount = window.localStorage.getItem("shibgxBalance");
   const handleApprove = useCallback(async () => {
     try {
       setRequestedApproval(true)
@@ -97,7 +98,7 @@ const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId }) => {
         </Button>
       )
     }
-    if(parseInt(oneDogeAmount) < minTokenBalance){
+    if(tokenBalance < minTokenBalance){
       return (
         <Button fullWidth size="sm" disabled>Not Enough SHIBGX</Button>
       )

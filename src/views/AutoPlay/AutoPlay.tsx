@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Heading } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
 import PageContent from 'components/layout/PageContent'
+import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useMonsters, useMyFightDoges, useMyStone } from 'hooks/useDogesLand'
 import FlexLayout from 'components/layout/Flex'
 import DogeCard from './components/DogeCard'
@@ -36,6 +37,7 @@ const MyDoges = styled.div`
   text-align: center;
   overflow: hidden;
   align-content: center;
+  margin-bottom: 50px;
 `
 const Monsters = styled.div`
   text-align: center;
@@ -51,6 +53,12 @@ const StyledFlexLayout = styled(FlexLayout)`
 
 const AutoPlay: React.FC = () => {
   // const chevronWidth = 40;
+  const { account, connect, reset } = useWallet()
+  useEffect(() => {
+    if (!account && window.localStorage.getItem('accountStatus')) {
+    connect('injected')
+    }
+  }, [account, connect])
   const stones = useMyStone();
   const stoneSize = stones.length;
   const monsters = useMonsters();
@@ -62,7 +70,7 @@ const AutoPlay: React.FC = () => {
   let availableStoneId = 0;
   // console.log(stones)
   for(let i = 0; i < stoneSize; i ++){
-    if(stones[i]._shibaId === "0") {
+    if(stones[i]._shibaId === "0" || stones[i]._shibaOwner !== account) {
       availableStone ++;
       availableStoneId = stones[i]._tokenId;
       // setActiveStoneId(stones[i]._tokenId);
