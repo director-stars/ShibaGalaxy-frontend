@@ -114,7 +114,7 @@ const Referrals: React.FC = () => {
       return tempList.map((address) => {
         index ++;
         if(index > 50) return <></>
-        return <ReferralInfo>
+        return <ReferralInfo key={index}>
           <ReferralAddress>{address}</ReferralAddress>
           <ReferralCount>{referralHistory[address].length}</ReferralCount>
         </ReferralInfo>

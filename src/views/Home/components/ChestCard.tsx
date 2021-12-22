@@ -1,15 +1,17 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Heading, Text, Card, CardBody, CardHeader, CardFooter, Image } from '@pancakeswap-libs/uikit'
 import styled, { keyframes } from 'styled-components'
+import CustomSelect from 'components/Select'
 import ChestCardActions from './ChestCardActions'
 
 interface ChestCardProps {
-    imgUrl: string
     name: string
     price: string
     totalSupply: number
     bnbBalance: number
     shibaNftBalance: number
+    priceShibaWithToken: string
+    tokenBalance: number
 }
 
 const round = keyframes`
@@ -86,6 +88,9 @@ const PriceInfo = styled.div`
 const TokenIcon = styled(Image)`
     width: 24px;
     margin-right: 10px;
+    & img {
+        width: auto;
+    }
 `
 const OwnerInfo = styled.div`
     display: flex;
@@ -102,7 +107,35 @@ const StyledCard = styled(Card)`
 const StyledCardBody = styled(CardBody)`
     padding-bottom: 10px;
 `
-const ChestCard: React.FC<ChestCardProps> = ({imgUrl, name, price, totalSupply, bnbBalance, shibaNftBalance}) => {
+interface Payment {
+    token: string;
+    id: number;
+    image: string;
+    price: string;
+}  
+
+const ChestCard: React.FC<ChestCardProps> = ({name, price, totalSupply, bnbBalance, shibaNftBalance, priceShibaWithToken, tokenBalance}) => {
+    const [imgUrl, setImgUrl] = useState("/images/egg/bnb.png");
+    const [tokenAmount, setTokenAmount] = useState(price.toString());
+    const payments: Payment[] = [
+        {
+            id: 0,
+            token: "BNB",
+            image: "/images/egg/bnb.png",
+            price: price.toString()
+        },
+        {
+            id: 1,
+            token: "$SHIBGX",
+            image: "/images/egg/9.png",
+            price: `${Math.ceil(parseInt(priceShibaWithToken) / (10**9))}`
+        }
+    ];
+    const [payment, setPayment] = useState(payments[0]);
+    useEffect(() => {
+        setImgUrl(payment.image);
+        setTokenAmount(payment.price);
+      }, [payment])
     return (
         <div>
             <StyledCard>
@@ -124,7 +157,7 @@ const ChestCard: React.FC<ChestCardProps> = ({imgUrl, name, price, totalSupply, 
                         <Text color="cardItemKey" bold>Price</Text>
                         <PriceInfo>
                             <TokenIcon width={24} height={24} src={imgUrl}/>
-                            <Text color="cardItemValue" bold>{price}</Text>
+                            <Text color="cardItemValue" bold>{tokenAmount}</Text>
                         </PriceInfo>
                     </DogeInfo>
                     {/* <DogeInfo>
@@ -133,11 +166,21 @@ const ChestCard: React.FC<ChestCardProps> = ({imgUrl, name, price, totalSupply, 
                     </DogeInfo> */}
                     <OwnerInfo>
                         <Text color="cardItemKey" bold>Payment</Text>
-                        <Text color="cardItemValue" bold>BNB</Text>
+                        {/* <Text color="cardItemValue" bold>BNB</Text> */}
+                        <CustomSelect
+                            value={payment}
+                            onChange={setPayment}
+                            options={payments}
+                            mapOptionToLabel={(p: Payment) => p.token}
+                            mapOptionToValue={(p: Payment) => p.id}
+                        />
                     </OwnerInfo>
                     <ChestCardActions 
                         price={price}
                         bnbBalance={bnbBalance}
+                        priceShibaWithToken={priceShibaWithToken}
+                        tokenBalance={tokenBalance}
+                        payment={payment.id}
                         shibaNftBalance={shibaNftBalance}
                     />
                 </CardFooter>

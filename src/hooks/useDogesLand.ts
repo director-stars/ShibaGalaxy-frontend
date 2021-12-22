@@ -42,7 +42,9 @@ import {
   getShibaSupply,
   getStoneSupply,
   dbUpdateEarnedAmount,
-  dbGetClaimList
+  dbGetClaimList,
+  getShibaPrice,
+  getStonePrice
 } from '../utils/dogelandUtils'
 
 // export const useBattleBosses = () => {
@@ -116,10 +118,10 @@ export const useBuyCryptoDoge = () => {
   // const cryptoDogeNFTContract = useCryptoDogeNFT();
   // const oneDogeContract = useOneDoge();
   const handleBuy = useCallback(
-    async (price) => {
+    async (payment, price) => {
       try {
         // const firstPurchaseTime = await cryptoDogeNFTContract.methods.firstPurchaseTime(account).call();
-        const txHash = await buyDoge(cryptoDogeControllerContract, account, price)
+        const txHash = await buyDoge(cryptoDogeControllerContract, account, price, payment)
         // const lastTokenId = await getLastTokenId(cryptoDogeNFTContract, account);
         // const _classInfo = "0";
         // const token = getBuyDogeToken(lastTokenId, account, _classInfo);
@@ -143,9 +145,9 @@ export const useBuyMagicStone = () => {
   // const cryptoDogeNFTContract = useCryptoDogeNFT();
 
   const handleBuy = useCallback(
-    async (price) => {
+    async (payment, price) => {
       try {
-        const txHash = await buyStone(magicStoneControllerContract, account, price)
+        const txHash = await buyStone(magicStoneControllerContract, account, price, payment)
         // const lastTokenId = await getLastTokenId(cryptoDogeNFTContract, account);
         // const dogeInfo = await getDogeInfo(cryptoDogeNFTContract, lastTokenId);
         return txHash
@@ -556,4 +558,32 @@ export const useClaimList = () => {
     getList();
   },[]);
   return list;
+}
+
+export const useGetShibaPrice = () => {
+  const cryptoDogeControllerContract = useCryptoDogeController();
+  const [price, setPrice] = useState()
+  const { fastRefresh } = useRefresh()
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const result = await getShibaPrice( cryptoDogeControllerContract);
+      setPrice(result);
+    }
+    fetchBalance()
+  }, [fastRefresh, cryptoDogeControllerContract])
+  return price;
+}
+
+export const useGetStonePrice = () => {
+  const magicStoneControllerContract = useMagicStoneController()
+  const [price, setPrice] = useState()
+  const { fastRefresh } = useRefresh()
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const result = await getStonePrice( magicStoneControllerContract);
+      setPrice(result);
+    }
+    fetchBalance()
+  }, [fastRefresh, magicStoneControllerContract])
+  return price;
 }

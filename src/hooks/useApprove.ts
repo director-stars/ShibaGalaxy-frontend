@@ -5,7 +5,7 @@ import { ethers } from 'ethers'
 import { useDispatch } from 'react-redux'
 import { updateUserAllowance, fetchFarmUserDataAsync } from 'state/actions'
 import { approve } from 'utils/callHelpers'
-import { useMasterchef, useCake, useSousChef, useLottery, useCryptoDogeController, useOneDoge, useCryptoDogeNFT } from './useContract'
+import { useMasterchef, useCake, useSousChef, useLottery, useCryptoDogeController, useOneDoge, useCryptoDogeNFT, useMagicStoneController } from './useContract'
 
 // Approve a Farm
 export const useApprove = (lpContract: Contract) => {
@@ -76,6 +76,23 @@ export const useCryptoDogeControllerApprove = () => {
       return false
     }
   }, [account, oneDogeContract, cryptoDogeControllerContract])
+
+  return { onApprove: handleApprove }
+}
+
+export const useMagicStoneControllerApprove = () => {
+  const { account }: { account: string } = useWallet()
+  const oneDogeContract = useOneDoge()
+  const magicStoneControllerContract = useMagicStoneController()
+
+  const handleApprove = useCallback(async () => {
+    try {
+      const tx = await approve(oneDogeContract, magicStoneControllerContract, account)
+      return tx
+    } catch (e) {
+      return false
+    }
+  }, [account, oneDogeContract, magicStoneControllerContract])
 
   return { onApprove: handleApprove }
 }

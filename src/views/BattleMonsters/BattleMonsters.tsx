@@ -256,7 +256,7 @@ const BattleMonsters: React.FC = () => {
             {(rewardTokenAmount)&&(parseInt(rewardTokenAmount.toString()) > 0)?(
             <div>
               <RewardInfo>
-                <Text fontSize="22px">Pending SHIBGX: {parseInt(rewardTokenAmount.toString())/10**9}</Text>
+                <Text fontSize="22px">Pending SHIBGX: {Math.floor(parseInt(rewardTokenAmount.toString())/10**9)}</Text>
                 <TokenIcon width={30} height={30} src="/images/egg/9.png"/>
               </RewardInfo>
               {( nextClaimTime < 0)?(renderClaimButtons()):(

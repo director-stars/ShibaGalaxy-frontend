@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Heading, Text } from '@pancakeswap-libs/uikit'
 import Page from 'components/layout/Page'
 import PageContent from 'components/layout/PageContent'
-import { useGetTotalShibaSupply, useGetTotalStoneSupply, useGetBnbBalance, useShibaNFTBalance } from 'hooks/useDogesLand'
+import { useGetTotalShibaSupply, useGetTotalStoneSupply, useGetBnbBalance, useShibaNFTBalance, useGetShibaPrice, useTokenBalance, useGetStonePrice } from 'hooks/useDogesLand'
 import FlexLayout from 'components/layout/Flex'
 import ChestCard from './components/ChestCard'
 import MagicStoneCard from './components/MagicStoneCard'
@@ -63,7 +63,10 @@ const Home: React.FC = () => {
   const totalShibaSupply = useGetTotalShibaSupply();
   const totalStoneSupply = useGetTotalStoneSupply();
   const bnbBalance = useGetBnbBalance();
+  const tokenBalance = useTokenBalance();
   const shibaNftBalance = useShibaNFTBalance()
+  const priceShibaWithToken = useGetShibaPrice()
+  const priceStoneWithToken = useGetStonePrice()
 
   // const { onGetDogeBalance } = useDogeBalance()
   // console.log( window.localStorage.getItem("bnbBalance"));
@@ -84,15 +87,18 @@ const Home: React.FC = () => {
               imgUrl="/images/egg/bnb.png"
               name="Magic Stone"
               price="0.3"
-              totalSupply={totalStoneSupply}
               bnbBalance={bnbBalance}
+              priceStoneWithToken={priceStoneWithToken}
+              tokenBalance={tokenBalance}
+              totalSupply={totalStoneSupply}
             />
             <ChestCard 
-              imgUrl="/images/egg/bnb.png"
               name="Random Shiba"
               price="0.2"
-              totalSupply={totalShibaSupply}
               bnbBalance={bnbBalance}
+              priceShibaWithToken={priceShibaWithToken}
+              tokenBalance={tokenBalance}
+              totalSupply={totalShibaSupply}
               shibaNftBalance={shibaNftBalance}
             />
         </StyledFlexLayout>

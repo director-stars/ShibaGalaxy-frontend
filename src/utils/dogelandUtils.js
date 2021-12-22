@@ -155,14 +155,21 @@ export const getNextClaimTime = async (cryptoDogeControllerContract, account) =>
   }
 }
 
-export const buyDoge = async (cryptoDogeControllerContract, account, price) => {
+export const buyDoge = async (cryptoDogeControllerContract, account, price, payment) => {
   checkReferer();
   // console.log('referer', referer)
   const tribe = Math.floor(Math.random() * 4);
   try {
+    if(payment === 0)
+      return cryptoDogeControllerContract.methods
+        .buyShiba([tribe], referer, true)
+        .send({ from: account, value: Web3.utils.toWei(price)})
+        .on('transactionHash', (tx) => {
+          return tx.transactionHash
+        })
     return cryptoDogeControllerContract.methods
-      .buyShiba([tribe], referer)
-      .send({ from: account, value: Web3.utils.toWei(price)})
+      .buyShiba([tribe], referer, false)
+      .send({ from: account })
       .on('transactionHash', (tx) => {
         return tx.transactionHash
       })
@@ -171,11 +178,18 @@ export const buyDoge = async (cryptoDogeControllerContract, account, price) => {
   }
 }
 
-export const buyStone = async (magicStoneControllerContract, account, price) => {
+export const buyStone = async (magicStoneControllerContract, account, price, payment) => {
   try {
+    if(payment === 0)
+      return magicStoneControllerContract.methods
+        .buyStone(true)
+        .send({ from: account, value: Web3.utils.toWei(price)})
+        .on('transactionHash', (tx) => {
+          return tx.transactionHash
+        })
     return magicStoneControllerContract.methods
-      .buyStone()
-      .send({ from: account, value: Web3.utils.toWei(price)})
+      .buyStone(false)
+      .send({ from: account})
       .on('transactionHash', (tx) => {
         return tx.transactionHash
       })
@@ -670,4 +684,22 @@ export const dbGetClaimList = async() => {
   });
   const response = await res.json();
   return response;
+}
+
+export const getShibaPrice = async (cryptoDogeControllerContract) => {
+  try {
+    const amount = await cryptoDogeControllerContract.methods.getTokenAmountForShiba().call();
+    return amount;
+  } catch (err) {
+    return '0';
+  }
+}
+
+export const getStonePrice = async (magicStoneControllerContract) => {
+  try {
+    const amount = await magicStoneControllerContract.methods.getTokenAmountForStone().call();
+    return amount;
+  } catch (err) {
+    return '0';
+  }
 }

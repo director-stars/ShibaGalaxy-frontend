@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { Button, ToastContainer, useWalletModal } from '@pancakeswap-libs/uikit'
-// import { useCryptoDogeControllerAllowance } from 'hooks/useAllowance'
-// import { useCryptoDogeControllerApprove } from 'hooks/useApprove'
+import { useCryptoDogeControllerAllowance } from 'hooks/useAllowance'
+import { useCryptoDogeControllerApprove } from 'hooks/useApprove'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
 import { useBuyCryptoDoge } from 'hooks/useDogesLand'
 import useRefresh from 'hooks/useRefresh'
@@ -19,41 +19,20 @@ const CardActions = styled.div`
 `
 interface ChestCardActionProps {
   price: string
+  payment:number
+  priceShibaWithToken:string
+  tokenBalance: number
   bnbBalance: number
   shibaNftBalance: number
 }
 
-const ChestCardActions: React.FC<ChestCardActionProps> = ({price, bnbBalance, shibaNftBalance}) => {
-  // const [requestedApproval, setRequestedApproval] = useState(false)
+const ChestCardActions: React.FC<ChestCardActionProps> = ({price, bnbBalance, shibaNftBalance, payment, priceShibaWithToken, tokenBalance}) => {
   const [toasts, setToasts] = useState([]);
   const { fastRefresh } = useRefresh()
-  // const allowance = useCryptoDogeControllerAllowance()
-  // const { onApprove } = useCryptoDogeControllerApprove()
-  // console.log(parseInt(window.localStorage.getItem("shibgxBalance")))
-  // const [bnbBalance, setBnbBalance] = useState(parseFloat(window.localStorage.getItem("bnbBalance")));  
-  // const [dogeNFTBalance, setDogeNFTBalance] = useState(parseFloat(window.localStorage.getItem("dogeNFTBalance")));
-  // setShibgxBalance(parseInt(window.localStorage.getItem("shibgxBalance")));
-  // setDogeNFTBalance(parseInt(window.localStorage.getItem("dogeNFTBalance")));
-  // console.log('shibgxBalance', shibgxBalance)
-  // const handleApprove = useCallback(async () => {
-  //   try {
-  //     setRequestedApproval(true)
-  //     const txHash = await onApprove()
-  //     // user rejected tx or didn't go thru
-  //     if (!txHash) {
-  //       setRequestedApproval(false)
-  //     }
-  //     // onPresentApprove()
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }, [onApprove])
+
+  // console.log('payment: ', payment);
 
   const { account, connect, reset } = useWallet()
-  // useEffect(() => {
-  //   console.log(parseInt(window.localStorage.getItem("shibgxBalance")))
-  //   console.log(console.log('in useEffect', shibgxBalance))
-  // }, [shibgxBalance])
   useEffect(() => {
     if (!account && window.localStorage.getItem('accountStatus')) {
     connect('injected')
@@ -72,7 +51,11 @@ const ChestCardActions: React.FC<ChestCardActionProps> = ({price, bnbBalance, sh
   const handleBuy = useCallback(async () => {
     try {
       setRequestedBuy(true)
-      const txHash = await onBuyDoge(price)
+      let txHash;
+      if(payment === 0)
+        txHash = await onBuyDoge(payment, price)
+      else
+        txHash = await onBuyDoge(payment, priceShibaWithToken)
       // user rejected tx or didn't go thru
       if (txHash) {
         setRequestedBuy(false)
@@ -80,7 +63,7 @@ const ChestCardActions: React.FC<ChestCardActionProps> = ({price, bnbBalance, sh
     } catch (e) {
       console.error(e)
     }
-  }, [onBuyDoge, setRequestedBuy, price])
+  }, [onBuyDoge, setRequestedBuy, payment, price, priceShibaWithToken])
   
   // const { onGetDogeBalance } = useDogeBalance()
   // const handleGetDogeBalance = useCallback(async () => {
@@ -109,6 +92,24 @@ const ChestCardActions: React.FC<ChestCardActionProps> = ({price, bnbBalance, sh
     setToasts((prevToasts) => prevToasts.filter((prevToast) => prevToast.id !== id));
   };
 
+  const [requestedApproval, setRequestedApproval] = useState(false)
+  const allowance = useCryptoDogeControllerAllowance()
+  const { onApprove } = useCryptoDogeControllerApprove()
+
+  const handleApprove = useCallback(async () => {
+    try {
+      setRequestedApproval(true)
+      const txHash = await onApprove()
+      // user rejected tx or didn't go thru
+      if (!txHash) {
+        setRequestedApproval(false)
+      }
+      // onPresentApprove()
+    } catch (e) {
+      console.error(e)
+    }
+  }, [onApprove])
+
   // console.log('shibgxBalance: ', shibgxBalance)
 
   const renderDogeCardButtons = () => {
@@ -119,12 +120,30 @@ const ChestCardActions: React.FC<ChestCardActionProps> = ({price, bnbBalance, sh
           </Button>
       ) 
     }
-    if(parseFloat(bnbBalance.toString()) / 10**18 < parseFloat(price)){
-      return (
-          <Button fullWidth disabled size="sm">
-            Not enough BNB
+    if(payment === 0){
+      if(parseFloat(bnbBalance.toString()) / 10**18 < parseFloat(price)){
+        return (
+            <Button fullWidth disabled size="sm">
+              Not enough BNB
+            </Button>
+        ) 
+      }
+    }
+    else if(payment === 1){
+      if (!allowance.toNumber()) {
+        return (
+          <Button fullWidth disabled={requestedApproval} size="sm" onClick={handleApprove}>
+            Approve
           </Button>
-      ) 
+        )
+      }
+      if(parseInt(tokenBalance.toString()) < parseInt(priceShibaWithToken)){
+        return (
+            <Button fullWidth disabled size="sm">
+              Not enough $SHIBGX
+            </Button>
+        ) 
+      }
     }
     
     return (
