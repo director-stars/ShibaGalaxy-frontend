@@ -13,6 +13,7 @@ function checkReferer(){
 }
 
 const API_URL = process.env.REACT_APP_API_URL;
+const oldShibaIds = [1,2,3,4,6,7,11,12,13,14,15,16,17,19,20,22,23,24,25,26,27,28,29];
 export const getBattleBosses = async () => {
   const res = await fetch(`${API_URL}/battle-bosses`, {
       method: "GET",
@@ -33,18 +34,18 @@ export const getMyFightDoges = async (MarketControllerContract, account) => {
     }
     // console.log('dogeIds', dogeIds)
 
-    const res = await fetch(`${API_URL}/crypto-doges-findDogesByIds`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ids: dogeIds
-      })
-    });
+    // const res = await fetch(`${API_URL}/crypto-doges-findDogesByIds`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     ids: dogeIds
+    //   })
+    // });
 
     const fightDoges = [];
-    const dogesExtraInfo = await res.json();
+    // const dogesExtraInfo = await res.json();
     // console.log('dogesExtraInfo', dogesExtraInfo)
     let doge = {};
     for (let i = 0; i < unSaleDoges.length; i ++) {
@@ -61,14 +62,17 @@ export const getMyFightDoges = async (MarketControllerContract, account) => {
       doge.fightNumber = unSaleDoges[i]._fightNumber;
       doge._stoneInfo = unSaleDoges[i]._stoneInfo;
       doge._classInfo = unSaleDoges[i]._classInfo;
-      for (let j = 0; j < dogesExtraInfo.length; j ++){
-        if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
-          // doge.fightNumber = dogesExtraInfo[j].fightNumber;
-          doge._classInfo = dogesExtraInfo[j].classInfo;
-          // console.log(doge.fightNumber);
-          // console.log(doge._classInfo);
-        }
+      if(oldShibaIds.includes(parseInt(doge._tokenId))){
+        doge._classInfo = "0";
       }
+      // for (let j = 0; j < dogesExtraInfo.length; j ++){
+      //   if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
+      //     // doge.fightNumber = dogesExtraInfo[j].fightNumber;
+      //     doge._classInfo = dogesExtraInfo[j].classInfo;
+      //     // console.log(doge.fightNumber);
+      //     // console.log(doge._classInfo);
+      //   }
+      // }
       // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
       if(unSaleDoges[i]._isEvolved)
         fightDoges.push(doge);
@@ -325,18 +329,18 @@ export const getDogeOfSaleByOwner = async(MarketControllerContract, account) => 
     }
     // console.log('dogeIds', dogeIds)
 
-    const res = await fetch(`${API_URL}/crypto-doges-findDogesByIds`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ids: dogeIds
-      })
-    });    
+    // const res = await fetch(`${API_URL}/crypto-doges-findDogesByIds`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     ids: dogeIds
+    //   })
+    // });    
 
     const fightDoges = [];
-    const dogesExtraInfo = await res.json();
+    // const dogesExtraInfo = await res.json();
     // console.log('dogesExtraInfo', dogesExtraInfo)
     let doge = {};
     for (let i = 0; i < unSaleDoges.length; i ++) {
@@ -354,15 +358,18 @@ export const getDogeOfSaleByOwner = async(MarketControllerContract, account) => 
       // doge.fightNumber = 0;
       doge._stoneInfo = unSaleDoges[i]._stoneInfo;
       doge._classInfo = unSaleDoges[i]._classInfo;
-      // if(!doge._classInfo)
-        for (let j = 0; j < dogesExtraInfo.length; j ++){
-          if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
-            // doge.fightNumber = dogesExtraInfo[j].fightNumber;
-            doge._classInfo = dogesExtraInfo[j].classInfo;
-            // console.log(doge.fightNumber);
-          }
-        }
-      // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
+      if(oldShibaIds.includes(parseInt(doge._tokenId))){
+        doge._classInfo = "0";
+      }
+      // // if(!doge._classInfo)
+      //   for (let j = 0; j < dogesExtraInfo.length; j ++){
+      //     if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
+      //       // doge.fightNumber = dogesExtraInfo[j].fightNumber;
+      //       doge._classInfo = dogesExtraInfo[j].classInfo;
+      //       // console.log(doge.fightNumber);
+      //     }
+      //   }
+      // // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
       if(unSaleDoges[i]._isEvolved)
         fightDoges.push(doge);
     }
@@ -437,18 +444,18 @@ export const getDogeByOwner = async(MarketControllerContract, account) => {
     }
     // console.log('dogeIds', dogeIds)
 
-    const res = await fetch(`${API_URL}/crypto-doges-findDogesByIds`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ids: dogeIds
-      })
-    });
+    // const res = await fetch(`${API_URL}/crypto-doges-findDogesByIds`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     ids: dogeIds
+    //   })
+    // });
 
     const fightDoges = [];
-    const dogesExtraInfo = await res.json();
+    // const dogesExtraInfo = await res.json();
     // console.log('dogesExtraInfo', dogesExtraInfo)
     let doge = {};
     for (let i = 0; i < unSaleDoges.length; i ++) {
@@ -466,17 +473,20 @@ export const getDogeByOwner = async(MarketControllerContract, account) => {
       doge._stoneInfo = unSaleDoges[i]._stoneInfo;
       doge._salePrice = unSaleDoges[i]._salePrice;
       doge._classInfo = unSaleDoges[i]._classInfo;
-      // if(!doge._classInfo)
-        for (let j = 0; j < dogesExtraInfo.length; j ++){
-          if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
-            doge.fightNumber = dogesExtraInfo[j].fightNumber;
-            doge._classInfo = dogesExtraInfo[j].classInfo;
-            // console.log(doge.fightNumber);
-            // console.log(doge._classInfo);
-          }
-        }
-      // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
-      // if(unSaleDoges[i]._isEvolved)
+      // // if(!doge._classInfo)
+      //   for (let j = 0; j < dogesExtraInfo.length; j ++){
+      //     if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
+      //       doge.fightNumber = dogesExtraInfo[j].fightNumber;
+      //       doge._classInfo = dogesExtraInfo[j].classInfo;
+      //       // console.log(doge.fightNumber);
+      //       // console.log(doge._classInfo);
+      //     }
+      //   }
+      // // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
+      // // if(unSaleDoges[i]._isEvolved)
+      if(oldShibaIds.includes(parseInt(doge._tokenId))){
+        doge._classInfo = "0";
+      }
       fightDoges.push(doge);
     }
     return fightDoges;
