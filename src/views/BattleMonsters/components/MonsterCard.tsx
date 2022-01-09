@@ -119,7 +119,7 @@ const MonsterCard: React.FC<MonsterCardProps> = ({id, health, successRate, rewar
     const [winNumber, setWinNumber] = useState("")
     const [tx, setTx] = useState('')
     const [error, setError] = useState('')
-    const minTokenBalance = 3000000;
+    const minTokenBalance = 6000000;
     
     // const oneDogeAmount = window.localStorage.getItem("shibgxBalance");
     

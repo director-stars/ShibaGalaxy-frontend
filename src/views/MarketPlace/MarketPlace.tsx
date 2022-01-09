@@ -266,7 +266,7 @@ const MarketPlace: React.FC = () => {
             Market Place
           </StyledHeading>
         </StyledHead>
-        <StyledText>Choose your young doge here, then train and build your 1doge army!</StyledText>
+        {/* <StyledText>Choose your young doge here, then train and build your 1doge army!</StyledText> */}
       </Hero>
       <PageContent>
         <MarketBlock>

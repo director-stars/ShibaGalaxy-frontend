@@ -163,21 +163,22 @@ const MagicStoneCard: React.FC<MagicStoneCardProps> = ({name, price, totalSupply
                     </DogeInfo> */}
                     <OwnerInfo>
                         <Text color="cardItemKey" bold>Payment</Text>
-                        {/* <Text color="cardItemValue" bold>BNB</Text> */}
-                        <CustomSelect
+                        <Text color="cardItemValue" bold>BNB</Text>
+                        {/* <CustomSelect
                             value={payment}
                             onChange={setPayment}
                             options={payments}
                             mapOptionToLabel={(p: Payment) => p.token}
                             mapOptionToValue={(p: Payment) => p.id}
-                        />
+                        /> */}
                     </OwnerInfo>
                     <MagicStoneCardActions 
                         price={price}
                         bnbBalance={bnbBalance}
                         priceStoneWithToken={priceStoneWithToken}
                         tokenBalance={tokenBalance}
-                        payment={payment.id}
+                        // payment={payment.id}
+                        payment={0}
                     />
                 </CardFooter>
             </StyledCard>

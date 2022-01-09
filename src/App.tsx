@@ -15,6 +15,7 @@ const BattleMonsters = lazy(() => import('./views/BattleMonsters'))
 // const BattleBosses = lazy(() => import('./views/BattleBosses'))
 const DogeArmy = lazy(() => import('./views/DogeArmy'))
 const AutoPlay = lazy(() => import('./views/AutoPlay'))
+const LaunchPool = lazy(() => import('./views/LaunchPool'))
 const MarketPlace = lazy(() => import('./views/MarketPlace'))
 const TopWarriors = lazy(() => import('./views/TopWarriors'))
 const Referrals = lazy(() => import('./views/Referrals'))
@@ -68,6 +69,9 @@ const App: React.FC = () => {
             <Route path="/auto-play">
               <AutoPlay />
             </Route>
+            {/* <Route path="/launchpool">
+              <LaunchPool />
+            </Route> */}
             <Route path="/battle-monsters">
              <BattleMonsters />
             </Route>

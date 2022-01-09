@@ -47,3 +47,7 @@ export const getMagicStoneControllerAddress = () => {
 export const getAirDropAddress = () => {
   return addresses.airDrop[chainId];
 }
+
+export const getLaunchPoolAddress = () => {
+  return addresses.launchPool[chainId];
+}

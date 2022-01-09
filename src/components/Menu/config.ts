@@ -32,6 +32,11 @@ const config: MenuItemsType[] = [
     href: '/auto-play',
   },
   {
+    label: 'LaunchPool',
+    icon: 'Prize',
+    href: '/launchpool',
+  },
+  {
     href: "#",
     label: 'More',
     icon: 'More',

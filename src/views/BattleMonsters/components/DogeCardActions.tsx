@@ -89,7 +89,7 @@ const DogeCardActions: React.FC<DogeCardActionsProps> = ({ dogeId, tokenBalance 
     }
   }, [ fightNumber, winNumber, rewardExp, rewardToken, tx, error, onPresentResult ])
 
-  const minTokenBalance = 3000000;
+  const minTokenBalance = 6000000;
   const renderDogeCardButtons = () => {
     if (!allowance.toNumber()) {
       return (

@@ -33,6 +33,10 @@ const StyledHead = styled.div`
 const StyledHeading = styled(Heading)`
   font-size: 4.5rem;
 `
+const StyledHeading1 = styled(Heading)`
+  text-align: center;
+  margin: 30px auto;  
+`
 const MyDoges = styled.div`
   text-align: center;
   overflow: hidden;
@@ -139,6 +143,9 @@ const AutoPlay: React.FC = () => {
         </StyledHead>
       </Hero>
       <PageContent>
+        <StyledHeading1 as="h1" size="xl" mb="24px" color="primary">
+            You have already {stoneSize} stone(s)
+        </StyledHeading1>
         <FlexLayout>
           <StoneCard magicStoneNFTBalance={magicStoneNFTBalance}/>
         </FlexLayout>
