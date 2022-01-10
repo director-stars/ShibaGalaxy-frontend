@@ -69,9 +69,9 @@ const App: React.FC = () => {
             <Route path="/auto-play">
               <AutoPlay />
             </Route>
-            {/* <Route path="/launchpool">
+            <Route path="/launchpool">
               <LaunchPool />
-            </Route> */}
+            </Route>
             <Route path="/battle-monsters">
              <BattleMonsters />
             </Route>

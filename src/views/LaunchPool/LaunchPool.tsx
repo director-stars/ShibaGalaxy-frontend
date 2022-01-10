@@ -1,12 +1,14 @@
 import React, { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { Heading, useWalletModal, Button, useModal } from '@pancakeswap-libs/uikit'
+import { Heading, useWalletModal, Button, useModal, Text } from '@pancakeswap-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { useClaimList } from 'hooks/useDogesLand'
+import { useTokenBalance } from 'hooks/useDogesLand'
+import { useLaunchPoolAllowance } from 'hooks/useAllowance'
+import { useLaunchPoolApprove } from 'hooks/useApprove'
 import Page from 'components/layout/Page'
 import PageContent from 'components/layout/PageContent'
-import { useGetStartTime, useGetDepositedAmount, useGetPeriod,  useGetOldTokenAmount, useGetOldClaimAmount } from 'hooks/useLaunchPool';
-import FlexLayout from 'components/layout/Flex'
+import { useGetStartTime, useGetDepositedAmount, useGetPeriod,  useGetOldTokenAmount, useGetOldClaimAmount, useWithdrawSHIBGX, useClaim } from 'hooks/useLaunchPool';
+// import FlexLayout from 'components/layout/Flex'
 import OrderModal from './components/OrderModal'
 // import GetReferralLinkCard from './components/GetReferralLinkCard'
 
@@ -74,7 +76,7 @@ const CycleContent = styled.div`
   max-width: 800px;
   padding: 40px;
   width: 100%;
-  margin: 60px auto;
+  margin: 30px auto;
   border: 1px solid #fff;
 `
 const BlockTitle = styled.div`
@@ -88,6 +90,7 @@ const BlockTitle = styled.div`
   color: #fea726;
   font-weight: bold;
   letter-spacing: 1px;
+  font-size: 22px;
 `
 const BlockContent = styled.div`
   // display: flex;
@@ -99,6 +102,7 @@ const BlockContent = styled.div`
   color: #fea726;
   font-weight: bold;
   letter-spacing: 1px;
+  font-size: 22px;
 `
 const Address = styled.div`
   font-family: monospace;
@@ -112,10 +116,8 @@ const Address = styled.div`
   }
   // color: #d63341;
 `
-const EarnedAmount = styled.div`
-  font-family: monospace;
-  font-weight: bold;
-  // color: #d63341;
+const StyledText = styled(Text)`
+  font-size: 1.5rem;
 `
 const StyledHeading = styled(Heading)`
   font-size: 4.5rem;
@@ -129,6 +131,26 @@ const LauchPool: React.FC = () => {
     }
   }, [account, connect])
   const { onPresentConnectModal } = useWalletModal(connect, reset)
+
+  const [requestedApproval, setRequestedApproval] = useState(false)
+  const allowance = useLaunchPoolAllowance()
+  const { onApprove } = useLaunchPoolApprove()
+  // const [onPresentApprove] = useModal(<PurchaseWarningModal />)
+  // const oneDogeAmount = window.localStorage.getItem("shibgxBalance");
+  const handleApprove = useCallback(async () => {
+    try {
+      setRequestedApproval(true)
+      const txHash = await onApprove()
+      // user rejected tx or didn't go thru
+      if (!txHash) {
+        setRequestedApproval(false)
+      }
+      // onPresentApprove()
+    } catch (e) {
+      console.error(e)
+    }
+  }, [onApprove])
+
   const [pendingInvest, setPendingInvest] = useState(false)
   const [pendingWithdraw, setPendingWithdraw] = useState(false)
   const [pendingClaim, setPendingClaim] = useState(false)
@@ -148,9 +170,14 @@ const LauchPool: React.FC = () => {
     setStatus(Date.now() < availableTime * 1000);
   }, [availableTime])
 
-  const [onInvestResult] = useModal(<OrderModal title="Invest SHIBGX" id='invest'/>) 
-  const [onWithdrawResult] = useModal(<OrderModal title="Withdraw SHIBGX" id='withdraw'/>) 
-  const [onClaimResult] = useModal(<OrderModal title="Claim SHIBGX, BNB" id='claim' />)
+  const tokenBalance = useTokenBalance();
+
+  const [onInvestResult] = useModal(<OrderModal title="Invest SHIBGX" id='invest' tokenBalance={tokenBalance}/>) 
+  // const [onWithdrawResult] = useModal(<OrderModal title="Withdraw SHIBGX" id='withdraw'/>) 
+  const { onWithdrawSHIBGX } = useWithdrawSHIBGX()
+  // const [onClaimResult] = useModal(<OrderModal title="Claim SHIBGX, BNB" id='claim' />)
+  const { onClaim } = useClaim()
+
   return (
       <Page>
         <Hero>
@@ -162,6 +189,7 @@ const LauchPool: React.FC = () => {
         </Hero>
         <PageContent>
           <StyledBody>
+          <StyledText>If you have Magic Stone, you can hold $SHIBGX here and get BNB as a reward!</StyledText>
             {(oldTokenAmount > 0)?(
             <CycleContent>
               <Heading as="h3" size="xl" mb="24px" color="primary">
@@ -169,20 +197,21 @@ const LauchPool: React.FC = () => {
               </Heading>
               <BlockContext>
                 <BlockTitle>Invested Amount : </BlockTitle>
-                <BlockContent>{oldTokenAmount}</BlockContent>
+                <BlockContent>{Math.floor(oldTokenAmount / 10 ** 9)} $SHIBGX</BlockContent>
               </BlockContext>
               <BlockContext>
-                <BlockTitle>Profit BNB : </BlockTitle>
-                <BlockContent>{oldClaimAmount}</BlockContent>
+                <BlockTitle>Profit : </BlockTitle>
+                <BlockContent>{Math.floor(oldClaimAmount / 10 ** 14) / 10 ** 4} BNB</BlockContent>
               </BlockContext>
               <BlockContext>
                 <Button size="sm" mt="20px"
+                  variant="secondary" 
                   disabled={pendingClaim}
                   onClick={async () => {
                       setPendingClaim(true)
-                      onClaimResult()
+                      onClaim()
                       setPendingClaim(false)
-                  }}>{pendingClaim ? 'Pending Claim' : 'Claim SHIBGX & BNB'}</Button>
+                  }}>{pendingClaim ? 'Pending Claim' : 'Claim $SHIBGX & BNB'}</Button>
               </BlockContext>
             </CycleContent>
             ):(<></>)}
@@ -192,31 +221,43 @@ const LauchPool: React.FC = () => {
               </Heading>
               <BlockContext>
                 <BlockTitle>StartTime :</BlockTitle>
-                <BlockContent>{startTime}</BlockContent>
+                <BlockContent>{(parseInt(startTime.toString()) === 0)?(<>Cycle will be started soon</>):(new Date(startTime*1000).toLocaleDateString("en-us"))}</BlockContent>
               </BlockContext>
               <BlockContext>
                 <BlockTitle>SubScription Period : </BlockTitle>
-                <BlockContent>{period}</BlockContent>
+                <BlockContent>{(parseInt(startTime.toString()) === 0)?(<>_</>):(<>{period/(3600 * 24)} day(s)</>)}</BlockContent>
               </BlockContext>
               <BlockContext>
                 <BlockTitle>Invested Amount : </BlockTitle>
-                <BlockContent>{depositedAmount}</BlockContent>
+                <BlockContent>{(parseInt(startTime.toString()) === 0)?(<>_</>):(<>{Math.floor(depositedAmount / 10 ** 9)} $SHIBGX</>)}</BlockContent>
               </BlockContext>
               <BlockContext>
-                <Button size="sm" mt="20px"
+                { (!allowance.toNumber())?(
+                  <Button fullWidth disabled={requestedApproval} size="sm" variant="secondary" onClick={handleApprove}>
+                    Approve
+                  </Button>
+                ):(
+                <Button size="sm" mt="20px" variant="secondary"
                   disabled={pendingInvest || !status}
                   onClick={async () => {
                       setPendingInvest(true)
                       onInvestResult()
                       setPendingInvest(false)
                   }}>{pendingInvest ? 'Pending Invest' : 'Invest SHIBGX'}</Button>
-                <Button size="sm" mt="20px"
-                  disabled={pendingWithdraw || !status || depositedAmount === 0}
+                )}
+                { (!allowance.toNumber())?(
+                  <Button fullWidth disabled={requestedApproval} size="sm" variant="secondary" onClick={handleApprove}>
+                    Approve
+                  </Button>
+                ):(
+                <Button size="sm" mt="20px" variant="secondary" 
+                  disabled={pendingWithdraw || !status || parseInt(depositedAmount.toString()) === 0}
                   onClick={async () => {
                       setPendingWithdraw(true)
-                      onWithdrawResult()
+                      onWithdrawSHIBGX()
                       setPendingWithdraw(false)
-                  }}>{pendingWithdraw ? 'Pending Withdraw' : 'Withdraw SHIBGX'}</Button>
+                  }}>{pendingWithdraw ? 'Pending Withdraw' : 'Withdraw $SHIBGX'}</Button>
+                )}
               </BlockContext>
             </CycleContent>
           </StyledBody>

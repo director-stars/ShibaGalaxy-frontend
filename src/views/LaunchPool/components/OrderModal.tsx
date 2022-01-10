@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Button, Modal } from '@pancakeswap-libs/uikit'
 import { useInvestSHIBGX, useWithdrawSHIBGX, useClaim } from 'hooks/useLaunchPool'
 import TicketInput from 'components/TicketInput'
@@ -44,9 +44,10 @@ interface ResultModalProps {
     // startTime?: number
     // period?: number
     // depositedAmount?: number
+    tokenBalance?: number
 }
 
-const OrderModal: React.FC<ResultModalProps> = ({ onDismiss, title="result", id = '' }) => {
+const OrderModal: React.FC<ResultModalProps> = ({ onDismiss, title="result", id = '', tokenBalance = 0 }) => {
     const [val, setVal] = useState('');
     // const [receiveTokenAmount, setReceiveTokenAmount] = useState(0);
     const [pendingTx, setPendingTx] = useState(false)
@@ -58,6 +59,13 @@ const OrderModal: React.FC<ResultModalProps> = ({ onDismiss, title="result", id 
       setVal(e.currentTarget.value)
       // setReceiveTokenAmount(Math.round(parseInt(e.currentTarget.value)*0.95*100)/100);
     }
+    const handleSelectMax = useCallback(() => {
+      // if (Number(maxTickets) > permittedMaxTickets) {
+      //   setVal(tokenBalance.toString())
+      // } else {
+        setVal(Math.floor(tokenBalance / 10 ** 9).toString())
+      // }
+    }, [tokenBalance])
     // console.log('val: ', parseInt(val))
     // const availableTime = startTime + period;
     // console.log(Date.now());
@@ -76,7 +84,8 @@ const OrderModal: React.FC<ResultModalProps> = ({ onDismiss, title="result", id 
               <TicketInput
                 value={val}
                 onChange={handleChange}
-                max='0'
+                onSelectMax={handleSelectMax}
+                max={tokenBalance}
                 symbol="SHIBGX"
                 availableSymbol="SHIBGX"
               />

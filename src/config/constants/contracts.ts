@@ -59,6 +59,6 @@ export default {
   },
   launchPool: {
     56: '0x681C706e6d394004B032019a38d6C0745D29e640',
-    97: '0xdDf816356f705c8Bde6F90492198ef15F978C45C',
+    97: '0x53f7D1d087FbdA75056431eD7FDb13007fA02abe',
   }
 }
