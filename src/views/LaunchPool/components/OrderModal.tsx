@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Button, Modal } from '@pancakeswap-libs/uikit'
+import { Button, Modal, Text } from '@pancakeswap-libs/uikit'
 import { useInvestSHIBGX, useWithdrawSHIBGX, useClaim } from 'hooks/useLaunchPool'
 import TicketInput from 'components/TicketInput'
 import styled from 'styled-components'
@@ -45,9 +45,11 @@ interface ResultModalProps {
     // period?: number
     // depositedAmount?: number
     tokenBalance?: number
+    stoneBalance?: number
 }
 
-const OrderModal: React.FC<ResultModalProps> = ({ onDismiss, title="result", id = '', tokenBalance = 0 }) => {
+const OrderModal: React.FC<ResultModalProps> = ({ onDismiss, title="result", id = '', tokenBalance = 0, stoneBalance = 0 }) => {
+  // console.log('stoneBalance: ', stoneBalance)
     const [val, setVal] = useState('');
     // const [receiveTokenAmount, setReceiveTokenAmount] = useState(0);
     const [pendingTx, setPendingTx] = useState(false)
@@ -75,9 +77,12 @@ const OrderModal: React.FC<ResultModalProps> = ({ onDismiss, title="result", id 
     // }, [availableTime])
     // const status = Date.now() < availableTime * 1000;
     // console.log('status', status)
+    const string = "You don't have Magic Stone.";
     return (
         <Modal title={title} onDismiss={onDismiss}>
           {(id === "invest")?(<>
+          {(parseInt(stoneBalance.toString()) === 0)?(<Text color="red"> {string}</Text>):(<></>)}
+          
           <SellInfo>
             Amount
             <InputField>

@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { Heading, useWalletModal, Button, useModal, Text } from '@pancakeswap-libs/uikit'
 import { useWallet } from '@binance-chain/bsc-use-wallet'
-import { useTokenBalance } from 'hooks/useDogesLand'
+import { useTokenBalance, useStoneNFTBalance } from 'hooks/useDogesLand'
 import { useLaunchPoolAllowance } from 'hooks/useAllowance'
 import { useLaunchPoolApprove } from 'hooks/useApprove'
 import Page from 'components/layout/Page'
@@ -132,18 +132,33 @@ const LauchPool: React.FC = () => {
   }, [account, connect])
   const { onPresentConnectModal } = useWalletModal(connect, reset)
 
-  const [requestedApproval, setRequestedApproval] = useState(false)
+  const [requestedApproval1, setRequestedApproval1] = useState(false)
+  const [requestedApproval2, setRequestedApproval2] = useState(false)
   const allowance = useLaunchPoolAllowance()
   const { onApprove } = useLaunchPoolApprove()
   // const [onPresentApprove] = useModal(<PurchaseWarningModal />)
   // const oneDogeAmount = window.localStorage.getItem("shibgxBalance");
-  const handleApprove = useCallback(async () => {
+  const handleApprove1 = useCallback(async () => {
     try {
-      setRequestedApproval(true)
+      setRequestedApproval1(true)
       const txHash = await onApprove()
       // user rejected tx or didn't go thru
       if (!txHash) {
-        setRequestedApproval(false)
+        setRequestedApproval1(false)
+      }
+      // onPresentApprove()
+    } catch (e) {
+      console.error(e)
+    }
+  }, [onApprove])
+
+  const handleApprove2 = useCallback(async () => {
+    try {
+      setRequestedApproval2(true)
+      const txHash = await onApprove()
+      // user rejected tx or didn't go thru
+      if (!txHash) {
+        setRequestedApproval2(false)
       }
       // onPresentApprove()
     } catch (e) {
@@ -163,6 +178,9 @@ const LauchPool: React.FC = () => {
   const oldTokenAmount = useGetOldTokenAmount();
   const oldClaimAmount = useGetOldClaimAmount();
 
+  const tokenBalance = useTokenBalance();
+  const stoneBalance = useStoneNFTBalance();
+
   const availableTime = startTime + period;
     // console.log(Date.now());
     // console.log('availableTime', availableTime)
@@ -170,9 +188,7 @@ const LauchPool: React.FC = () => {
     setStatus(Date.now() < availableTime * 1000);
   }, [availableTime])
 
-  const tokenBalance = useTokenBalance();
-
-  const [onInvestResult] = useModal(<OrderModal title="Invest SHIBGX" id='invest' tokenBalance={tokenBalance}/>) 
+  const [onInvestResult] = useModal(<OrderModal title="Invest SHIBGX" id='invest' tokenBalance={tokenBalance} stoneBalance={stoneBalance}/>) 
   // const [onWithdrawResult] = useModal(<OrderModal title="Withdraw SHIBGX" id='withdraw'/>) 
   const { onWithdrawSHIBGX } = useWithdrawSHIBGX()
   // const [onClaimResult] = useModal(<OrderModal title="Claim SHIBGX, BNB" id='claim' />)
@@ -201,7 +217,7 @@ const LauchPool: React.FC = () => {
               </BlockContext>
               <BlockContext>
                 <BlockTitle>Profit : </BlockTitle>
-                <BlockContent>{Math.floor(oldClaimAmount / 10 ** 14) / 10 ** 4} BNB</BlockContent>
+                <BlockContent>{oldClaimAmount / 10 ** 18} BNB</BlockContent>
               </BlockContext>
               <BlockContext>
                 <Button size="sm" mt="20px"
@@ -225,15 +241,16 @@ const LauchPool: React.FC = () => {
               </BlockContext>
               <BlockContext>
                 <BlockTitle>SubScription Period : </BlockTitle>
-                <BlockContent>{(parseInt(startTime.toString()) === 0)?(<>_</>):(<>{period/(3600 * 24)} day(s)</>)}</BlockContent>
+                <BlockContent>{(parseInt(startTime.toString()) === 0)?(<>0 day</>):(<>{period/(3600 * 24)} day(s)</>)}</BlockContent>
               </BlockContext>
               <BlockContext>
                 <BlockTitle>Invested Amount : </BlockTitle>
-                <BlockContent>{(parseInt(startTime.toString()) === 0)?(<>_</>):(<>{Math.floor(depositedAmount / 10 ** 9)} $SHIBGX</>)}</BlockContent>
+                <BlockContent>{(parseInt(startTime.toString()) === 0)?(<>0 $SHIBGX</>):(<>{Math.floor(depositedAmount / 10 ** 9)} $SHIBGX</>)}</BlockContent>
               </BlockContext>
               <BlockContext>
+                {account? (<>
                 { (!allowance.toNumber())?(
-                  <Button fullWidth disabled={requestedApproval} size="sm" variant="secondary" onClick={handleApprove}>
+                  <Button fullWidth disabled={requestedApproval1} size="sm" variant="secondary" onClick={handleApprove1}>
                     Approve
                   </Button>
                 ):(
@@ -246,7 +263,7 @@ const LauchPool: React.FC = () => {
                   }}>{pendingInvest ? 'Pending Invest' : 'Invest SHIBGX'}</Button>
                 )}
                 { (!allowance.toNumber())?(
-                  <Button fullWidth disabled={requestedApproval} size="sm" variant="secondary" onClick={handleApprove}>
+                  <Button fullWidth disabled={requestedApproval2} size="sm" variant="secondary" onClick={handleApprove2}>
                     Approve
                   </Button>
                 ):(
@@ -258,6 +275,11 @@ const LauchPool: React.FC = () => {
                       setPendingWithdraw(false)
                   }}>{pendingWithdraw ? 'Pending Withdraw' : 'Withdraw $SHIBGX'}</Button>
                 )}
+                </>)
+                    : (
+                    <><Button size="sm" variant="secondary" onClick={onPresentConnectModal}>Connect Wallet</Button>
+                    <Button size="sm" variant="secondary" onClick={onPresentConnectModal}>Connect Wallet</Button>
+                    </>)}
               </BlockContext>
             </CycleContent>
           </StyledBody>
