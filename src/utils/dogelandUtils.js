@@ -411,15 +411,16 @@ export const getDogeOfSale = async(MarketControllerContract) => {
       // doge.fightNumber = 0;
       doge._stoneInfo = unSaleDoges[i]._stoneInfo;
       doge._stoneInfo = '';
+      doge._classInfo = unSaleDoges[i]._classInfo;
       for (let j = 0; j < dogesExtraInfo.length; j ++){
         if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
           // doge.fightNumber = dogesExtraInfo[j].fightNumber;
-          doge._classInfo = dogesExtraInfo[j].classInfo;
-          doge._name = classes[parseInt(doge._rare) - 1][doge._classInfo].name;
+          doge._classInfo = dogesExtraInfo[j].classInfo;          
           // console.log(dogesExtraInfo[j].classInfo)
           // console.log('doge')
         }
       }
+      doge._name = classes[parseInt(doge._rare) - 1][doge._classInfo].name;
       // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
       if(unSaleDoges[i]._isEvolved)
         fightDoges.push(doge);

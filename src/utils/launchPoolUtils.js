@@ -29,6 +29,15 @@ export const getPeriod = async (launchPoolContract, account) => {
   }
 }
 
+export const getLockTime = async (launchPoolContract, account) => {
+  try {
+    const lockTime = await launchPoolContract.methods.checkTime().call();
+    return lockTime;
+  } catch (err) {
+    return 0;
+  }
+}
+
 export const getMinimumInvestAmount = async (launchPoolContract, account) => {
   try {
     const minimumInvestAmount = await launchPoolContract.methods.minimumInvestAmount().call();

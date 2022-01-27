@@ -6,6 +6,7 @@ import {
   getStartTime,
   getDepositedAmount,
   getPeriod,
+  getLockTime,
   getMinimumInvestAmount,
   getOldTokenAmount,
   getOldClaimAmount,
@@ -66,6 +67,24 @@ export const useGetPeriod = () => {
   }, [account, fastRefresh, launchPool])
 
   return period
+}
+
+export const useGetLockTime = () => {
+  const { account } = useWallet()
+  const launchPool = useLaunchPool();
+  // console.log(account);
+  const [lockTime, setLockTime] = useState(0)
+  const { fastRefresh } = useRefresh()
+  useEffect(() => {
+    const fetchBalance = async () => {
+      const res = await getLockTime(launchPool, account);
+      // console.log('doges:', res)
+      setLockTime(res)
+    }
+    fetchBalance()
+  }, [account, fastRefresh, launchPool])
+
+  return lockTime
 }
 
 // export const useGetMinimumInvestAmount = () => {

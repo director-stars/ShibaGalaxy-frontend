@@ -7,7 +7,7 @@ import { useLaunchPoolAllowance } from 'hooks/useAllowance'
 import { useLaunchPoolApprove } from 'hooks/useApprove'
 import Page from 'components/layout/Page'
 import PageContent from 'components/layout/PageContent'
-import { useGetStartTime, useGetDepositedAmount, useGetPeriod,  useGetOldTokenAmount, useGetOldClaimAmount, useWithdrawSHIBGX, useClaim } from 'hooks/useLaunchPool';
+import { useGetStartTime, useGetDepositedAmount, useGetPeriod, useGetLockTime,  useGetOldTokenAmount, useGetOldClaimAmount, useWithdrawSHIBGX, useClaim } from 'hooks/useLaunchPool';
 // import FlexLayout from 'components/layout/Flex'
 import OrderModal from './components/OrderModal'
 // import GetReferralLinkCard from './components/GetReferralLinkCard'
@@ -56,7 +56,6 @@ const Banner = styled.div`
 `
 
 const BlockContext = styled.div`
-  max-width: 500px;
   margin: 10px auto;
   display: flex;
   align-items: center;
@@ -64,6 +63,16 @@ const BlockContext = styled.div`
   justify-content: space-around;
   column-gap: 30px;
   color: #fff;
+`
+const BlockActionContext = styled.div`
+max-width: 500px;
+margin: 10px auto;
+display: flex;
+align-items: center;
+width: -webkit-fill-available;
+justify-content: space-around;
+column-gap: 30px;
+color: #fff;
 `
 const StyledBody = styled.div`
   text-align:center;
@@ -174,6 +183,7 @@ const LauchPool: React.FC = () => {
   const startTime = useGetStartTime();
   const depositedAmount = useGetDepositedAmount();
   const period = useGetPeriod();
+  const lockTime = useGetLockTime();
   // const minimumInvestAmount = useGetMinimumInvestAmount();
   const oldTokenAmount = useGetOldTokenAmount();
   const oldClaimAmount = useGetOldClaimAmount();
@@ -181,11 +191,12 @@ const LauchPool: React.FC = () => {
   const tokenBalance = useTokenBalance();
   const stoneBalance = useStoneNFTBalance();
 
-  const availableTime = startTime + period;
-    // console.log(Date.now());
+  const availableTime = startTime * 1000 + period * 1000;
+  const releaseTime = startTime * 1000 + period * 1000 + lockTime * 1000;
+    // console.log(releaseTime);
     // console.log('availableTime', availableTime)
   useEffect(() => {
-    setStatus(Date.now() < availableTime * 1000);
+    setStatus(Date.now() < availableTime);
   }, [availableTime])
 
   const [onInvestResult] = useModal(<OrderModal title="Invest SHIBGX" id='invest' tokenBalance={tokenBalance} stoneBalance={stoneBalance}/>) 
@@ -236,8 +247,8 @@ const LauchPool: React.FC = () => {
                 Current Cycle
               </Heading>
               <BlockContext>
-                <BlockTitle>StartTime :</BlockTitle>
-                <BlockContent>{(parseInt(startTime.toString()) === 0)?(<>Cycle will be started soon</>):(new Date(startTime*1000).toLocaleDateString("en-us"))}</BlockContent>
+                <BlockTitle>Start Time :</BlockTitle>
+                <BlockContent>{(parseInt(startTime.toString()) === 0)?(<>Cycle will be started soon</>):(new Date(startTime*1000).toLocaleString("en-us"))}</BlockContent>
               </BlockContext>
               <BlockContext>
                 <BlockTitle>SubScription Period : </BlockTitle>
@@ -247,7 +258,21 @@ const LauchPool: React.FC = () => {
                 <BlockTitle>Invested Amount : </BlockTitle>
                 <BlockContent>{(parseInt(startTime.toString()) === 0)?(<>0 $SHIBGX</>):(<>{Math.floor(depositedAmount / 10 ** 9)} $SHIBGX</>)}</BlockContent>
               </BlockContext>
-              <BlockContext>
+              {(Date.now() > availableTime)?(
+                <>
+                <BlockContext>
+                  <BlockTitle>Release Time : </BlockTitle>
+                  <BlockContent>{new Date(releaseTime).toLocaleString("en-us")}</BlockContent>
+                </BlockContext>
+                <BlockContext>
+                  Invested tokens will be locked for {Math.ceil(lockTime / 3600 / 24)} day(s)
+                </BlockContext>
+                </>
+              ):(
+                <></>
+              )}
+              
+              <BlockActionContext>
                 {account? (<>
                 { (!allowance.toNumber())?(
                   <Button fullWidth disabled={requestedApproval1} size="sm" variant="secondary" onClick={handleApprove1}>
@@ -260,7 +285,7 @@ const LauchPool: React.FC = () => {
                       setPendingInvest(true)
                       onInvestResult()
                       setPendingInvest(false)
-                  }}>{pendingInvest ? 'Pending Invest' : 'Invest SHIBGX'}</Button>
+                  }}>{pendingInvest ? 'Pending Invest' : 'Invest $SHIBGX'}</Button>
                 )}
                 { (!allowance.toNumber())?(
                   <Button fullWidth disabled={requestedApproval2} size="sm" variant="secondary" onClick={handleApprove2}>
@@ -280,7 +305,7 @@ const LauchPool: React.FC = () => {
                     <><Button size="sm" variant="secondary" onClick={onPresentConnectModal}>Connect Wallet</Button>
                     <Button size="sm" variant="secondary" onClick={onPresentConnectModal}>Connect Wallet</Button>
                     </>)}
-              </BlockContext>
+              </BlockActionContext>
             </CycleContent>
           </StyledBody>
         </PageContent>

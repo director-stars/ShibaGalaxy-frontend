@@ -57,9 +57,9 @@ const App: React.FC = () => {
             <Route path="/" exact>
               <Home />
             </Route>
-            {/* <Route path="/marketplace">
+            <Route path="/marketplace">
               <MarketPlace />
-            </Route> */}
+            </Route>
             <Route path="/my-shiba">
               <DogeArmy />
             </Route>

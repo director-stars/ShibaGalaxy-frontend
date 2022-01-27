@@ -165,52 +165,54 @@ const MarketPlace: React.FC = () => {
   useEffect(() => {
     // console.log(doges.length)
     if(typeof doges === typeof []){
-      setSelectedDoges(doges.filter(
-          (doge) => {
-            let cr1 =  chRare1 ? doge._rare === '1' : true
-            let cr2 =  chRare2 ? doge._rare === '2' : true
-            let cr3 =  chRare3 ? doge._rare === '3' : true
-            let cr4 =  chRare4 ? doge._rare === '4' : true
-            let cr5 =  chRare5 ? doge._rare === '5' : true
-            let cr6 =  chRare6 ? doge._rare === '6' : true
-            if(chRare1 || chRare2 || chRare3 || chRare4 || chRare5 || chRare6){
-              cr1 =  chRare1 ? doge._rare === '1' : false
-              cr2 =  chRare2 ? doge._rare === '2' : false
-              cr3 =  chRare3 ? doge._rare === '3' : false
-              cr4 =  chRare4 ? doge._rare === '4' : false
-              cr5 =  chRare5 ? doge._rare === '5' : false
-              cr6 =  chRare6 ? doge._rare === '6' : false
-            }
+      if(doges.length !== 0){
+        setSelectedDoges(doges.filter(
+            (doge) => {
+              let cr1 =  chRare1 ? doge._rare === '1' : true
+              let cr2 =  chRare2 ? doge._rare === '2' : true
+              let cr3 =  chRare3 ? doge._rare === '3' : true
+              let cr4 =  chRare4 ? doge._rare === '4' : true
+              let cr5 =  chRare5 ? doge._rare === '5' : true
+              let cr6 =  chRare6 ? doge._rare === '6' : true
+              if(chRare1 || chRare2 || chRare3 || chRare4 || chRare5 || chRare6){
+                cr1 =  chRare1 ? doge._rare === '1' : false
+                cr2 =  chRare2 ? doge._rare === '2' : false
+                cr3 =  chRare3 ? doge._rare === '3' : false
+                cr4 =  chRare4 ? doge._rare === '4' : false
+                cr5 =  chRare5 ? doge._rare === '5' : false
+                cr6 =  chRare6 ? doge._rare === '6' : false
+              }
 
-            let cl1 =  chLevel1 ? doge._level === '1' : true
-            let cl2 =  chLevel2 ? doge._level === '2' : true
-            let cl3 =  chLevel3 ? doge._level === '3' : true
-            let cl4 =  chLevel4 ? doge._level === '4' : true
-            let cl5 =  chLevel5 ? doge._level === '5' : true
-            let cl6 =  chLevel6 ? doge._level === '6' : true
-            if(chLevel1 || chLevel2 || chLevel3 || chLevel4 || chLevel5 || chLevel6){
-              cl1 =  chLevel1 ? doge._level === '1' : false
-              cl2 =  chLevel2 ? doge._level === '2' : false
-              cl3 =  chLevel3 ? doge._level === '3' : false
-              cl4 =  chLevel4 ? doge._level === '4' : false
-              cl5 =  chLevel5 ? doge._level === '5' : false
-              cl6 =  chLevel6 ? doge._level === '6' : false
-            }
+              let cl1 =  chLevel1 ? doge._level === '1' : true
+              let cl2 =  chLevel2 ? doge._level === '2' : true
+              let cl3 =  chLevel3 ? doge._level === '3' : true
+              let cl4 =  chLevel4 ? doge._level === '4' : true
+              let cl5 =  chLevel5 ? doge._level === '5' : true
+              let cl6 =  chLevel6 ? doge._level === '6' : true
+              if(chLevel1 || chLevel2 || chLevel3 || chLevel4 || chLevel5 || chLevel6){
+                cl1 =  chLevel1 ? doge._level === '1' : false
+                cl2 =  chLevel2 ? doge._level === '2' : false
+                cl3 =  chLevel3 ? doge._level === '3' : false
+                cl4 =  chLevel4 ? doge._level === '4' : false
+                cl5 =  chLevel5 ? doge._level === '5' : false
+                cl6 =  chLevel6 ? doge._level === '6' : false
+              }
 
-            let ct1 =  chFire ? doge._tribe === '0' : true
-            let ct2 =  chSky ? doge._tribe === '1' : true
-            let ct3 =  chGrass ? doge._tribe === '2' : true
-            let ct4 =  chElectric ? doge._tribe === '3' : true
-            if(chFire || chSky || chGrass || chElectric){
-              ct1 =  chFire ? doge._tribe === '0' : false
-              ct2 =  chSky ? doge._tribe === '1' : false
-              ct3 =  chGrass ? doge._tribe === '2' : false
-              ct4 =  chElectric ? doge._tribe === '3' : false
+              let ct1 =  chFire ? doge._tribe === '0' : true
+              let ct2 =  chSky ? doge._tribe === '1' : true
+              let ct3 =  chGrass ? doge._tribe === '2' : true
+              let ct4 =  chElectric ? doge._tribe === '3' : true
+              if(chFire || chSky || chGrass || chElectric){
+                ct1 =  chFire ? doge._tribe === '0' : false
+                ct2 =  chSky ? doge._tribe === '1' : false
+                ct3 =  chGrass ? doge._tribe === '2' : false
+                ct4 =  chElectric ? doge._tribe === '3' : false
+              }
+              return doge._name.toLowerCase().includes(searchValue.toLowerCase()) && (cr1 || cr2 || cr3 || cr4 || cr5 || cr6) && (cl1 || cl2 || cl3 || cl4 || cl5 || cl6) && (ct1 || ct2 || ct3 || ct4)
             }
-            return doge._name.toLowerCase().includes(searchValue.toLowerCase()) && (cr1 || cr2 || cr3 || cr4 || cr5 || cr6) && (cl1 || cl2 || cl3 || cl4 || cl5 || cl6) && (ct1 || ct2 || ct3 || ct4)
-          }
-        )
-      );
+          )
+        );
+      }
     }
   }, [doges, searchValue, chRare1, chRare2, chRare3, chRare4, chRare5, chRare6, chLevel1, chLevel2, chLevel3, chLevel4, chLevel5, chLevel6, chFire, chSky, chGrass, chElectric])
 
@@ -270,7 +272,6 @@ const MarketPlace: React.FC = () => {
       </Hero>
       <PageContent>
         <MarketBlock>
-          {(selectedDoges.length)?(
         <FilterBlock>
           <Input type="text" scale="md" placeholder="Search Your Shibas" value={searchValue} onChange={handleInput}/>
           <BlockTitle color="primary">Rare</BlockTitle>
@@ -347,12 +348,10 @@ const MarketPlace: React.FC = () => {
             </CheckBoxBlock>
           </BlockDiv>
         </FilterBlock>
-        ):(<></>)}
         <FlexLayout>
           {dogeList(selectedDoges, true)}
         </FlexLayout>
         </MarketBlock>
-        {/* <Pagination itemsPerPage={1} setRequestedPageNumber={setRequestedPageNumber} items={[]}/> */}
         <StyledPagination>
           <ReactPaginate
             breakLabel="..."

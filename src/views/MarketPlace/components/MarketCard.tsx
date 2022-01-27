@@ -39,7 +39,7 @@ const TokenIcon = styled(Image)`
 const OwnerInfo = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
 `
 const StyledImage = styled.div<{
     imgUrl?: string
@@ -102,7 +102,7 @@ const StyledCardBody = styled(CardBody)`
 `
 const StyledCardFooter = styled(CardFooter)`
     margin-top: -25px;
-    padding-top: 40px;
+    padding-top: 35px;
     background-image: url(/images/card-market__footer.png);
     background-size: contain;
     background-repeat: no-repeat;
@@ -112,7 +112,7 @@ const StyledCardFooter = styled(CardFooter)`
 `
 const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, level, exp, rare, tribe, tokenBalance, shibaNftBalance}) => {
     const price1 = new BigNumber(price).div(new BigNumber(10).pow(9)).toString()
-    const ownerAddress = `${owner.substring(0, 4)}...${owner.substring(owner.length - 4)}`;
+    const ownerAddress = `${owner.substring(0, 5)}...${owner.substring(owner.length - 5)}`;
     let dogeImage;
     let dogeName;
     if(classInfo){
@@ -179,27 +179,28 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
       const renderDogeCardButtons = () => {
         if (!allowance.toNumber()) {
           return (
-            <Button fullWidth disabled={requestedApproval} size="sm" onClick={handleApprove}>
+            <Button fullWidth disabled={requestedApproval} size="sm" mt={2} onClick={handleApprove}>
               Approve
             </Button>
           )
         }
         if(shibaNftBalance > 4){
             return (
-                <Button fullWidth disabled size="sm">
+                <Button fullWidth disabled size="sm" mt={2}>
                   You have enough Shibas
                 </Button>
             ) 
         }
         if(tokenBalance < parseInt(price)){
             return (
-                <Button fullWidth disabled size="sm">
+                <Button fullWidth disabled size="sm" mt={2}>
                   Not enough SHIBGX
                 </Button>
             ) 
         }        
         return (
             <Button fullWidth size="sm"
+            mt={2}
             disabled={pendingTx}
             onClick={async () => {
                 setPendingTx(true)
@@ -235,20 +236,20 @@ const MarketCard: React.FC<MartketCardProps> = ({id, classInfo, price, owner, le
                         <Text color="cardItemKey" bold>Tribe :</Text>
                         <Text color="cardItemValue" bold>{tribeName}</Text>
                     </DogeInfoItem>
-                    <DogeInfoItem>
-                        <Text color="cardItemKey" bold>Price</Text>
+                </DogeInfo>
+                    <OwnerInfo>
+                        <Text color="cardItemKey" bold>Price : </Text>
                         <PriceInfo>
-                            <TokenIcon width={24} height={24} src="/images/egg/9.png"/>
+                            <TokenIcon width={24} height={24} mr={10} src="/images/egg/9.png"/>
                             <Text color="cardItemValue" bold>{price1}</Text>
                         </PriceInfo>
-                    </DogeInfoItem>
-                </DogeInfo>
+                    </OwnerInfo>
                 <OwnerInfo>
-                    <Text color="cardItemKey" bold>Owner</Text>
+                    <Text color="cardItemKey" bold>Owner : </Text>
                     <Text color="cardItemValue" bold>{ownerAddress}</Text>
                 </OwnerInfo>
                 {account? (renderDogeCardButtons())
-                : (<Button fullWidth size="sm" onClick={onPresentConnectModal}>Connect Wallet</Button>)}
+                : (<Button fullWidth size="sm" mt={2} onClick={onPresentConnectModal}>Connect Wallet</Button>)}
             </StyledCardFooter>
         </StyledCard>
     )
