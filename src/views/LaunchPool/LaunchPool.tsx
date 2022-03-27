@@ -258,7 +258,7 @@ const LauchPool: React.FC = () => {
                 <BlockTitle>Invested Amount : </BlockTitle>
                 <BlockContent>{(parseInt(startTime.toString()) === 0)?(<>0 $SHIBGX</>):(<>{Math.floor(depositedAmount / 10 ** 9)} $SHIBGX</>)}</BlockContent>
               </BlockContext>
-              {(Date.now() > availableTime)?(
+              {(Date.now() > availableTime && Date.now() < releaseTime)?(
                 <>
                 <BlockContext>
                   <BlockTitle>Release Time : </BlockTitle>

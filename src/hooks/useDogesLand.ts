@@ -14,8 +14,8 @@ import {
   getMonsters, 
   buyDoge, 
   getLastTokenId, 
-  dbCreateDoge, 
-  dbUpdateOwner,
+  // dbCreateDoge, 
+  // dbUpdateOwner,
   fightMonster, 
   getRewardTokenInfo, 
   claimReward, 
@@ -38,11 +38,11 @@ import {
   getNextClaimTime,
   getAirDropInfo,
   claimAirDrop,
-  dbGetReferralHistory,
+  // dbGetReferralHistory,
   getShibaSupply,
   getStoneSupply,
-  dbUpdateEarnedAmount,
-  dbGetClaimList,
+  // dbUpdateEarnedAmount,
+  // dbGetClaimList,
   getShibaPrice,
   getStonePrice
 } from '../utils/dogelandUtils'
@@ -262,7 +262,7 @@ export const useFillOrder = () => {
         const firstPurchaseTime = await cryptoDogeNFTContract.methods.firstPurchaseTime(account).call();
         const result = await fillOrder(cryptoDogeNFTContract, account, _tokenId)
         const token = getFillOrderToken(_tokenId, account);
-        await dbUpdateOwner(_tokenId, firstPurchaseTime, account, token);
+        // await dbUpdateOwner(_tokenId, firstPurchaseTime, account, token);
         // await getBalance(cryptoDogeNFTContract, oneDogeContract, account, );
         return result
       } catch (e) {
@@ -511,13 +511,13 @@ export const useClaimAirDrop = () => {
 export const useReferralHistory = () => {
   const [history, setHistory] = useState([])
 
-  useEffect(() => {
-    const getHistory = async () => {
-      const referralHistory = await dbGetReferralHistory();
-      setHistory(referralHistory);
-    }
-    getHistory();
-  },[]);
+  // useEffect(() => {
+  //   const getHistory = async () => {
+  //     const referralHistory = await dbGetReferralHistory();
+  //     setHistory(referralHistory);
+  //   }
+  //   getHistory();
+  // },[]);
   return history;
 }
 
@@ -550,13 +550,13 @@ export const useGetTotalStoneSupply = () => {
 export const useClaimList = () => {
   const [list, setList] = useState([])
 
-  useEffect(() => {
-    const getList = async () => {
-      const claimList = await dbGetClaimList();
-      setList(claimList);
-    }
-    getList();
-  },[]);
+  // useEffect(() => {
+  //   const getList = async () => {
+  //     const claimList = await dbGetClaimList();
+  //     setList(claimList);
+  //   }
+  //   getList();
+  // },[]);
   return list;
 }
 

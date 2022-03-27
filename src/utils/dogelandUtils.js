@@ -4,7 +4,6 @@ import { getWeb3 } from 'utils/web3'
 import { classes } from 'hooks/useDogeInfo'
 
 let referer="0x0000000000000000000000000000000000000000" ;
-// console.log(window.localStorage.getItem("referer"))
 function checkReferer(){
   if (window.localStorage.getItem("referer"))
   {   
@@ -32,21 +31,8 @@ export const getMyFightDoges = async (MarketControllerContract, account) => {
     for (let i = 0; i < unSaleDoges.length; i ++) {
       dogeIds.push(unSaleDoges[i]._tokenId);
     }
-    // console.log('dogeIds', dogeIds)
-
-    // const res = await fetch(`${API_URL}/crypto-doges-findDogesByIds`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     ids: dogeIds
-    //   })
-    // });
 
     const fightDoges = [];
-    // const dogesExtraInfo = await res.json();
-    // console.log('dogesExtraInfo', dogesExtraInfo)
     let doge = {};
     for (let i = 0; i < unSaleDoges.length; i ++) {
       doge = {};
@@ -65,15 +51,6 @@ export const getMyFightDoges = async (MarketControllerContract, account) => {
       if(oldShibaIds.includes(parseInt(doge._tokenId))){
         doge._classInfo = "0";
       }
-      // for (let j = 0; j < dogesExtraInfo.length; j ++){
-      //   if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
-      //     // doge.fightNumber = dogesExtraInfo[j].fightNumber;
-      //     doge._classInfo = dogesExtraInfo[j].classInfo;
-      //     // console.log(doge.fightNumber);
-      //     // console.log(doge._classInfo);
-      //   }
-      // }
-      // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
       if(unSaleDoges[i]._isEvolved)
         fightDoges.push(doge);
     }
@@ -83,46 +60,45 @@ export const getMyFightDoges = async (MarketControllerContract, account) => {
   }
 }
 
-export const dbCreateDoge = async (tokenId, firstPurchaseTime ,account, classInfo, token) => {
-  checkReferer();
-  const refererAddress = (firstPurchaseTime === "0")?referer:"0x0000000000000000000000000000000000000000";
-  const res = await fetch(`${API_URL}/crypto-doges-create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-          tokenId,
-          owner: account,
-          classInfo,
-          fightNumber: 3,
-          referee: refererAddress,
-          token
-      })
-  });
-  const response = await res.json();
-  return response
-}
+// export const dbCreateDoge = async (tokenId, firstPurchaseTime ,account, classInfo, token) => {
+//   checkReferer();
+//   const refererAddress = (firstPurchaseTime === "0")?referer:"0x0000000000000000000000000000000000000000";
+//   const res = await fetch(`${API_URL}/crypto-doges-create`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//           tokenId,
+//           owner: account,
+//           classInfo,
+//           fightNumber: 3,
+//           referee: refererAddress,
+//           token
+//       })
+//   });
+//   const response = await res.json();
+//   return response
+// }
 
-export const dbUpdateOwner = async (_tokenId, firstPurchaseTime, account, token) => {
-  checkReferer();
-  const refererAddress = (firstPurchaseTime === "0")?referer:"0x0000000000000000000000000000000000000000";
-  const res = await fetch(`${API_URL}/crypto-doges-update`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-          tokenId: _tokenId,
-          owner: account,
-          referee: refererAddress,
-          token
-      })
-  });
-  // console.log('res', res);
-  const response = await res.json();
-  return response
-}
+// export const dbUpdateOwner = async (_tokenId, firstPurchaseTime, account, token) => {
+//   checkReferer();
+//   const refererAddress = (firstPurchaseTime === "0")?referer:"0x0000000000000000000000000000000000000000";
+//   const res = await fetch(`${API_URL}/crypto-doges-update`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//           tokenId: _tokenId,
+//           owner: account,
+//           referee: refererAddress,
+//           token
+//       })
+//   });
+//   const response = await res.json();
+//   return response
+// }
 
 export const getMonsters = async (cryptoDogeControllerContract) => {
   try {
@@ -131,19 +107,10 @@ export const getMonsters = async (cryptoDogeControllerContract) => {
     monsters[1] = await cryptoDogeControllerContract.methods.monsters(1).call();
     monsters[2] = await cryptoDogeControllerContract.methods.monsters(2).call();
     monsters[3] = await cryptoDogeControllerContract.methods.monsters(3).call();
-    // console.log('monsters', monsters[0]._name);
-    // const res = await fetch(`${API_URL}/monsters`, {
-    //     method: "GET",
-    // });
-    // const response = await res.json();
     monsters[0].id = 0;
-    // monsters[0].asset = response[0].asset;
     monsters[1].id = 1;
-    // monsters[1].asset = response[1].asset;
     monsters[2].id = 2;
-    // monsters[2].asset = response[2].asset;
     monsters[3].id = 3;
-    // monsters[3].asset = response[3].asset;  
     return monsters
   } catch (err) {
     return [];
@@ -161,7 +128,6 @@ export const getNextClaimTime = async (cryptoDogeControllerContract, account) =>
 
 export const buyDoge = async (cryptoDogeControllerContract, account, price, payment) => {
   checkReferer();
-  // console.log('referer', referer)
   const tribe = Math.floor(Math.random() * 4);
   try {
     if(payment === 0)
@@ -219,7 +185,6 @@ export const getLastTokenId = async (cryptoDogeNFTContract, account) => {
   try {
     const nftNumbers = await cryptoDogeNFTContract.methods
     .balanceOf(account).call();
-    // console.log('nftNumbers', parseInt(nftNumbers.toString())-1)
     return await cryptoDogeNFTContract.methods
     .tokenOfOwnerByIndex(account, parseInt(nftNumbers.toString())-1).call()
   } catch (err) {
@@ -300,7 +265,6 @@ export const cancelOrder = async (cryptoDogeNFTContract, account, tokenId) => {
 
 export const fillOrder = async (cryptoDogeNFTContract, account, tokenId) => {
   checkReferer();
-  // console.log('referer', referer);
   try {
     return cryptoDogeNFTContract.methods
       .fillOrder(tokenId, referer)
@@ -315,9 +279,6 @@ export const fillOrder = async (cryptoDogeNFTContract, account, tokenId) => {
 
 export const getDogeOfSaleByOwner = async(MarketControllerContract, account) => {
   try {
-    // const res = await fetch(`${API_URL}/crypto-doges`, {
-    //   method: "GET",
-    // });
 
     const unSaleDoges = await MarketControllerContract.methods.getShibaOfSaleByOwner().call({
       from: account
@@ -327,21 +288,8 @@ export const getDogeOfSaleByOwner = async(MarketControllerContract, account) => 
     for (let i = 0; i < unSaleDoges.length; i ++) {
       dogeIds.push(unSaleDoges[i]._tokenId);
     }
-    // console.log('dogeIds', dogeIds)
-
-    // const res = await fetch(`${API_URL}/crypto-doges-findDogesByIds`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     ids: dogeIds
-    //   })
-    // });    
 
     const fightDoges = [];
-    // const dogesExtraInfo = await res.json();
-    // console.log('dogesExtraInfo', dogesExtraInfo)
     let doge = {};
     for (let i = 0; i < unSaleDoges.length; i ++) {
       doge = {};
@@ -352,28 +300,15 @@ export const getDogeOfSaleByOwner = async(MarketControllerContract, account) => 
       doge._tribe = unSaleDoges[i]._tribe;
       doge._tokenId = unSaleDoges[i]._tokenId;
       doge._salePrice = unSaleDoges[i]._salePrice;
-      // doge._farmTime = unSaleDoges[i]._farmTime;
-      // doge._availableBattleTime = unSaleDoges[i]._availableBattleTime;
       doge._isEvolved = unSaleDoges[i]._isEvolved;
-      // doge.fightNumber = 0;
       doge._stoneInfo = unSaleDoges[i]._stoneInfo;
       doge._classInfo = unSaleDoges[i]._classInfo;
       if(oldShibaIds.includes(parseInt(doge._tokenId))){
         doge._classInfo = "0";
       }
-      // // if(!doge._classInfo)
-      //   for (let j = 0; j < dogesExtraInfo.length; j ++){
-      //     if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
-      //       // doge.fightNumber = dogesExtraInfo[j].fightNumber;
-      //       doge._classInfo = dogesExtraInfo[j].classInfo;
-      //       // console.log(doge.fightNumber);
-      //     }
-      //   }
-      // // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
       if(unSaleDoges[i]._isEvolved)
         fightDoges.push(doge);
     }
-    // console.log('doge', doge)
     return fightDoges;
   } catch (err) {
     return []
@@ -382,17 +317,15 @@ export const getDogeOfSaleByOwner = async(MarketControllerContract, account) => 
 
 export const getDogeOfSale = async(MarketControllerContract) => {
   try {
-  //   const result = await MarketControllerContract.methods.getDogeOfSale().call();
-  //   return result;
     
-    const res = await fetch(`${API_URL}/crypto-doges`, {
-      method: "GET",
-    });
+    // const res = await fetch(`${API_URL}/crypto-doges`, {
+    //   method: "GET",
+    // });
 
     const unSaleDoges = await MarketControllerContract.methods.getShibaOfSale().call();
 
     const fightDoges = [];
-    const dogesExtraInfo = await res.json();
+    // const dogesExtraInfo = await res.json();
     // console.log(dogesExtraInfo)
     let doge = {};
     for (let i = 0; i < unSaleDoges.length; i ++) {
@@ -403,28 +336,23 @@ export const getDogeOfSale = async(MarketControllerContract) => {
       doge._exp = unSaleDoges[i]._exp;
       doge._tribe = unSaleDoges[i]._tribe;
       doge._tokenId = unSaleDoges[i]._tokenId;
-      // doge._farmTime = unSaleDoges[i]._farmTime;
-      // doge._availableBattleTime = unSaleDoges[i]._availableBattleTime;
       doge._isEvolved = unSaleDoges[i]._isEvolved;
       doge._owner = unSaleDoges[i]._owner;
       doge._salePrice = unSaleDoges[i]._salePrice;
-      // doge.fightNumber = 0;
       doge._stoneInfo = unSaleDoges[i]._stoneInfo;
       doge._stoneInfo = '';
       doge._classInfo = unSaleDoges[i]._classInfo;
-      for (let j = 0; j < dogesExtraInfo.length; j ++){
-        if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
-          // doge.fightNumber = dogesExtraInfo[j].fightNumber;
-          doge._classInfo = dogesExtraInfo[j].classInfo;          
-          // console.log(dogesExtraInfo[j].classInfo)
-          // console.log('doge')
-        }
+      // for (let j = 0; j < dogesExtraInfo.length; j ++){
+      //   if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
+      //     doge._classInfo = dogesExtraInfo[j].classInfo; 
+      //   }
+      // }
+      if(oldShibaIds.includes(parseInt(doge._tokenId))){
+        doge._classInfo = "0";
       }
       doge._name = classes[parseInt(doge._rare) - 1][doge._classInfo].name;
-      // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
       if(unSaleDoges[i]._isEvolved)
         fightDoges.push(doge);
-      // console.log('---------------doge----------------')
     }
     return fightDoges;
   } catch (err) {
@@ -433,8 +361,6 @@ export const getDogeOfSale = async(MarketControllerContract) => {
 }
 
 export const getDogeByOwner = async(MarketControllerContract, account) => {
-  // console.log(MarketControllerContract);
-  // console.log(account)
   try {
     const unSaleDoges = await MarketControllerContract.methods.getShibaByOwner().call({
       from: account
@@ -443,21 +369,8 @@ export const getDogeByOwner = async(MarketControllerContract, account) => {
     for (let i = 0; i < unSaleDoges.length; i ++) {
       dogeIds.push(unSaleDoges[i]._tokenId);
     }
-    // console.log('dogeIds', dogeIds)
-
-    // const res = await fetch(`${API_URL}/crypto-doges-findDogesByIds`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     ids: dogeIds
-    //   })
-    // });
 
     const fightDoges = [];
-    // const dogesExtraInfo = await res.json();
-    // console.log('dogesExtraInfo', dogesExtraInfo)
     let doge = {};
     for (let i = 0; i < unSaleDoges.length; i ++) {
       doge = {};
@@ -474,60 +387,16 @@ export const getDogeByOwner = async(MarketControllerContract, account) => {
       doge._stoneInfo = unSaleDoges[i]._stoneInfo;
       doge._salePrice = unSaleDoges[i]._salePrice;
       doge._classInfo = unSaleDoges[i]._classInfo;
-      // // if(!doge._classInfo)
-      //   for (let j = 0; j < dogesExtraInfo.length; j ++){
-      //     if(unSaleDoges[i]._tokenId === dogesExtraInfo[j].Doge_ID){
-      //       doge.fightNumber = dogesExtraInfo[j].fightNumber;
-      //       doge._classInfo = dogesExtraInfo[j].classInfo;
-      //       // console.log(doge.fightNumber);
-      //       // console.log(doge._classInfo);
-      //     }
-      //   }
-      // // if(unSaleDoges[i]._isEvolved&&doge.fightNumber)
-      // // if(unSaleDoges[i]._isEvolved)
       if(oldShibaIds.includes(parseInt(doge._tokenId))){
         doge._classInfo = "0";
       }
       fightDoges.push(doge);
     }
     return fightDoges;
-    // return result;
   } catch (err) {
-    // return console.error('err'))
     return []
   }
 }
-
-// export const getBalance = async(cryptoDogeNFTContract, oneDogeContract, account) => {
-//   try {
-//     if(account){
-//       const balance = await cryptoDogeNFTContract.methods.balanceOf(account).call();
-//       const order = await cryptoDogeNFTContract.methods.orders(account).call();
-//       const result = parseInt(balance) + parseInt(order);
-//       window.localStorage.setItem("dogeNFTBalance",result);
-//       // console.log("dogeNFTBalance",result);
-//       const oneDoge = await oneDogeContract.methods.balanceOf(account).call();
-//       window.localStorage.setItem("shibgxBalance",parseInt(oneDoge) / 10**18);
-//       // console.log("shibgxBalance",oneDoge);
-//       // const magicStone = await magicStoneNFTContract.methods.balanceOf(account).call();
-//       // window.localStorage.setItem("magicStoneNFTBalance",magicStone);
-//       // console.log("magicStoneNFTBalance",magicStone);
-//       const bnb = await getWeb3().eth.getBalance(account);
-//       console.log('bnb: ', bnb)
-//       window.localStorage.setItem("bnbBalance",bnb);
-//     }
-//     else{
-//       window.localStorage.setItem("dogeNFTBalance",0);
-//       window.localStorage.setItem("shibgxBalance",0);
-//       window.localStorage.setItem("bnbBalance",0);
-//     }
-//     // console.log('bnb', bnb);
-//     return 0;
-//   } catch (err) {
-//     console.log(err)
-//     return console.error('err')
-//   }
-// }
 
 export const getBnbBalance = async(account) => {
   try {
@@ -629,9 +498,6 @@ export const getAirDropInfo = async(airDropContract, account) => {
   try {
     const exist = await airDropContract.methods.contributors(account).call();
     const withdrawDate = await airDropContract.methods.withdrawDate(account).call();
-    // console.log('exist', exist)
-    // console.log('withdrawDate', withdrawDate === '0')
-    // console.log(exist && (withdrawDate === '0'))
     const result = exist && (withdrawDate === '0');
     return result;
   } catch (err) {
@@ -648,19 +514,19 @@ export const claimAirDrop = async(airDropContract, account) => {
   }
 }
 
-export const dbGetReferralHistory = async() => {
-  const curr = new Date();
-  const first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
-  const firstday = new Date(curr.setDate(first));
-  const res = await fetch(`${API_URL}/crypto-doges-referral-history?purchaseTime_gte=${firstday.valueOf()}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    }
-  });
-  const response = await res.json();
-  return response;
-}
+// export const dbGetReferralHistory = async() => {
+//   const curr = new Date();
+//   const first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+//   const firstday = new Date(curr.setDate(first));
+//   const res = await fetch(`${API_URL}/crypto-doges-referral-history?purchaseTime_gte=${firstday.valueOf()}`, {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     }
+//   });
+//   const response = await res.json();
+//   return response;
+// }
 
 export const getShibaSupply = async(cryptoDogeNFTContract) => {
   const supply = await cryptoDogeNFTContract.methods.totalSupply().call();
@@ -672,30 +538,30 @@ export const getStoneSupply = async(magicStoneNFTContract) => {
   return supply;
 }
 
-export const dbUpdateEarnedAmount = async(account, amount, token) => {
-  await fetch(`${API_URL}/earned-amounts/update`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-          address: account,
-          amount,
-          token
-      })
-  });
-}
+// export const dbUpdateEarnedAmount = async(account, amount, token) => {
+//   await fetch(`${API_URL}/earned-amounts/update`, {
+//       method: "PUT",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//           address: account,
+//           amount,
+//           token
+//       })
+//   });
+// }
 
-export const dbGetClaimList = async() => {
-  const res = await fetch(`${API_URL}/earned-amounts`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    }
-  });
-  const response = await res.json();
-  return response;
-}
+// export const dbGetClaimList = async() => {
+//   const res = await fetch(`${API_URL}/earned-amounts`, {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     }
+//   });
+//   const response = await res.json();
+//   return response;
+// }
 
 export const getShibaPrice = async (cryptoDogeControllerContract) => {
   try {

@@ -54,6 +54,7 @@ const FilterBlock = styled.div`
   width: 300px;
   min-width: 300px;
   height: fit-content;
+  margin: 0px auto;
 `
 const BlockTitle = styled(Text)`
   margin-top: 30px;
@@ -70,12 +71,17 @@ const StyledSpan = styled.span`
   font-size: 20px;
 `
 const MarketBlock = styled.div`
-  display: flex;
+  display: grid;
+  ${({ theme }) => theme.mediaQueries.lg} {
+    display: flex;
+  }
+  margin-bottom: 50px;
 `
 
 const StyledPagination = styled.div`
   padding: 10px;
   // background-color: #fff;
+  margin-bottom: 50px;
   & ul {
     display: flex;
     list-style: none;
@@ -109,7 +115,9 @@ const StyledPagination = styled.div`
     color: #FFC50D;
   }
 `
-
+const StyledFlexLayout = styled(FlexLayout)`
+  width: -webkit-fill-available;
+`
 const MarketPlace: React.FC = () => {
   const [selectedDoges, setSelectedDoges] = useState([])
   const [searchValue, setSearchValue] = useState<string>('')
@@ -348,21 +356,23 @@ const MarketPlace: React.FC = () => {
             </CheckBoxBlock>
           </BlockDiv>
         </FilterBlock>
-        <FlexLayout>
+        <StyledFlexLayout>
           {dogeList(selectedDoges, true)}
-        </FlexLayout>
+        </StyledFlexLayout>
         </MarketBlock>
-        <StyledPagination>
-          <ReactPaginate
-            breakLabel="..."
-            nextLabel=">"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={3}
-            pageCount={pageCount}
-            previousLabel="<"
-            renderOnZeroPageCount={null}
-          />
-        </StyledPagination>
+        {(selectedDoges.length > itemsPerPage)?(
+          <StyledPagination>
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={3}
+              pageCount={pageCount}
+              previousLabel="<"
+              renderOnZeroPageCount={null}
+            />
+          </StyledPagination>
+        ):(<></>)}
       </PageContent>
     </Page>
   )
